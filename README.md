@@ -19,7 +19,7 @@ VipeCloud API v1.0 (still in beta)
 <a name="#overview"></a>Overview
 -------------
 #### Apply to be a VipeCloud Partner
-    * Learn about our partnership programs and apply here: http://partners.vipecloud.com
+    * Learn about our partnership programs and apply here: [http://partners.vipecloud.com](http://partners.vipecloud.com)
 
 #### General Information
    * All requests must by made from HTTPS
