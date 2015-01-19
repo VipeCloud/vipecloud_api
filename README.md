@@ -18,6 +18,14 @@ VipeCloud API v1.0 (still in beta)
 
 <a name="#overview"></a>Overview
 -------------
+#### What can VipeCloud's API do for you?
+   * Bring the latest (and constantly improving) sales force automation into your application.
+   * Let your users send trackable emails learning what emails are opened and attachments viewed, leveraging templates, and scheduling emails for later.
+   * Add a complete mass emailing solution to your application without redirecting your users to a third party application.
+   * Allow your users to make and record VOIP phone calls from inside your application.
+   * Automatically log your user's emails, email engagement, and other activities in your CRM.
+   * And much, much more!
+
 #### Apply to be a VipeCloud Partner
    * Learn about our partnership programs and [apply here](http://partners.vipecloud.com).
 
