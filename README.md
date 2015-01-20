@@ -1,4 +1,4 @@
-VipeCloud API v1.0 (still in beta)
+VipeCloud API v1.0
 =============
 1. [Overview](#overview)
 2. [Generating the Signature](#generating-the-signature)
