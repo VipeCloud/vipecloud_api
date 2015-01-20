@@ -167,10 +167,13 @@ VipeCloud supports creating new contact lists and adding contacts to existing li
 POST /contact_list/API_KEY?signature=SIGNATURE
 ```
 If a list key is present, contacts will be added to that list. If no list key is present, a list name must be present. Creating an "empty" list - a list with a list_name and no contacts is allowed. VipeCloud will check for and not add duplicates to this list. VipeCloud will also not add contacts that have unsubscribed from this user or bounced.
+
+NOTE - if the number of contacts being submitted is greater than 2,000 then submit a link to a CSV file.
 ```   
 { 
  "list_key" : "LIST_KEY/FALSE",
  "list_name" : "LIST_NAME",
+ "csv_url" : "{url to csv file}", //only for POSTs with greater than 2,000 contacts
  "contacts" : [
     {
       "first_name"  : "Wiley",  // required
@@ -186,6 +189,8 @@ If a list key is present, contacts will be added to that list. If no list key is
 }
 ```
 The response to this POST will be a status of success or error. On success the list_key will be included in addition to a *count* of successful emails added to the list and a *list* of emails that were not added, with a message detailing why the contact wasn't added.
+
+NOTE - contacts not added will be displayed in contact list performance as well.
 ```
 {
   "status" : "success",
