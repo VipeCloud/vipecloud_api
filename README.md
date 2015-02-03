@@ -1,4 +1,4 @@
-VipeCloud API v1.0
+VipeCloud API
 =============
 1. [Overview](#overview)
 2. [Generating the Signature](#generating-the-signature)
