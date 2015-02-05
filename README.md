@@ -67,7 +67,7 @@ For all iframes that will be opened via modals (e.g. Send Trackable Email, Creat
 
 Note that postMessage is compatible with IE 8+, FF 3.0+, Chrome 1.0+, Safari 4.0+, Opera 9.5+
 
-Here is a sample script to catch the postMessage:
+Here is a sample script to catch the postMessage (be sure to include in the HTML where the modal is located):
 ```
 <script>
 
@@ -255,7 +255,7 @@ Optional Params:
 * dest_email
 * dest_first_name
 * list_key
-* crm_obj & obj_id- If you have a crm_obj, at this time we are only setup to handle 'deal' as an object. If you use a deal crm_obj and deal_id, we will attribute the email activity to the deal_id instead of person.
+* crm_obj & obj_id- we support deal, person, contact, or lead as objects. If you include a crm_obj in the url, we will attribute the email to that object, saving an API call to search for the object.
 * reply_to_email - add the email_id of the email the user is replying to and we will append the original email into the message
 
 Sample iframe for the widget
