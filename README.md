@@ -168,6 +168,8 @@ POST /contact_list/API_KEY?signature=SIGNATURE
 ```
 If a list key is present, contacts will be added to that list. If no list key is present, a list name must be present. Creating an "empty" list - a list with a list_name and no contacts is allowed. VipeCloud will check for and not add duplicates to this list. VipeCloud will also not add contacts that have unsubscribed from this user or bounced.
 
+If you use a deal crm_obj and obj_id we will attribute the email activity to the appropriate crm_obj and save your API a call by not needing to search for the obj id.
+
 NOTE - if the number of contacts being submitted is greater than 10,000 then submit a link to a CSV file.
 ```   
 { 
@@ -180,7 +182,9 @@ NOTE - if the number of contacts being submitted is greater than 10,000 then sub
       "email" : "wiley.coyote@acme.com", // required
       "last_name" : "Coyote",
       "phone" : "1234567890",
-      "company" : "Acme"
+      "company" : "Acme",
+      "crm_obj" : "123XYZ",
+      "obj_id" : "123XYZ"
     },
     {
     ...
