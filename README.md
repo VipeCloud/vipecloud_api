@@ -35,6 +35,10 @@ VipeCloud API v1.1
    * Base URL for these functions: https://v.vipecloud.com/api/v1.0/{partner_api_slug}
    * The api_key included in VipeCloud API calls is a unique user identifier for one of your users. This could be an install_id, user_key, or whatever. We use the term api_key.
 
+#### New in v1.1
+   * Signature now includes timestamp param
+   * /trigger_trackable_email endpoint. Send an email directly via our API
+
 #### Responses
    * 200 for success
    * 422 for incorrect post
@@ -259,12 +263,35 @@ Optional Params:
 * dest_email
 * dest_first_name
 * list_key
-* crm_obj & obj_id- we support deal, person, contact, or lead as objects. If you include a crm_obj in the url, we will attribute the email to that object, saving an API call to search for the object.
+* person_id & deal_id - if you use these params we will attribute the email to that person and/or deal, saving an API call to search for the person/deal by email.
 * reply_to_email - add the email_id of the email the user is replying to and we will append the original email into the message
 
 Sample iframe for the widget
 ```
 <iframe src="{URL}" width="660" height="560" frameborder="0"></iframe>
+```
+
+<a name="#trigger-trackable-email-post"></a>Trigger Trackable Email (POST)
+-------------
+Send a trackable email via a POST. 
+
+```
+POST /trigger_trackable_email/API_KEY?timestamp=TIMESTAMP&signature=SIGNATURE
+``` 
+
+Body params
+
+```   
+{
+  "dest_email":"roadrunner@acme.com",
+  "dest_first_name":"Road", //optional param used to merge if template id
+  "company_name":"Acme", //optional param used to merge if template id
+  "person_id":"ABC123", //optional param used to write share and engagement activities
+  "deal_id":"XYZ789", //optional param used to write share and engagement activities
+  "email_template_id":"123", //optional param referencing a VipeCloud email template. Can be replaced by partner specific tag that will lead to email_template_id. Will supercede subject/message.
+  "subject":"Can you point me in the right direction?", //req'd if no email_template_id
+  "message":"<p>Dear Wiley,</p><p>Good luck catching me.</p><p>-Road Runner</p>" //req'd if no email_template_id
+}
 ```
 
 
