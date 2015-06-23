@@ -1,4 +1,4 @@
-VipeCloud API
+VipeCloud API v1.1
 =============
 1. [Overview](#overview)
 2. [Generating the Signature](#generating-the-signature)
@@ -43,7 +43,7 @@ VipeCloud API
 
 <a name="#generating-the-signature"></a>Generating the Signature
 -------------
-The signature is a base64 encoded concatenation of the request path based on the shared secret (i.e. https://v.vipecloud.com/api/v1.0/{partner_api_slug}/users/{api_key}).
+The signature is a base64 encoded concatenation of the request path based on the shared secret (i.e. https://v.vipecloud.com/api/v1.0/{partner_api_slug}/users/{api_key}?timestamp=TIMESTAMP).
 
 Your shared secret can be found here: https://v.vipecloud.com/settings/affiliate after having been approved as a VipeCloud partner. 
 
@@ -52,7 +52,7 @@ Sample PHP code to generate the signature
 <?php
 
 function generateSignature($action,$api_key){
-    $path = "https://v.vipecloud.com/api/v1.0/{partner_api_slug}/" . $action . "/" . $api_key;
+    $path = "https://v.vipecloud.com/api/v1.0/{partner_api_slug}/" . $action . "/" . $api_key . "?timestamp=".time();
     $signature = hash_hmac('sha256', $path, SHARED_SECRET, $raw=true);
     $encoded_sig = base64_encode(strtr($signature, '-_','+/')); 
     return array('signature' => $encoded_sig);
@@ -103,7 +103,7 @@ Include ALL USERS within the account that should actively have an integration wi
 IMPORTANT: the api_key for the FIRST user must match the api_key in the URL.
 
 ```
-POST /users/API_KEY?signature=SIGNATURE
+POST /users/API_KEY?timestamp=TIMESTAMP&signature=SIGNATURE
 ``` 
 
 Body params
@@ -135,7 +135,7 @@ Body params
 ### GET all currently active users for the integration
 
 ```
-GET /users/API_KEY?signature=SIGNATURE
+GET /users/API_KEY?timestamp=TIMESTAMP&signature=SIGNATURE
 ``` 
 The response to this GET will be a list of the currently active VipeCloud users for an account within your integration.
 ```
@@ -164,7 +164,7 @@ VipeCloud supports creating new contact lists and adding contacts to existing li
 
 #### Create new / update existing Contact List in VipeCloud
 ```
-POST /contact_list/API_KEY?signature=SIGNATURE
+POST /contact_list/API_KEY?timestamp=TIMESTAMP&signature=SIGNATURE
 ```
 If a list key is present, contacts will be added to that list. If no list key is present, a list name must be present. Creating an "empty" list - a list with a list_name and no contacts is allowed. VipeCloud will check for and not add duplicates to this list. VipeCloud will also not add contacts that have unsubscribed from this user or bounced.
 
@@ -214,7 +214,7 @@ NOTE - contacts not added will be displayed in contact list performance as well.
 
 #### GET list of existing Contact Lists a user has in VipeCloud
 ```
-GET /contact_list/API_KEY?signature=SIGNATURE
+GET /contact_list/API_KEY?timestamp=TIMESTAMP&signature=SIGNATURE
 ```
 Returns an array of the lists that a user has in VipeCloud
 ```   
@@ -240,7 +240,7 @@ Access a user's email sending reputation in VipeCloud
 
 #### GET a user's email reputation
 ```
-GET /user_reputation/API_KEY?signature=SIGNATURE
+GET /user_reputation/API_KEY?timestamp=TIMESTAMP&signature=SIGNATURE
 ```
 The response to this GET will be an integer between 0 and 100.
 ```   
@@ -253,7 +253,7 @@ The response to this GET will be an integer between 0 and 100.
 --------------------
 This widget will allow all VipeCloud enabled users to send a trackable email from within your application.
 
-ENDPOINT: /send_trackable_email/{api_key}?signature={signature}
+ENDPOINT: /send_trackable_email/API_KEY?timestamp=TIMESTAMP&signature=SIGNATURE
 
 Optional Params:
 * dest_email
@@ -274,7 +274,7 @@ Receive a history of contact list shares and their performance for a user
 
 #### GET entire history of contact list shares for a user
 ```
-GET /contact_list_performance/API_KEY?signature=SIGNATURE
+GET /contact_list_performance/API_KEY?timestamp=TIMESTAMP&signature=SIGNATURE
 ```
 The response to this GET will be an array of list shares for the user as outlined below.
 ```   
@@ -303,7 +303,7 @@ The response to this GET will be an array of list shares for the user as outline
 
 #### GET detail/s for an action of a list share
 ```
-GET /contact_list_performance/API_KEY?signature=SIGNATURE&id=[list_share_id]&a=[action]
+GET /contact_list_performance/API_KEY?timestamp=TIMESTAMP&signature=SIGNATURE&id=[list_share_id]&a=[action]
 ```
 Actions supported include uniq_open, click, bounce, unsubscribe, and deliver.
 
@@ -331,9 +331,9 @@ Enable users to manage email templates.
 
 #### Iframe to create new / update existing email templates in VipeCloud
 
-* ENDPOINT: /email_template_iframe/{api_key}?signature={signature}
-* Creating templates: use the base URL with "&type=[type]" to create a template of type personal, team, or reply. Note that to create a team template user must be admin user
-* Editing templates: use the base URL with "&id=[email_template_id]&action=[action]" to edit, create_a_copy, delete, or add_to_team
+* ENDPOINT: /email_template_iframe/AIP_KEY?timestamp=TIMESTAMP&signature=SIGNATURE
+* Creating templates: use the base URL with "&type=TYPE" to create a template of type personal, team, or reply. Note that to create a team template user must be admin user
+* Editing templates: use the base URL with "&id=EMAIL_TEMPLATE_ID&action=ACTION" to edit, create_a_copy, delete, or add_to_team
 
 ```
 <iframe src="{URL}" width="600" height="530" frameborder="0"></iframe>
@@ -342,15 +342,15 @@ Enable users to manage email templates.
 #### GET a user's email templates by type OR a specific email template by id
 GET all templates at the root level for a particular type (personal, reply, or team)
 ```
-GET /email_templates/API_KEY?signature=SIGNATURE&type=[type]
+GET /email_templates/API_KEY?timestamp=TIMESTAMP&signature=SIGNATURE&type=TYPE
 ```
 GET all email templates within a folder a particular type (folder_id is the email_template_id for an email template where is_folder = 1)
 ```
-GET /email_templates/API_KEY?signature=SIGNATURE&type=[type]&folder_id=[folder_id]
+GET /email_templates/API_KEY?timestamp=TIMESTAMP&signature=SIGNATURE&type=TYPE&folder_id=FOLDER_ID
 ```
 GET an email template by id
 ```
-GET /email_templates/API_KEY?signature=SIGNATURE&id=[email_template_id]
+GET /email_templates/API_KEY?timestamp=TIMESTAMP&signature=SIGNATURE&id=EMAIL_TEMPLATE_ID
 ```
 * Requesting templates by type or by type & folder_id returns an array
 * Requesting a specific template returns data about the template
@@ -382,7 +382,7 @@ GET /email_templates/API_KEY?signature=SIGNATURE&id=[email_template_id]
 Page where users can edit default sharing settings, including their signature
 
 Sample iframe for email sharing settings
-*ENDPOINT: /email_sharing_settings_iframe/{api_key}?signature={signature}
+*ENDPOINT: /email_sharing_settings_iframe/API_KEY?timestamp=TIMESTAMP&signature=SIGNATURE
 ```
 <iframe src="{URL}" width="600" height="530" frameborder="0"></iframe>
 ```
@@ -392,19 +392,19 @@ Sample iframe for email sharing settings
 #### GET a user's email history 
 GET the last 30 days of a user's email history (default)
 ```
-GET /email_history/API_KEY?signature=SIGNATURE
+GET /email_history/API_KEY?timestamp=TIMESTAMP&signature=SIGNATURE
 ```
 GET the a user's entire email history
 ```
-GET /email_history/API_KEY?signature=SIGNATURE&from=all
+GET /email_history/API_KEY?timestamp=TIMESTAMP&signature=SIGNATURE&from=all
 ```
 Search a user's entire email history
 ```
-GET /email_history/API_KEY?signature=SIGNATURE&query=[query]
+GET /email_history/API_KEY?timestamp=TIMESTAMP&signature=SIGNATURE&query=QUERY
 ```
 GET the a user's email history by date range (unix timestamps)
 ```
-GET /email_history/API_KEY?signature=SIGNATURE&from=1421095000&to=1421095100
+GET /email_history/API_KEY?timestamp=TIMESTAMP&signature=SIGNATURE&from=1421095000&to=1421095100
 ```
 Sample response array
 ```   
@@ -433,15 +433,15 @@ Users can view / manage scheduled emails
 
 Iframe to change or cancel a scheduled email
 
-* ENDPOINT: /scheduled_emails_iframe/{api_key}?signature={signature}
-* Params: &scheduled_email_id=[send_later_id]&action=[change/cancel]
+* ENDPOINT: /scheduled_emails_iframe/API_KEY?timestamp=TIMESTAMP&signature=SIGNATURE
+* Params: &scheduled_email_id=SEND_LATER_ID&action=[change/cancel]
 ```
 <iframe src="{URL}" width="600" height="530" frameborder="0"></iframe>
 ```
 #### GET a user's scheduled emails
 GET the a user's entire email history
 ```
-GET /scheduled_emails/API_KEY?signature=SIGNATURE&from=all
+GET /scheduled_emails/API_KEY?timestamp=TIMESTAMP&signature=SIGNATURE&from=all
 ```
 Note that the default limit for number of responses is 500. To increase that limit add &limit=XXX to the GET.
 
@@ -471,8 +471,8 @@ NOTES:
 * The first time /phone_call is called for every user, we will need to setup 1) payment and 2) a verified caller_id. An admin can setup an account-wide credit card, so we suggest launching the /phone_call modal as part of the setup process to give them the option to do so. (otherwise, each team member will have to enter a credit card to make phone calls).
 
 Sample iframe for the phone call widget
-* ENDPOINT: /phone_call/{api_key}?signature={signature}
-* Params: &ContactEmail={dest_email}&ContactName={dest_name}&ContactPhone={dest_phone}
+* ENDPOINT: /phone_call/API_KEY?timestamp=TIMESTAMP&signature=SIGNATURE
+* Params: &ContactEmail=DEST_EMAIL&ContactName=DEST_NAME&ContactPhone=DEST_PHONE
 ```
 <iframe src="{URL}" width="600" height="530" frameborder="0"></iframe>
 ```
