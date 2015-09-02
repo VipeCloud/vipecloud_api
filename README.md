@@ -7,7 +7,7 @@ VipeCloud API v1.1
 5. [Contact Lists (POST/GET)](#contact-lists-post--get)
 6. [User Reputation (GET)](#user-reputation-get)
 7. [Send Trackable Email Widget (IFRAME)](#send-trackable-email-widget-iframe)
-8. [Trigger Trackable Email](#trigger-trackable-email-post)
+8. [Trigger Trackable Email (POST)](#trigger-trackable-email-post)
 9. [Contact List Performance (GET)](#contact-list-performance-get)
 10. [Manage Email Templates (IFRAME/GET)](#manage-email-templates-iframe--get)
 11. [Email Sharing Settings (IFRAME)](#email-sharing-settings-iframe)
