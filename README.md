@@ -7,12 +7,13 @@ VipeCloud API v1.1
 5. [Contact Lists (POST/GET)](#contact-lists-post--get)
 6. [User Reputation (GET)](#user-reputation-get)
 7. [Send Trackable Email Widget (IFRAME)](#send-trackable-email-widget-iframe)
-8. [Contact List Performance (GET)](#contact-list-performance-get)
-9. [Manage Email Templates (IFRAME/GET)](#manage-email-templates-iframe--get)
-10. [Email Sharing Settings (IFRAME)](#email-sharing-settings-iframe)
-11. [Email History (GET)](#email-history-get)
-12. [Scheduled Emails (IFRAME/GET)](#scheduled-emails-iframe--get)
-13. [Phone Calls (IFRAME)](#phone-calls-iframe)
+8. [Trigger Trackable Email](#trigger-trackable-email-post)
+9. [Contact List Performance (GET)](#contact-list-performance-get)
+10. [Manage Email Templates (IFRAME/GET)](#manage-email-templates-iframe--get)
+11. [Email Sharing Settings (IFRAME)](#email-sharing-settings-iframe)
+12. [Email History (GET)](#email-history-get)
+13. [Scheduled Emails (IFRAME/GET)](#scheduled-emails-iframe--get)
+14. [Phone Calls (IFRAME)](#phone-calls-iframe)
 
 
 
@@ -283,15 +284,18 @@ Body params
 
 ```   
 {
-  "dest_email":"roadrunner@acme.com",
-  "dest_first_name":"Road", //optional param used to merge if template id
-  "company_name":"Acme", //optional param used to merge if template id
+  "emails":"roadrunner@acme.com", //comma or semicolon separated string of emails
+  "cc_emails":"wile.e.coyote@acme.com", //comma or semicolon separated string of emails
   "person_id":"ABC123", //optional param used to write share and engagement activities
-  "deal_id":"XYZ789", //optional param used to write share and engagement activities
-  "email_template_id":"123", //optional param referencing a VipeCloud email template. Can be replaced by partner specific tag that will lead to email_template_id. Will supercede subject/message.
+  "deal_id":"XYZ789", //optional param used to write share and engagement activities. person_id req'd for deal_id to work
   "subject":"Can you point me in the right direction?", //req'd if no email_template_id
-  "message":"<p>Dear Wiley,</p><p>Good luck catching me.</p><p>-Road Runner</p>" //req'd if no email_template_id
+  "message":"<p>Dear Wiley,</p><p>Good luck catching me.</p><p>-Road Runner</p>", //req'd if no email_template_id
+  "open_alert": 1 //can be 1 (yes open alert) or 0 (no open alert). Defaults to 0 if not provided.
 }
+```
+A sample 200 response from above would look like:
+```
+{"emails":[{"email":"roadrunner@acme.com","status":"correct"},{"email":"wile.e.coyote@acme.com","status":"correct"}]}
 ```
 
 
