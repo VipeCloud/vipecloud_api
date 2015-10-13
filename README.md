@@ -2,18 +2,23 @@ VipeCloud API v1.1
 =============
 1. [Overview](#overview)
 2. [Generating the Signature](#generating-the-signature)
-3. [Working with Iframed Modals](#working-with-iframed-modals)
-4. [User Management (POST/GET)](#user-management-post--get)
-5. [Contact Lists (POST/GET)](#contact-lists-post--get)
-6. [User Reputation (GET)](#user-reputation-get)
-7. [Send Trackable Email Widget (IFRAME)](#send-trackable-email-widget-iframe)
-8. [Trigger Trackable Email (POST)](#trigger-trackable-email-post)
-9. [Contact List Performance (GET)](#contact-list-performance-get)
-10. [Manage Email Templates (IFRAME/GET)](#manage-email-templates-iframe--get)
-11. [Email Sharing Settings (IFRAME)](#email-sharing-settings-iframe)
-12. [Email History (GET)](#email-history-get)
-13. [Scheduled Emails (IFRAME/GET)](#scheduled-emails-iframe--get)
-14. [Phone Calls (IFRAME)](#phone-calls-iframe)
+3. [User Management (POST/GET)](#user-management-post--get)
+4. [Contact Lists (POST/GET)](#contact-lists-post--get)
+5. [User Reputation (GET)](#user-reputation-get)
+6. [Trigger Trackable Email (POST)](#trigger-trackable-email-post)
+7. [Contact List Performance (GET)](#contact-list-performance-get)
+8. [Email History (GET)](#email-history-get)
+9. [Manage Email Templates (GET)](#manage-email-templates-get)
+10. [Scheduled Emails (GET)](#scheduled-emails-get)
+
+Front end helpful widgets we've built for you
+-------------
+1. [Working with Iframed Modals](#working-with-iframed-modals)
+2. [Send Trackable Email Widget (IFRAME)](#send-trackable-email-widget-iframe)
+3. [Manage Email Templates (IFRAME)](#manage-email-templates-iframe)
+4. [Email Sharing Settings (IFRAME)](#email-sharing-settings-iframe)
+5. [Scheduled Emails (IFRAME)](#scheduled-emails-iframe-)
+6. [Phone Calls (IFRAME)](#phone-calls-iframe)
 
 
 
@@ -65,36 +70,6 @@ function generateSignature($action,$api_key){
 
 ?>
 ```
-
-<a name="#working-with-iframed-modals"></a>Working with Iframed Modals
--------------
-For all iframes that will be opened via modals (e.g. Send Trackable Email, Create Template, etc), we use postMessage on the successful completion of the modal task, so you can close the modal.
-
-Note that postMessage is compatible with IE 8+, FF 3.0+, Chrome 1.0+, Safari 4.0+, Opera 9.5+
-
-Here is a sample script to catch the postMessage (be sure to include in the HTML where the modal is located):
-```
-<script>
-
-  function receiveMessage(event){
-  
-    //security check that message is coming from VC domain
-    if (event.origin !== "https://v.vipecloud.com"){
-      return false;
-    }
-    
-    if(event.data == 'success'){
-      //close modal
-    }
-    
-    return false;
-  };
-
-  addEventListener("message", receiveMessage, false);
-  
-</script>
-```
-
 
 <a name="#user-management-post--get"></a>User Management (POST / GET)
 -------------
@@ -254,23 +229,6 @@ The response to this GET will be an integer between 0 and 100.
 }
 ```
 
-<a name="#send-trackable-email-widget-iframe"></a>Send Trackable Email Widget (IFRAME)
---------------------
-This widget will allow all VipeCloud enabled users to send a trackable email from within your application.
-
-ENDPOINT: /send_trackable_email/API_KEY?timestamp=TIMESTAMP&signature=SIGNATURE
-
-Optional Params:
-* dest_email
-* dest_first_name
-* list_key
-* person_id & deal_id - if you use these params we will attribute the email to that person and/or deal, saving an API call to search for the person/deal by email.
-* reply_to_email - add the email_id of the email the user is replying to and we will append the original email into the message
-
-Sample iframe for the widget
-```
-<iframe src="{URL}" width="660" height="560" frameborder="0"></iframe>
-```
 
 <a name="#trigger-trackable-email-post"></a>Trigger Trackable Email (POST)
 -------------
@@ -356,19 +314,9 @@ The response to this GET will be an array of the list send actions for the user 
 ```
 
 
-<a name="#manage-email-templates-iframe--get"></a>Manage Email Templates (IFRAME / GET)
+<a name="#manage-email-templates-get"></a>Manage Email Templates (GET)
 --------------------
 Enable users to manage email templates.
-
-#### Iframe to create new / update existing email templates in VipeCloud
-
-* ENDPOINT: /email_template_iframe/AIP_KEY?timestamp=TIMESTAMP&signature=SIGNATURE
-* Creating templates: use the base URL with "&type=TYPE" to create a template of type personal, team, or reply. Note that to create a team template user must be admin user
-* Editing templates: use the base URL with "&id=EMAIL_TEMPLATE_ID&action=ACTION" to edit, create_a_copy, delete, or add_to_team
-
-```
-<iframe src="{URL}" width="600" height="530" frameborder="0"></iframe>
-```
 
 #### GET a user's email templates by type OR a specific email template by id
 GET all templates at the root level for a particular type (personal, reply, or team)
@@ -407,16 +355,6 @@ GET /email_templates/API_KEY?timestamp=TIMESTAMP&signature=SIGNATURE&id=EMAIL_TE
 }
 ```
 
-
-<a name="#email-sharing-settings-iframe"></a>Email Sharing Settings (IFRAME)
---------------------
-Page where users can edit default sharing settings, including their signature
-
-Sample iframe for email sharing settings
-*ENDPOINT: /email_sharing_settings_iframe/API_KEY?timestamp=TIMESTAMP&signature=SIGNATURE
-```
-<iframe src="{URL}" width="600" height="530" frameborder="0"></iframe>
-```
 
 <a name="#email-history-get"></a>Email History (GET)
 --------------------
@@ -458,17 +396,10 @@ Sample response array
 }
 ```
 
-<a name="#scheduled-emails-iframe--get"></a>Scheduled Emails (IFRAME / GET)
+<a name="#scheduled-emails-get"></a>Scheduled Emails (GET)
 --------------------
 Users can view / manage scheduled emails
 
-Iframe to change or cancel a scheduled email
-
-* ENDPOINT: /scheduled_emails_iframe/API_KEY?timestamp=TIMESTAMP&signature=SIGNATURE
-* Params: &scheduled_email_id=SEND_LATER_ID&action=[change/cancel]
-```
-<iframe src="{URL}" width="600" height="530" frameborder="0"></iframe>
-```
 #### GET a user's scheduled emails
 GET the a user's entire email history
 ```
@@ -492,6 +423,91 @@ Sample response array
   ]
 }
 ```
+
+<a name="#working-with-iframed-modals"></a>Working with Iframed Modals
+-------------
+For all iframes that will be opened via modals (e.g. Send Trackable Email, Create Template, etc), we use postMessage on the successful completion of the modal task, so you can close the modal.
+
+Note that postMessage is compatible with IE 8+, FF 3.0+, Chrome 1.0+, Safari 4.0+, Opera 9.5+
+
+Here is a sample script to catch the postMessage (be sure to include in the HTML where the modal is located):
+```
+<script>
+
+  function receiveMessage(event){
+  
+    //security check that message is coming from VC domain
+    if (event.origin !== "https://v.vipecloud.com"){
+      return false;
+    }
+    
+    if(event.data == 'success'){
+      //close modal
+    }
+    
+    return false;
+  };
+
+  addEventListener("message", receiveMessage, false);
+  
+</script>
+```
+
+<a name="#send-trackable-email-widget-iframe"></a>Send Trackable Email Widget (IFRAME)
+--------------------
+This widget will allow all VipeCloud enabled users to send a trackable email from within your application.
+
+ENDPOINT: /send_trackable_email/API_KEY?timestamp=TIMESTAMP&signature=SIGNATURE
+
+Optional Params:
+* dest_email
+* dest_first_name
+* list_key
+* person_id & deal_id - if you use these params we will attribute the email to that person and/or deal, saving an API call to search for the person/deal by email.
+* reply_to_email - add the email_id of the email the user is replying to and we will append the original email into the message
+
+Sample iframe for the widget
+```
+<iframe src="{URL}" width="660" height="560" frameborder="0"></iframe>
+```
+
+<a name="#manage-email-templates-iframe-"></a>Manage Email Templates (IFRAME)
+--------------------
+Enable users to manage email templates.
+
+#### Iframe to create new / update existing email templates in VipeCloud
+
+* ENDPOINT: /email_template_iframe/AIP_KEY?timestamp=TIMESTAMP&signature=SIGNATURE
+* Creating templates: use the base URL with "&type=TYPE" to create a template of type personal, team, or reply. Note that to create a team template user must be admin user
+* Editing templates: use the base URL with "&id=EMAIL_TEMPLATE_ID&action=ACTION" to edit, create_a_copy, delete, or add_to_team
+
+```
+<iframe src="{URL}" width="600" height="530" frameborder="0"></iframe>
+```
+
+<a name="#email-sharing-settings-iframe"></a>Email Sharing Settings (IFRAME)
+--------------------
+Page where users can edit default sharing settings, including their signature
+
+Sample iframe for email sharing settings
+*ENDPOINT: /email_sharing_settings_iframe/API_KEY?timestamp=TIMESTAMP&signature=SIGNATURE
+```
+<iframe src="{URL}" width="600" height="530" frameborder="0"></iframe>
+```
+
+<a name="#scheduled-emails-iframe"></a>Scheduled Emails (IFRAME)
+--------------------
+Users can view / manage scheduled emails
+
+Iframe to change or cancel a scheduled email
+
+* ENDPOINT: /scheduled_emails_iframe/API_KEY?timestamp=TIMESTAMP&signature=SIGNATURE
+* Params: &scheduled_email_id=SEND_LATER_ID&action=[change/cancel]
+```
+<iframe src="{URL}" width="600" height="530" frameborder="0"></iframe>
+```
+
+
 
 <a name="#phone-calls-iframe"></a>Phone Calls (IFRAME)
 --------------------
