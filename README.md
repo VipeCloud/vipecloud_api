@@ -1,18 +1,19 @@
 VipeCloud API v1.1
 =============
 
+[Overview](#overview)
+[Generating the Signature](#generating-the-signature)
+
 Back end enpoints
 -------------
-1. [Overview](#overview)
-2. [Generating the Signature](#generating-the-signature)
-3. [User Management (POST/GET)](#user-management-post--get)
-4. [Contact Lists (POST/GET)](#contact-lists-post--get)
-5. [User Reputation (GET)](#user-reputation-get)
-6. [Trigger Trackable Email (POST)](#trigger-trackable-email-post)
-7. [Contact List Performance (GET)](#contact-list-performance-get)
-8. [Email History (GET)](#email-history-get)
-9. [Manage Email Templates (GET)](#manage-email-templates-get)
-10. [Scheduled Emails (GET)](#scheduled-emails-get)
+1. [User Management (POST/GET)](#user-management-post--get)
+2. [Contact Lists (POST/GET)](#contact-lists-post--get)
+3. [User Reputation (GET)](#user-reputation-get)
+4. [Trigger Trackable Email (POST)](#trigger-trackable-email-post)
+5. [Contact List Performance (GET)](#contact-list-performance-get)
+6. [Email History (GET)](#email-history-get)
+7. [Manage Email Templates (GET)](#manage-email-templates-get)
+8. [Scheduled Emails (GET)](#scheduled-emails-get)
 
 Front end helpful widgets we've built for you
 -------------
