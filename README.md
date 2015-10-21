@@ -42,7 +42,7 @@ Front end helpful widgets we've built for you
 #### General Information
    * All requests must by made from HTTPS
    * All data sent should be JSON encoded (all data received will be JSON encoded)
-   * Base URL for these functions: https://v.vipecloud.com/api/v1.0/{partner_api_slug}
+   * Base URL for these functions: https://v.vipecloud.com/api/v1.1/{partner_api_slug}
    * The api_key included in VipeCloud API calls is a unique user identifier for one of your users. This could be an install_id, user_key, or whatever. We use the term api_key.
 
 #### New in v1.1
