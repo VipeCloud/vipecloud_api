@@ -1,9 +1,8 @@
 VipeCloud API v1.1
 =============
 
-[Overview](#overview)
-
-[Generating the Signature](#generating-the-signature)
+1. [Overview](#overview)
+2. [Generating the Signature](#generating-the-signature)
 
 Back end enpoints
 -------------
