@@ -10,7 +10,7 @@ Back end enpoints
 2. [Contact Lists (POST/GET)](#contact-lists-post--get)
 3. [User Reputation (GET)](#user-reputation-get)
 4. [Trigger Trackable Email (POST)](#trigger-trackable-email-post)
-5. [Contact List Performance (GET)](#contact-list-performance-get)
+5. [Email Performance (GET)](#email-performance-get)
 6. [Email History (GET)](#email-history-get)
 7. [Manage Email Templates (GET)](#manage-email-templates-get)
 8. [Scheduled Emails (GET)](#scheduled-emails-get)
@@ -19,6 +19,7 @@ Front end helpful widgets we've built for you
 -------------
 1. [Working with Iframed Modals](#working-with-iframed-modals)
 2. [Send Trackable Email Widget (IFRAME)](#send-trackable-email-widget-iframe)
+3. [Email Performance (IFRAME)](#email-performance-iframe)
 3. [Manage Email Templates (IFRAME)](#manage-email-templates-iframe)
 4. [Email Sharing Settings (IFRAME)](#email-sharing-settings-iframe)
 5. [Scheduled Emails (IFRAME)](#scheduled-emails-iframe-)
@@ -261,9 +262,9 @@ A sample 200 response from above would look like:
 ```
 
 
-<a name="#contact-list-performance-get"></a>Contact List Performance (GET)
+<a name="#email-performance-get"></a>Email Performance (GET)
 --------------------
-Receive a history of contact list shares and their performance for a user
+Receive a history of emails (single and mass) and their performance for a user or your team
 
 #### GET entire history of contact list shares for a user
 ```
@@ -474,6 +475,17 @@ Sample iframe for the widget
 ```
 <iframe src="{URL}" width="660" height="560" frameborder="0"></iframe>
 ```
+
+<a name="#email-performance-iframe-"></a>Email Performance (IFRAME)
+--------------------
+View a history of emails (single and mass) and their performance for a user or your team
+
+* ENDPOINT: /email_performance_iframe/AIP_KEY?timestamp=TIMESTAMP&signature=SIGNATURE
+
+```
+<iframe src="{URL}" width="100%" height="100%" frameborder="0"></iframe>
+```
+
 
 <a name="#manage-email-templates-iframe-"></a>Manage Email Templates (IFRAME)
 --------------------
