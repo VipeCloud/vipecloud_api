@@ -20,10 +20,11 @@ Front end helpful widgets we've built for you
 1. [Working with Iframed Modals](#working-with-iframed-modals)
 2. [Send Trackable Email Widget (IFRAME)](#send-trackable-email-widget-iframe)
 3. [Email Performance (IFRAME)](#email-performance-iframe)
-3. [Manage Email Templates (IFRAME)](#manage-email-templates-iframe)
-4. [Email Sharing Settings (IFRAME)](#email-sharing-settings-iframe)
-5. [Scheduled Emails (IFRAME)](#scheduled-emails-iframe-)
-6. [Phone Calls (IFRAME)](#phone-calls-iframe)
+4. [Series Management (IFRAME)](#series-management-iframe)
+5. [Manage Email Templates (IFRAME)](#manage-email-templates-iframe)
+6. [Email Sharing Settings (IFRAME)](#email-sharing-settings-iframe)
+7. [Scheduled Emails (IFRAME)](#scheduled-emails-iframe-)
+8. [Phone Calls (IFRAME)](#phone-calls-iframe)
 
 
 
@@ -460,7 +461,7 @@ Here is a sample script to catch the postMessage (be sure to include in the HTML
 
 <a name="#send-trackable-email-widget-iframe"></a>Send Trackable Email Widget (IFRAME)
 --------------------
-This widget will allow all VipeCloud enabled users to send a trackable email from within your application.
+This widget will allow all VipeCloud enabled users to send a trackable email from within your application. Inclusive in this widget is access to email templates (personal and team), send later, and create series.
 
 ENDPOINT: /send_trackable_email/API_KEY?timestamp=TIMESTAMP&signature=SIGNATURE
 
@@ -480,7 +481,17 @@ Sample iframe for the widget
 --------------------
 View a history of emails (single and mass) and their performance for a user or your team
 
-* ENDPOINT: /email_performance_iframe/AIP_KEY?timestamp=TIMESTAMP&signature=SIGNATURE
+ENDPOINT: /email_performance_iframe/AIP_KEY?timestamp=TIMESTAMP&signature=SIGNATURE
+
+```
+<iframe src="{URL}" width="100%" height="100%" frameborder="0"></iframe>
+```
+
+<a name="#series-management-iframe-"></a>Series Management (IFRAME)
+--------------------
+View and manage in progress, scheduled, and completed email series.
+
+ENDPOINT: /series_management_iframe/AIP_KEY?timestamp=TIMESTAMP&signature=SIGNATURE
 
 ```
 <iframe src="{URL}" width="100%" height="100%" frameborder="0"></iframe>
