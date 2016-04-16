@@ -474,7 +474,7 @@ Optional Params:
 
 Sample iframe for the widget
 ```
-<iframe src="{URL}" width="660" height="560" frameborder="0"></iframe>
+<iframe src="{URL}" width="800" height="600" frameborder="0"></iframe>
 ```
 
 <a name="#email-performance-iframe-"></a>Email Performance (IFRAME)
