@@ -469,8 +469,8 @@ Optional Params:
 * dest_email
 * dest_first_name
 * list_key
-* person_id & deal_id - if you use these params we will attribute the email to that person and/or deal, saving an API call to search for the person/deal by email.
-* reply_to_email - add the email_id of the email the user is replying to and we will append the original email into the message
+* contact_id & opp_id - if you use these params we will attribute the email to that contact and/or opportunity
+* user_email - this can be used to create a user account in VipeCloud. If the user_email is present and an account does not exist for the user, we will create the account for the email address and walk the user through a short registration.
 
 Sample iframe for the widget
 ```
