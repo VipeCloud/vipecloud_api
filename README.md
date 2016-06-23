@@ -1,5 +1,5 @@
 VipeCloud API
 =============
 
-1. Users go here: [Read more words!](docs/more_words.md)
-2. Partners go here: [Read more words!](docs/more_words.md)
+1. Users go here: [Users API v2.0](vipecloud_users_v2_0.md)
+2. Partners go here: [Partner API v1.1](partners_v1_1.md)
