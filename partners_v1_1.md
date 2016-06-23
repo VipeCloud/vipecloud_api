@@ -4,7 +4,7 @@ VipeCloud API for Partners v1.1
 1. [Overview](#overview)
 2. [Generating the Signature](#generating-the-signature)
 
-Back end enpoints
+Back end endpoints
 -------------
 1. [User Management (POST/GET)](#user-management-post--get)
 2. [Contact Lists (POST/GET)](#contact-lists-post--get)
