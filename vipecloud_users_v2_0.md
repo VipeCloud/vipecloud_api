@@ -29,7 +29,7 @@ Back end enpoints
    * 500 which is most likely a VipeCloud error
 
 
-<a name="#authentication"></a>Generating the Signature
+<a name="#authentication"></a>Authentication
 -------------
 The signature is an Authorization header of a base64 encoded concatenation of your VipeCloud username and password.
 
