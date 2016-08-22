@@ -77,7 +77,7 @@ to verify the event.
 
 function authenticateSignature($app){
   $path = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"; //sample might be https://www.acme.com?timestamp=123456789&signature=ASDFGHJKL
-  $clean_path = explode("&", $path); //remove the signature from the URL
+  $clean_path = explode("&", $path); //keep the timestamp and remove the signature from the URL
   $encoded_sig = $app->request()->params('signature');
   $expected_sig = hash_hmac('sha256', $clean_path[0], $secret,$raw=true); //use the shared secret we provide in your Webhook settings
   $decoded_enc_sig = base64_decode(strtr($encoded_sig, '-_','+/')); 
