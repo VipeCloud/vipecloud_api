@@ -3,11 +3,11 @@ VipeCloud Webhooks v1.0
 =============
 
 1. [Overview](#overview)
-2. [Webhook Events](#events)
-3. [Configuring Your Settings](#configure)
-4. [Receiving Webhooks](#receiving)
-5. [Responding To Webhooks](#responding)
-6. [Verifying Webhooks](#verify)
+2. [Webhook Events](#webhook-events)
+3. [Configuring Your Settings](#configure-your-settings)
+4. [Receiving Webhooks](#receiving-webhooks)
+5. [Responding To Webhooks](#responding-to-webhooks)
+6. [Verifying Webhooks](#verifying-webhooks)
 
 
 <a name="#overview"></a>Overview
