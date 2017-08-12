@@ -89,6 +89,7 @@ Body params
   "developer_mode" : true/false, //optional param for staging environment api_key check
   "developer_local" : true/false, //optional param that does *not* validate your user's api_key
   "account_id" : "123XYZ",
+  "action" : "add_user", //options incude 1) "add_user" to add new users to an account_id OR 2) "manage_users" in which case we expect a post of ALL the users for the account_id. We will create new users and deactivate any users already in the account_id which are not part of the POST.
   "users" : [
     {
       "user_email" : "wiley.coyote@acme.com",  
