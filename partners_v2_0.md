@@ -103,7 +103,7 @@ Body params
       "timezone" : "America/Los_Angeles", //olson timezone string
       "is_admin" : 0/1,
       "logo_url" : "http://www.logo.com/logo.png",
-      "user_type" : "referrer" //optional param and new to our 2.0 api. Allows for reseller partners to create referrer accounts which are not VipeCloud users
+      "user_type" : "referrer" //optional param and new to our 2.0 api. Allows for reseller partners to create referrer accounts which are not VipeCloud users. If "referrer" we will include a referrer_code in our response.
     },
     {
       ...
