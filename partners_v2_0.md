@@ -1,4 +1,4 @@
-VipeCloud API for Partners v1.1
+VipeCloud API for Partners v2.0
 =============
 
 1. [Overview](#overview)
