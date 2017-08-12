@@ -31,25 +31,17 @@ Front end helpful widgets we've built for you
 <a name="#overview"></a>Overview
 -------------
 #### What can VipeCloud's API do for you?
-   * Bring the latest (and constantly improving) email productivity tools inside your application.
-   * Let your users send trackable emails learning what emails are opened and attachments viewed, leveraging templates, and scheduling emails for later.
-   * Add a complete mass emailing solution to your application without redirecting your users to a third party application.
-   * Allow your users to make and record VOIP phone calls from inside your application.
-   * Automatically log your user's emails, email engagement, and other activities in your CRM.
-   * And much, much more!
+   * Bring the latest (and constantly improving) All-In-One Growth Stack tools inside your application.
+   * Connect your proprietary system to VipeCloud.
 
 #### Apply to be a VipeCloud Partner
-   * Learn about our partnership programs and [apply here](http://partners.vipecloud.com).
+   * Learn about our partnership programs and [apply here](mailto:support@vipecloud.com).
 
 #### General Information
    * All requests must by made from HTTPS
    * All data sent should be JSON encoded (all data received will be JSON encoded)
-   * Base URL for these functions: https://v.vipecloud.com/api/v1.1/{partner_api_slug}
+   * Base URL for these functions: https://v.vipecloud.com/api/v2.0/{partner_api_slug}
    * The api_key included in VipeCloud API calls is a unique user identifier for one of your users. This could be an install_id, user_key, or whatever. We use the term api_key.
-
-#### New in v1.1
-   * Signature now includes timestamp param
-   * /trigger_trackable_email endpoint. Send an email directly via our API
 
 #### Responses
    * 200 for success
@@ -59,16 +51,14 @@ Front end helpful widgets we've built for you
 
 <a name="#generating-the-signature"></a>Generating the Signature
 -------------
-The signature is a base64 encoded concatenation of the request path based on the shared secret (i.e. https://v.vipecloud.com/api/v1.0/{partner_api_slug}/users/{api_key}?timestamp=TIMESTAMP).
-
-Your shared secret can be found here: https://v.vipecloud.com/settings/affiliate after having been approved as a VipeCloud partner. 
+The signature is a base64 encoded concatenation of the request path based on the shared secret (i.e. https://v.vipecloud.com/api/v2.0/{partner_api_slug}/users/{api_key}?timestamp=TIMESTAMP).
 
 Sample PHP code to generate the signature
 ```php
 <?php
 
 function generateSignature($action,$api_key){
-    $path = "https://v.vipecloud.com/api/v1.0/{partner_api_slug}/" . $action . "/" . $api_key . "?timestamp=".time();
+    $path = "https://v.vipecloud.com/api/v2.0/{partner_api_slug}/" . $action . "/" . $api_key . "?timestamp=".time();
     $signature = hash_hmac('sha256', $path, SHARED_SECRET, $raw=true);
     $encoded_sig = base64_encode(strtr($signature, '-_','+/')); 
     return array('signature' => $encoded_sig);
@@ -110,7 +100,9 @@ Body params
       "unique_id" : "123456",
       "account_id" : "123XYZ",
       "timezone" : "America/Los_Angeles", //olson timezone string
-      "is_admin" : 0/1
+      "is_admin" : 0/1,
+      "logo_url" : "http://www.logo.com/logo.png",
+      "user_type" : "referrer" //optional param and new to our 2.0 api. Allows for reseller partners to create referrer accounts which are not VipeCloud users
     },
     {
       ...
