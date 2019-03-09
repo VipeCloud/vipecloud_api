@@ -20,7 +20,7 @@ Back end endpoints
 -------------
 #### What can VipeCloud's API do for you?
    * Bring the latest (and constantly improving) All-In-One Growth Stack tools inside your application.
-   * Connect your proprietary system to VipeCloud.
+   * Connect proprietary or other 3rd party system to VipeCloud.
 
 #### Apply to be a VipeCloud Partner
    * Learn about our partnership programs and [apply here](mailto:support@vipecloud.com).
