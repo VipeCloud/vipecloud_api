@@ -29,7 +29,7 @@ Back end endpoints
    * [Contact us](mailto:support@vipecloud.com) for more information about multi-user and multi-account access to VipeCloud's API.
    
 #### Interested in receiving webhooks?
-   * Learn about our webhooks API: [Webhooks v1.0] (webhooks_v1_0.md)
+   * Learn about our webhooks API: [Webhooks v1.0](webhooks_v1_0.md)
 
 #### Responses
    * 200 for success
