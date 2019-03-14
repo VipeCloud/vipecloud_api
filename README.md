@@ -24,10 +24,6 @@ Back end endpoints
    * All data sent should be JSON encoded (all data received will be JSON encoded)
    * Base URL for these functions: https://v.vipecloud.com/api/v3.1/vipecloud
    
-#### Agencies and large accounts
-   * Base URL for these functions: https://v.vipecloud.com/api/v3.1/{agency_api_slug}
-   * [Contact us](mailto:support@vipecloud.com) for more information about multi-user and multi-account access to VipeCloud's API.
-   
 #### Interested in receiving webhooks?
    * Learn about our webhooks API: [Webhooks v1.0](webhooks_v1_0.md)
 
@@ -39,7 +35,7 @@ Back end endpoints
 
 <a name="#authentication"></a>Authentication
 -------------
-For individual user access Authorization is a Basic header of a base64 encoded concatenation of your VipeCloud user email and an active user API Key. API keys can be managed in the Setup section of VipeCloud.
+Authorization is a Basic header of a base64 encoded concatenation of your VipeCloud user email and an active user API Key. API keys can be managed in the Setup section of VipeCloud.
 
 Sample PHP curl header to add to your POST
 ```php
@@ -47,26 +43,6 @@ Sample PHP curl header to add to your POST
 
 $auth = base64_encode($user_email.":".$api_key);
 curl_setopt($curl, CURLOPT_HTTPHEADER, array("Authorization: Basic $auth", "Accept: application/json"));
-
-?>
-```
-
-#### Agencies and large accounts
-  * Agencies and large accounts authenticate by adding an {api_key} route and a signature via a signature based on a shared secret. 
-  * The signature is a base64 encoded concatenation of the request path based on the shared secret (E.g. https://v.vipecloud.com/api/v3.1/{agency_api_slug}/users/{api_key}?timestamp=TIMESTAMP).
-  * The {api_key} is the individual user's API Key which is generated in their VipeCloud account.
-  * All calls must have the signature appended in order to authenticate. E.g. /users/API_KEY?timestamp=TIMESTAMP&signature=SIGNATURE
-
-Sample PHP code to create the signature
-```php
-<?php
-
-function generateSignature($action,$api_key){
-    $path = "https://v.vipecloud.com/api/v3.1/{agency_api_slug}/" . $action . "/" . $api_key . "?timestamp=".time();
-    $signature = hash_hmac('sha256', $path, SHARED_SECRET, $raw=true);
-    $encoded_sig = base64_encode(strtr($signature, '-_','+/')); 
-    return array('signature' => $encoded_sig);
-}
 
 ?>
 ```
@@ -104,7 +80,7 @@ The response to this GET will be a list of the currently active VipeCloud users 
 
 #### Create new / update existing Contacts in VipeCloud
 ```
-POST /contacts
+POST /contacts(/:id)
 ```
 
 Body params
@@ -127,11 +103,11 @@ Body params
 }
 ```
 
-#### GET list of existing Contacts a user has in VipeCloud
+#### GET Contacts
 ```
-GET /contacts
+GET /contacts(/:id)
 ```
-Returns an array of the contacts that a user has in VipeCloud
+If no id, returns an array of the contacts that a user has in VipeCloud. If id, returns the details for a contact
 ```   
 { 
   [
@@ -169,18 +145,12 @@ VipeCloud supports creating new contact lists and adding contacts to existing li
 
 #### Create new / update existing Contact List in VipeCloud
 ```
-POST /contact_list
+POST /contact_list(/:id)
 ```
-If a list key is present, contacts will be added to that list. If no list key is present, a list name must be present. Creating an "empty" list - a list with a list_name and no contacts is allowed. VipeCloud will check for and not add duplicates to this list. VipeCloud will also not add contacts that have unsubscribed from this user or bounced.
-
-If you use a deal crm_obj and obj_id we will attribute the email activity to the appropriate crm_obj and save your API a call by not needing to search for the obj id.
-
-NOTE - if the number of contacts being submitted is greater than 10,000 then submit a link to a CSV file.
+If creating a new list, a list name must be present. Creating an "empty" list - a list with a list_name and no contacts is allowed. VipeCloud will check for and not add duplicates to this list, based on email address. VipeCloud will also not add contacts that have unsubscribed from this user, bounced, or verified as undeliverable.
 ```   
 { 
- "list_key" : "LIST_KEY/FALSE",
- "list_name" : "LIST_NAME",
- "csv_url" : "{url to csv file}", //only for POSTs with greater than 10,000 contacts
+ "list_name" : "LIST_NAME", //only if creating a new list
  "contacts" : [
     {
       "first_name"  : "Wiley",  // required
@@ -188,8 +158,6 @@ NOTE - if the number of contacts being submitted is greater than 10,000 then sub
       "last_name" : "Coyote",
       "phone" : "1234567890",
       "company" : "Acme",
-      "crm_obj" : "123XYZ",
-      "obj_id" : "123XYZ"
     },
     {
     ...
@@ -197,13 +165,11 @@ NOTE - if the number of contacts being submitted is greater than 10,000 then sub
  ]
 }
 ```
-The response to this POST will be a status of success or error. On success the list_key will be included in addition to a *count* of successful emails added to the list and a *list* of emails that were not added, with a message detailing why the contact wasn't added.
-
-NOTE - contacts not added will be displayed in contact list performance as well.
+The response to this POST will be a status of success or error. On success the contact_list_id will be included in addition to a *count* of successful emails added to the list and a *list* of emails that were not added, with a message detailing why the contact wasn't added.
 ```
 {
   "status" : "success",
-  "list_key" : "123XYZ",
+  "contact_list_id" : "123",
   "contacts_added" : 123,
   "contacts_not_added": [
     {
@@ -219,7 +185,7 @@ NOTE - contacts not added will be displayed in contact list performance as well.
 
 #### GET list of existing Contact Lists a user has in VipeCloud
 ```
-GET /contact_list
+GET /contact_list(/:id)
 ```
 Returns an array of the lists that a user has in VipeCloud
 ```   
@@ -227,7 +193,7 @@ Returns an array of the lists that a user has in VipeCloud
   [
     {  
       "list_name" : "New Customers",  
-      "list_key" : "123XYZ",
+      "contact_list_id" : "123",
       "create_date" : "2014-09-03 08:30:39",
       "list_size": 16
     },
@@ -268,11 +234,8 @@ Body params
 {
   "emails":"roadrunner@acme.com", //comma or semicolon separated string of emails
   "cc_emails":"wile.e.coyote@acme.com", //comma or semicolon separated string of emails
-  "person_id":"ABC123", //optional param used to write share and engagement activities
-  "deal_id":"XYZ789", //optional param used to write share and engagement activities. person_id req'd for deal_id to work
   "subject":"Can you point me in the right direction?", //req'd if no email_template_id
   "message":"<p>Dear Wiley,</p><p>Good luck catching me.</p><p>-Road Runner</p>", //req'd if no email_template_id
-  "open_alert": 1 //can be 1 (yes open alert) or 0 (no open alert). Defaults to 0 if not provided.
 }
 ```
 A sample 200 response from above would look like:
