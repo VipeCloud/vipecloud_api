@@ -4,7 +4,7 @@ VipeCloud API v3.1
 1. [Overview](#overview)
 2. [Authentication](#authentication)
 
-Back end endpoints
+Endpoints
 -------------
 1. [Users (GET)](#user-get)
 2. [Contacts (POST/GET)](#contacts-post--get)
