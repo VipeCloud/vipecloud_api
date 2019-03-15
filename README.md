@@ -154,17 +154,16 @@ Full contact record:
 
 <a name="#contact-lists-post--get"></a>Contact Lists (POST / GET)
 -------------------------------------
-VipeCloud supports creating new contact lists and adding contacts to existing lists (while not duplicating contacts in a list). This endpoint can be implemented in several ways:
-* 1. Users create a named list in VipeCloud and they can send to that list at a later time or the Send Trackable Email modal can be launched on successful completion of the list creation to send a mail merge right then.
-* 2. If a user has an existing list they can add contacts to an existing list, and even have the share modal launched to send a mass email to the newly updated list.
-* 3. Keep users inside of your application for mass emailing! 
-
 
 #### Create new / update existing Contact List in VipeCloud
 ```
 POST /contact_lists(/:id)
 ```
-If creating a new list, a list name must be present. Creating an "empty" list - a list with a list_name and no contacts is allowed. VipeCloud will check for and not add duplicates to this list, based on email address. VipeCloud will also not add contacts that have unsubscribed from this user, bounced, or verified as undeliverable. 
+If creating a new list, a list name must be present. Creating an "empty" list - a list with a list_name and no contacts is allowed. 
+
+When POSTing contacts to an existing list, we will assume the contacts you submit represent the ENTIRETY of the contact list. We will compare your POSTed contacts to any existing contacts on the list. If contacts on the list are not in your POST they will be removed from the list. And if contact in your POST are not on the list they will be added.
+
+Note that VipeCloud will not add contacts that have unsubscribed from any user in your account, bounced, or have an email which has verified as undeliverable. 
 
 When submitting contacts EITHER include the contacts_master_id or fields for the contact. If the latter, we will search for an existing contact in your account with that email address. If found, the submitted fields will override current values. If not found, a new contact record will be created.
 ```   
@@ -172,7 +171,7 @@ When submitting contacts EITHER include the contacts_master_id or fields for the
  "list_name" : "LIST_NAME", //only if creating a new list
  "contacts" : [
     {
-      "contacts_master_id" : 123 //submit EITHER the contacts_master_id or fields for the contact
+      "contacts_master_id" : 123 //submit EITHER the contacts_master_id or fields for the contact. 
     },
     {
       "first_name"  : "Wiley",  // required if creating new contact
