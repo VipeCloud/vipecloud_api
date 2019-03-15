@@ -107,9 +107,12 @@ Body params
 ```
 GET /contacts(/:id)
 ```
-If no id, returns an array of the contacts for the authenticated user. If id, returns the details for a contact. If you only require certain contact parameters, append them (comma-separated) as a "to_get" parameter. 
+If no id, returns an array of the contacts for the authenticated user. If id, returns the details for a contact. If you only require certain contact parameters, append them (comma-separated) as a "to_get" parameter: 
+```
+E.g. GET /contacts/123?to_get=contacts_master_id,first_name 
+```
 
-E.g. /contacts/123?to_get=contacts_master_id,first_name 
+Full contact record:
 ```   
 { 
   [
