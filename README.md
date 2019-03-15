@@ -10,8 +10,7 @@ Endpoints
 2. [Contacts (POST/GET)](#contacts-post--get)
 3. [Contact Lists (POST/GET)](#contact-lists-post--get)
 4. [User Reputation (GET)](#user-reputation-get)
-5. [Trigger Trackable Email (POST)](#trigger-trackable-email-post)
-6. [Log Completed Task (POST)](#log-completed-task-post)
+5. [Log Completed Task (POST)](#log-completed-task-post)
 
 
 <a name="#overview"></a>Overview
@@ -231,30 +230,6 @@ The response to this GET will be an integer between 0 and 100.
 { 
   "reputation" : 100
 }
-```
-
-
-<a name="#trigger-trackable-email-post"></a>Trigger Trackable Email (POST)
--------------
-Send a trackable email via a POST. 
-
-```
-POST /trigger_trackable_email
-``` 
-
-Body params
-
-```   
-{
-  "emails":"roadrunner@acme.com", //comma or semicolon separated string of emails
-  "cc_emails":"wile.e.coyote@acme.com", //comma or semicolon separated string of emails
-  "subject":"Can you point me in the right direction?", //req'd if no email_template_id
-  "message":"<p>Dear Wiley,</p><p>Good luck catching me.</p><p>-Road Runner</p>", //req'd if no email_template_id
-}
-```
-A sample 200 response from above would look like:
-```
-{"emails":[{"email":"roadrunner@acme.com","status":"correct"},{"email":"wile.e.coyote@acme.com","status":"correct"}]}
 ```
 
 <a name="#log-completed-task-post"></a>Log Completed Task (POST)
