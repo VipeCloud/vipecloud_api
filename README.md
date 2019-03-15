@@ -213,7 +213,7 @@ Returns an individual record or array of the lists that a user has in VipeCloud
       "contact_list_id" : "123",
       "contact_list_name" : "New Customers",  
       "create_date" : "2014-09-03 08:30:39",
-      "list_size": 16
+      "active_count": 16 //note that bounces, unsubscribes, and verified undeliverable contacts are automatically removed
     },
     {
     ...
