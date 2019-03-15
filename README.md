@@ -219,7 +219,7 @@ Returns an individual record or array of the lists that a user has in VipeCloud
 
 <a name="#user-reputation-get"></a>User Reputation (GET)
 -------------------------------------
-Access a user's email sending reputation in VipeCloud
+Access a user's email sending reputation in VipeCloud. Note that if a user's email sending reputation drops below 70, they are not allowed to send email for 21 days. This is designed to protect your domain and ability to deliver email, as well as ours.
 
 #### GET a user's email reputation
 ```
