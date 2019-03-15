@@ -56,10 +56,9 @@ GET /users
 ``` 
 The response to this GET will be a list of the currently active VipeCloud users in your account. Users displayed are based on the visibility permission of the authenticated user. For example, an Admin user will see all your account users, a Manager will see their team members, and a Member will only see themselves.
 ```
-{
-  "account_id" : "123",
-  "users" : [
-    {
+{ 
+  [
+    { 
       "first_name"  : "Wiley", 
       "last_name"  : "Coyote", 
       "email"  : "wiley.coyote@acme.com",
