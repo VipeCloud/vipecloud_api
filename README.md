@@ -35,7 +35,7 @@ Endpoints
 
 <a name="#authentication"></a>Authentication
 -------------
-Authorization is a Basic header of a base64 encoded concatenation of your VipeCloud user email and an active user API Key. API keys can be managed in the Setup section of VipeCloud.
+Authorization is a Basic header of a base64 encoded concatenation of your VipeCloud user email and an active user API Key. API keys are managed in the Setup section of your VipeCloud account.
 
 Sample PHP curl header to add to your POST
 ```php
