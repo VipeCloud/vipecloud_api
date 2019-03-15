@@ -165,20 +165,16 @@ When POSTing contacts to an existing list, we will assume the contacts you submi
 
 Note that VipeCloud will not add contacts that have unsubscribed from any user in your account, bounced, or have an email which has verified as undeliverable. 
 
-When submitting contacts EITHER include the contacts_master_id or fields for the contact. If the latter, we will search for an existing contact in your account with that email address. If found, the submitted fields will override current values. If not found, a new contact record will be created.
+When submitting contacts include the contacts_master_id of the contact record. 
 ```   
 { 
  "contact_list_name" : "My First List", //required if creating a new list. Will overwrite existing name if "id" provided
  "contacts" : [
     {
-      "contacts_master_id" : 123 //submit EITHER the contacts_master_id or fields for the contact. 
+      "contacts_master_id" : 123
     },
     {
-      "first_name"  : "Wiley",  // required if creating new contact
-      "email" : "wiley.coyote@acme.com", // required if creating new contact
-      "last_name" : "Coyote",
-      "phone" : "1234567890",
-      "company" : "Acme",
+      ...
     }
  ]
 }
@@ -187,11 +183,11 @@ The response to this POST will be a status of success or error. On success the c
 ```
 {
   "status" : "success",
-  "contact_list_id" : "123",
+  "contact_list_id" : 123,
   "contacts_added" : 123,
   "contacts_not_added": [
     {
-      "email":"wiley.e.coyoto@gmail.com",
+      "contacts_master_id": 123,
       "message":"Contact unsubscribed."
     },
     {
