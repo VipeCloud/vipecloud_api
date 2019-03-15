@@ -168,7 +168,7 @@ Note that VipeCloud will not add contacts that have unsubscribed from any user i
 When submitting contacts EITHER include the contacts_master_id or fields for the contact. If the latter, we will search for an existing contact in your account with that email address. If found, the submitted fields will override current values. If not found, a new contact record will be created.
 ```   
 { 
- "list_name" : "My First List", //required if creating a new list. Will overwrite existing name if "id" provided
+ "contact_list_name" : "My First List", //required if creating a new list. Will overwrite existing name if "id" provided
  "contacts" : [
     {
       "contacts_master_id" : 123 //submit EITHER the contacts_master_id or fields for the contact. 
