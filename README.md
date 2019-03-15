@@ -54,7 +54,7 @@ curl_setopt($curl, CURLOPT_HTTPHEADER, array("Authorization: Basic $auth", "Acce
 ```
 GET /users
 ``` 
-The response to this GET will be a list of the currently active VipeCloud users for an account within your integration. Users displayed are based on the visibility permission of the authenticated user. For example, an Admin user will see all users, a Manager will see their team members, and a Member will only see themselves.
+The response to this GET will be a list of the currently active VipeCloud users in your account. Users displayed are based on the visibility permission of the authenticated user. For example, an Admin user will see all your account users, a Manager will see their team members, and a Member will only see themselves.
 ```
 {
   "account_id" : "123",
@@ -107,25 +107,34 @@ Body params
 ```
 GET /contacts(/:id)
 ```
-If no id, returns an array of the contacts that a user has in VipeCloud. If id, returns the details for a contact
+If no id, returns an array of the contacts for the authenticated user. If id, returns the details for a contact. If you only require certain contact parameters, append them (comma-separated) as a "to_get" parameter. 
+
+E.g. /contacts/123?to_get=contacts_master_id,first_name 
 ```   
 { 
   [
     { 
+     "contacts_master_id" : 123,
      "first_name" : "Road", 
      "last_name" : "Runner", 
      "email" : "email", 
+     "title" : "Evader",
      "website" : "www.acme.com", 
      "work_phone" : "1234567890", 
-     "mobile_phone" : "1234567890", 
+     "mobile_phone" : "1234567891", 
+     "direct_phone" : "1234567892", 
+     "phone" : "1234567893", 
      "company_name" : "Acme", 
-     "tags" : ["Speedy"], 
      "address1" : "123 Acme Street", 
      "address2" : "", 
      "city" : "Disneyland", 
      "state" : "CA", 
      "zip" : "12345", 
      "country" : "USA", 
+     "personal_linkedin_url" : "https://www.linkedin.com/...",
+     "personal_twitter_url" : "https://www.twitter.com/...",
+     "personal_facebook_url" : "https://www.facebook.com/...",
+     "tags" : ["Speedy"], 
     },
     {
     ...
@@ -145,22 +154,24 @@ VipeCloud supports creating new contact lists and adding contacts to existing li
 
 #### Create new / update existing Contact List in VipeCloud
 ```
-POST /contact_list(/:id)
+POST /contact_lists(/:id)
 ```
-If creating a new list, a list name must be present. Creating an "empty" list - a list with a list_name and no contacts is allowed. VipeCloud will check for and not add duplicates to this list, based on email address. VipeCloud will also not add contacts that have unsubscribed from this user, bounced, or verified as undeliverable.
+If creating a new list, a list name must be present. Creating an "empty" list - a list with a list_name and no contacts is allowed. VipeCloud will check for and not add duplicates to this list, based on email address. VipeCloud will also not add contacts that have unsubscribed from this user, bounced, or verified as undeliverable. 
+
+When submitting contacts EITHER include the contacts_master_id or fields for the contact. If the latter, we will search for an existing contact in your account with that email address. If found, the submitted fields will override current values. If not found, a new contact record will be created.
 ```   
 { 
  "list_name" : "LIST_NAME", //only if creating a new list
  "contacts" : [
     {
-      "first_name"  : "Wiley",  // required
-      "email" : "wiley.coyote@acme.com", // required
+      "contacts_master_id" : 123 //submit EITHER the contacts_master_id or fields for the contact
+    },
+    {
+      "first_name"  : "Wiley",  // required if creating new contact
+      "email" : "wiley.coyote@acme.com", // required if creating new contact
       "last_name" : "Coyote",
       "phone" : "1234567890",
       "company" : "Acme",
-    },
-    {
-    ...
     }
  ]
 }
@@ -185,15 +196,15 @@ The response to this POST will be a status of success or error. On success the c
 
 #### GET list of existing Contact Lists a user has in VipeCloud
 ```
-GET /contact_list(/:id)
+GET /contact_lists(/:id)
 ```
-Returns an array of the lists that a user has in VipeCloud
+Returns an individual record or array of the lists that a user has in VipeCloud
 ```   
 { 
   [
     {  
-      "list_name" : "New Customers",  
       "contact_list_id" : "123",
+      "contact_list_name" : "New Customers",  
       "create_date" : "2014-09-03 08:30:39",
       "list_size": 16
     },
