@@ -161,7 +161,7 @@ POST /contact_lists(/:id)
 ```
 If creating a new list, a list name must be present. Creating an "empty" list - a list with a list_name and no contacts is allowed. 
 
-When POSTing contacts to an existing list, we will assume the contacts you submit represent the ENTIRETY of the contact list. We will compare your POSTed contacts to any existing contacts on the list. If contacts on the list are not in your POST they will be removed from the list. And if contact in your POST are not on the list they will be added.
+When POSTing contacts to an existing list, we will assume the contacts you submit represent the ENTIRETY of the contact list. We will compare your POSTed contacts to any existing contacts on the list. If contacts on the list are not in your POST they will be removed from the list. And if contacts in your POST are not on the list they will be added.
 
 Note that VipeCloud will not add contacts that have unsubscribed from any user in your account, bounced, or have an email which has verified as undeliverable. 
 
