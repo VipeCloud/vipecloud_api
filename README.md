@@ -22,7 +22,7 @@ Endpoints
 #### General Information
    * All requests must by made from HTTPS
    * All data sent should be JSON encoded (all data received will be JSON encoded)
-   * Base URL for these functions: https://v.vipecloud.com/api/v3.1/vipecloud
+   * Base URL for these functions: https://v.vipecloud.com/api/v3.1
    
 #### Interested in receiving webhooks?
    * Learn about our webhooks API: [Webhooks v1.0](webhooks_v1_0.md)
