@@ -86,20 +86,26 @@ POST /contacts(/:id)
 Body params
 ```   
 { 
- "first_name" : "Road", //required
- "last_name" : "Runner", 
- "email" : "email", //required
- "website" : "www.acme.com", 
- "work_phone" : "1234567890", 
- "mobile_phone" : "1234567890", 
- "company_name" : "Acme", 
- "tags" : ["Speedy"], 
- "address1" : "123 Acme Street", 
- "address2" : "", 
- "city" : "Disneyland", 
- "state" : "CA", 
- "zip" : "12345", 
- "country" : "USA", 
+   "first_name" : "Road", //required
+   "last_name" : "Runner", 
+   "email" : "email", //required
+   "title" : "Evader",
+   "website" : "www.acme.com", 
+   "work_phone" : "1234567890", 
+   "mobile_phone" : "1234567891", 
+   "direct_phone" : "1234567892", 
+   "phone" : "1234567893", 
+   "company_name" : "Acme", 
+   "address1" : "123 Acme Street", 
+   "address2" : "", 
+   "city" : "Disneyland", 
+   "state" : "CA", 
+   "zip" : "12345", 
+   "country" : "USA", 
+   "personal_linkedin_url" : "https://www.linkedin.com/...",
+   "personal_twitter_url" : "https://www.twitter.com/...",
+   "personal_facebook_url" : "https://www.facebook.com/...",
+   "tags" : ["Speedy"], 
 }
 ```
 
