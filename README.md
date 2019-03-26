@@ -11,6 +11,8 @@ Endpoints
 3. [Contact Lists (POST/GET)](#contact-lists-post--get)
 4. [User Reputation (GET)](#user-reputation-get)
 5. [Log Completed Task (POST)](#log-completed-task-post)
+6. [HTML Templates (POST)](#html-templates)
+7. [Import Files (POST)](#import-files)
 
 
 <a name="#overview"></a>Overview
@@ -263,5 +265,67 @@ Sample response
     "contact_company": "Acme"
 }
 ```
+
+
+<a name="#email-templates"></a>Email Templates (POST)
+-------------
+If you are migrating from another email sending provider and more email templates than you can manually transfer over, you can import them using the /email_templates endpoint.
+
+```
+POST /html_templates
+``` 
+
+Body params
+
+```   
+{
+  "title" : "My Email Template", //required and used to identify the contact
+  "subject" : "My Email Subject", //required
+  "copy" : "Hi there, this is my email template copy....", //required. HTML is allowed.
+  "enable_html" : 1, //optional, can be a 1 or a 0. If enabled, this will allow you to edit your email in our HTML Builder (for newsletter type emails)
+  "landing_page" : 1, //optional, can be a 1 or a 0. If a 1 we will respond with a link to the landing page
+}
+```
+
+Sample response
+```
+{
+    "status": "success",
+    "email_template_id": 123,
+    "landing_page": "link goes here" //only if you enable a landing page for the email template
+}
+```
+
+<a name="#import-files"></a>Import Files (POST)
+-------------
+If you are migrating from another system and have more files than you can manually transfer over (images, videos, documents, etc.), you can import them using the /files endpoint.
+
+Note that this endpoint is throttled based on file size and requires enabling for your account by the VipeCloud team.
+
+```
+POST /files
+``` 
+
+Body params
+
+```   
+{
+  "file_url" : "https://www.linktofile.com", //required
+  "file_name" : "My File", //required
+  "file_size" : 12345, //required. Size is in bytes
+  "file_type" : "image/jpeg" //required. Mimetype of the file.
+}
+```
+
+Sample response
+```
+{
+    "status": "success",
+    "cdn_link": "link goes here",
+    "trackable_link": "link goes here" //this is a trackable vipecloud link
+}
+```
+
+
 
 
