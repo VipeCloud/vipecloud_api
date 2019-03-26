@@ -11,8 +11,8 @@ Endpoints
 3. [Contact Lists (POST/GET)](#contact-lists-post--get)
 4. [User Reputation (GET)](#user-reputation-get)
 5. [Log Completed Task (POST)](#log-completed-task-post)
-6. [HTML Templates (POST)](#html-templates)
-7. [Import Files (POST)](#import-files)
+6. [HTML Templates (POST)](#html-templates-post)
+7. [Import Files (POST)](#import-files-post)
 
 
 <a name="#overview"></a>Overview
