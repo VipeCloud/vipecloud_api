@@ -307,8 +307,6 @@ Sample response
 -------------
 If you are migrating from another system and have more files than you can manually transfer over (images, videos, documents, etc.), you can import them using the /files endpoint.
 
-Note that this endpoint is throttled based on file size.
-
 ```
 POST /files
 ``` 
@@ -319,8 +317,6 @@ Body params
 {
   "file_url" : "https://www.linktofile.com", //required
   "file_name" : "My File", //required
-  "file_size" : 12345, //required. Size is in bytes
-  "file_type" : "image/jpeg" //required. Mimetype of the file.
 }
 ```
 
@@ -328,8 +324,8 @@ Sample response
 ```
 {
     "status": "success",
-    "cdn_link": "link goes here",
-    "trackable_link": "link goes here" //this is a trackable vipecloud link
+    "download_link": "link goes here",
+    "trackable_link": "link goes here" //this is a trackable VipeCloud link
 }
 ```
 
