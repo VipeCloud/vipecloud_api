@@ -25,7 +25,7 @@ Endpoints
    * All requests must by made from HTTPS
    * All data sent should be JSON encoded (all data received will be JSON encoded)
    * Base URL for these functions: https://v.vipecloud.com/api/v3.1
-   * API usage is currently throttled at 10 calls per 2 seconds
+   * API usage is currently throttled at 10 calls per 2 seconds per user
    
 #### Interested in receiving webhooks?
    * Learn about our webhooks API: [Webhooks v1.0](webhooks_v1_0.md)
