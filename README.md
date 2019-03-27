@@ -278,7 +278,7 @@ If you are migrating from another email sending provider and more email template
 If you enable the HTML Builder you will also need to include the CSS of your Stripo formatted email. If you don't have a separate CSS file, their [blank template here](https://github.com/ardas/stripo-plugin/blob/master/Public-Templates/Basic-Templates/Empty-Template/Empty-Template.css) will most likely work. 
 
 ```
-POST /html_templates
+POST /email_templates
 ``` 
 
 Body params
