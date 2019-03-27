@@ -18,13 +18,14 @@ Endpoints
 <a name="#overview"></a>Overview
 -------------
 #### What can VipeCloud's API do for you?
-   * Connect proprietary or other 3rd party systems to VipeCloud.
+   * Connect proprietary or other 3rd party systems to VipeCloud
 
 #### General Information
-   * Your account must gain authorization to use the VipeCloud API. Email support@vipecloud.com to request authorization.
+   * Your account must gain authorization to use the VipeCloud API. Email support@vipecloud.com to request authorization
    * All requests must by made from HTTPS
    * All data sent should be JSON encoded (all data received will be JSON encoded)
    * Base URL for these functions: https://v.vipecloud.com/api/v3.1
+   * API usage is currently throttled at 10 calls per 2 seconds
    
 #### Interested in receiving webhooks?
    * Learn about our webhooks API: [Webhooks v1.0](webhooks_v1_0.md)
