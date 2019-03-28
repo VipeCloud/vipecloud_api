@@ -273,10 +273,6 @@ Sample response
 -------------
 If you are migrating from another email sending provider and more email templates than you can manually transfer over, you can import them using the /email_templates endpoint.
 
-**Important Note About Enabling HTML Builder**. All VipeCloud emails can be edited as HTML in our standard rich text editor. We also support an "HTML Builder" which is a drag and drop interface for creating beautiful, newsletter-like email templates. Our HTML Builder is powered by [Stripo](https://www.stripo.email). In order to enable the HTML Builder for an imported email template, your HTML **MUST** be formatted per the [Stripo requirements listed here](https://stripo.email/blog/advanced-option-email-templates-adaptation-stripo-builder/).
-
-If you enable the HTML Builder you will also need to include the CSS of your Stripo formatted email. If you don't have a separate CSS file, their [blank template here](https://github.com/ardas/stripo-plugin/blob/master/Public-Templates/Basic-Templates/Empty-Template/Empty-Template.css) will most likely work. 
-
 ```
 POST /email_templates
 ``` 
@@ -288,8 +284,6 @@ Body params
   "title" : "My Email Template", //required and used to identify the contact
   "subject" : "My Email Subject", //required
   "copy" : "Hi there, this is my email template copy....", //required. HTML is allowed.
-  "enable_html_builder" : 1, //optional, can be a 1 or a 0. 
-  "css" : "css here", //required if enable_html_builder is 1
   "landing_page" : 1, //optional, can be a 1 or a 0. If a 1 we will respond with a link to the landing page
 }
 ```
