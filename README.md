@@ -320,6 +320,7 @@ Sample response
     "status": "success",
     "download_link": "link goes here",
     "trackable_link": "link goes here" //this is a trackable VipeCloud link
+    "thumb_url": "link goes here" //only included for video file uploads
 }
 ```
 
