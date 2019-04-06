@@ -285,6 +285,7 @@ Body params
   "subject" : "My Email Subject", //required
   "copy" : "Hi there, this is my email template copy....", //required. HTML is allowed.
   "landing_page" : 1, //optional, can be a 1 or a 0. If a 1 we will respond with a link to the landing page
+  "email_template_id" : 123, //optional, can be used to update one of your existing email templates
 }
 ```
 
