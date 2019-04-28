@@ -12,7 +12,7 @@ Endpoints
 4. [User Reputation (GET)](#user-reputation-get)
 5. [Log Completed Task (POST)](#log-completed-task-post)
 6. [Email Templates (POST)](#email-templates-post)
-7. [Import Files (POST)](#import-files-post)
+7. [Files (POST/GET)](#files-post--get)
 
 
 <a name="#overview"></a>Overview
@@ -77,7 +77,7 @@ The response to this GET will be a list of the currently active VipeCloud users 
 }
 ```
 
-<a name="#contacts-post--get"></a>Contacts (POST/GET)
+<a name="#contacts-post--get"></a>Contacts (POST / GET)
 -------------------------------------
 
 #### Create new / update existing Contacts in VipeCloud
@@ -298,7 +298,7 @@ Sample response
 }
 ```
 
-<a name="#import-files"></a>Import Files (POST)
+<a name="#files-post--get"></a>Files (POST / GET)
 -------------
 If you are migrating from another system and have more files than you can manually transfer over (images, videos, documents, etc.), you can import them using the /files endpoint.
 
@@ -322,6 +322,23 @@ Sample response
     "download_link": "link goes here",
     "trackable_link": "link goes here" //this is a trackable VipeCloud link
     "thumb_url": "link goes here" //only included for video file uploads
+}
+```
+
+#### GET File
+```
+GET /files?file_name=MyImage.png
+```
+Search your account for a file by a urlencoded file_name. If no file is found, the response will be code 422 with the message "No file was found."
+
+Sample response
+```   
+{ 
+    "status" : "success",
+    "file_name" : "MyImage.png", 
+    "download_link": "link goes here",
+    "trackable_link": "link goes here" //this is a trackable VipeCloud link
+    "thumb_url": "link goes here" //only included for video file uploads 
 }
 ```
 
