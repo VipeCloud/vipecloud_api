@@ -108,6 +108,7 @@ Body params
    "personal_twitter_url" : "https://www.twitter.com/...",
    "personal_facebook_url" : "https://www.facebook.com/...",
    "tags" : ["Speedy"], 
+   "verify" : 0, //if this is 1 AND you are an enterprise user AND this user has less than 10K verifications this month, we will verify the contact's email address on import
 }
 ```
 
