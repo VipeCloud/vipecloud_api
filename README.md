@@ -313,6 +313,7 @@ Body params
 {
   "file_url" : "https://www.linktofile.com", //required
   "file_name" : "My File", //required
+  "thumb_url" : "https://whatever.com" //required if importing a video
 }
 ```
 
