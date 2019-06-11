@@ -8,11 +8,12 @@ Endpoints
 -------------
 1. [Users (GET)](#user-get)
 2. [Contacts (POST/GET)](#contacts-post--get)
-3. [Contact Lists (POST/GET)](#contact-lists-post--get)
-4. [User Reputation (GET)](#user-reputation-get)
-5. [Log Completed Task (POST)](#log-completed-task-post)
-6. [Email Templates (POST)](#email-templates-post)
-7. [Files (POST/GET)](#files-post--get)
+3. [Custom Fields (GET)](#custom-fields-get)
+4. [Contact Lists (POST/GET)](#contact-lists-post--get)
+5. [User Reputation (GET)](#user-reputation-get)
+6. [Log Completed Task (POST)](#log-completed-task-post)
+7. [Email Templates (POST)](#email-templates-post)
+8. [Files (POST/GET)](#files-post--get)
 
 
 <a name="#overview"></a>Overview
@@ -109,6 +110,9 @@ Body params
    "personal_facebook_url" : "https://www.facebook.com/...",
    "tags" : ["Speedy"], 
    "verify" : 0, //if this is 1 AND you are an enterprise user AND this user has less than 10K verifications this month, we will verify the contact's email address on import
+   "custom_fields" : [
+      id : "value" //an array of the custom fields. Key value is the custom field id.
+   ]
 }
 ```
 
@@ -150,6 +154,29 @@ Full contact record:
     },
     {
     ...
+    }
+  ]
+}
+```
+
+<a name="#custom-fields-get"></a>Custom Fields (GET)
+-------------------------------------
+Get your account's custom fields.
+
+#### GET account custom fields
+```
+GET /custom_fields
+```
+The response to this GET will be an array of your account custom fields.
+```   
+{ 
+  [
+    {
+      "id" : 1, //the custom field id
+      "item_type" : "contact",
+      "field_type" : "Text", //can be any of the input field types VipeCloud supports
+      "field_name" : "My Custom Field",
+      "options" : "", //will only have values for dropdowns and picklists. Will be an array of your options 
     }
   ]
 }
