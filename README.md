@@ -110,8 +110,8 @@ Body params
    "personal_facebook_url" : "https://www.facebook.com/...",
    "tags" : ["Speedy"], 
    "verify" : 0, //if this is 1 AND you are an enterprise user AND this user has less than 10K verifications this month, we will verify the contact's email address on import
-   "custom_fields" : [
-      id : "value" //an array of the custom fields. Key value is the custom field id.
+   "custom_fields" : [ //an array of the custom fields. Key value is the custom field id.
+      id : "value" 
    ]
 }
 ```
