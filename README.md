@@ -14,7 +14,7 @@ Endpoints
 6. [Log Completed Task (POST)](#log-completed-task-post)
 7. [Email Templates (POST)](#email-templates-post)
 8. [Files (POST/GET)](#files-post--get)
-9. [Emails (POST)](#email-post)
+9. [Emails (POST)](#emails-post)
 
 
 <a name="#overview"></a>Overview
