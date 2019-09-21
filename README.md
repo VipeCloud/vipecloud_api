@@ -14,6 +14,7 @@ Endpoints
 6. [Log Completed Task (POST)](#log-completed-task-post)
 7. [Email Templates (POST)](#email-templates-post)
 8. [Files (POST/GET)](#files-post--get)
+9. [Emails (POST)](#email-post)
 
 
 <a name="#overview"></a>Overview
@@ -371,6 +372,30 @@ Sample response
 }
 ```
 
+<a name="#emails-post"></a>Emails (POST)
+-------------
+Send a trackable email via a POST. 
+
+```
+POST /emails
+``` 
+
+Body params
+
+```   
+{
+  "emails":"roadrunner@acme.com", //comma or semicolon separated string of emails
+  "cc_emails":"wile.e.coyote@acme.com", //comma or semicolon separated string of emails
+  "contact_list_id": 12345, //optional param if sending to contact list. POST to include emails OR contact_list_id.
+  "email_template_id": 67890, //optional param used to send email to email template
+  "subject":"Can you point me in the right direction?", //req'd if no email_template_id
+  "message":"<p>Dear Wiley,</p><p>Good luck catching me.</p><p>-Road Runner</p>", //req'd if no email_template_id
+}
+```
+A sample 200 response is below. Sending to a contact list will respond with a status of "queued".
+```
+{"emails":[{"email":"roadrunner@acme.com","status":"correct"},{"email":"wile.e.coyote@acme.com","status":"correct"}]}
+```
 
 
 
