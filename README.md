@@ -374,7 +374,7 @@ Sample response
 
 <a name="#emails-post"></a>Emails (POST)
 -------------
-Send a trackable email via a POST. 
+Send emails via a POST. 
 
 ```
 POST /emails
