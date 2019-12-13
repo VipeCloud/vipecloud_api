@@ -86,8 +86,11 @@ The response to this GET will be a list of the currently active VipeCloud users 
 ```
 POST /contacts(/:id)
 ```
+When POSTing to /contacts, the body can either be an individual contact record or an array of contact records. If you are updating existing contacts, it is recommended that you include a contacts_master_id parameter for the contact. If not, the system will search for existing contacts based on the unique setting for your contact email address (account-wide, per user, or none). If submitting an array of contact records to create or update, first_name and email are always required.
 
-Body params
+You can, optionally, include a "contact_lists" parameter to your contact POST body. If you do, we will assume the contact_list_ids you submit represent the ENTIRETY of the contact lists the contact should be a part of. We will compare your POSTed contact_list_ids to any existing contact_lists for the contact. If the contact is part of contact lists not in your POST they will be removed from the list. And if contacts in your POST are not on the list they will be added.
+
+Sample post body below.
 ```   
 { 
    "first_name" : "Road", //required
@@ -113,6 +116,10 @@ Body params
    "verify" : 0, //if this is 1 AND you are an enterprise user AND this user has less than 10K verifications this month, we will verify the contact's email address on import
    "custom_fields" : [ //an array of the custom fields. Key value is the custom field id.
       id : "value" 
+   ],
+   "contact_lists" : [ //an array of contact_list_ids.
+      "0" => 123,
+      "1" => 1234
    ]
 }
 ```
@@ -151,7 +158,13 @@ Full contact record:
      "personal_linkedin_url" : "https://www.linkedin.com/...",
      "personal_twitter_url" : "https://www.twitter.com/...",
      "personal_facebook_url" : "https://www.facebook.com/...",
-     "tags" : ["Speedy"], 
+     "tags" : ["Speedy"],
+     "contact_lists" : [
+        "0" => [
+            "contact_list_id" : 123,
+            "contact_list_name" : "First list"
+        ]
+     ]
     },
     {
     ...
