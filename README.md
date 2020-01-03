@@ -393,7 +393,7 @@ Send emails via a POST.
 POST /emails
 ``` 
 
-Body params
+Body params. If you include the filters parameter our system will create a new, system-generated list based on which contacts meet your filters within the contact_list_id that is also submitted.
 
 ```   
 {
@@ -403,6 +403,15 @@ Body params
   "email_template_id": 67890, //optional param used to send email to email template
   "subject":"Can you point me in the right direction?", //req'd if no email_template_id
   "message":"<p>Dear Wiley,</p><p>Good luck catching me.</p><p>-Road Runner</p>", //req'd if no email_template_id
+  "filters":[ //optional parameter to allow for filtering of contacts within a contact list at the time of send.
+    "0" : [
+      "field_type" : "standard", //accepted values are standard or custom
+      "id" : "first_name", //if standard, we test against allowed contact standard fields, if custom provide the id (e.g. "123")
+      "operator" : "equals", //accepted values include "equals","less_than","greater_than","less_than_or_equal_to", or "greater_than_or_equal_to"
+      "value" : "Wiley"
+    ]
+  ],
+  "test_filters" : true //optional parameter which will test your filters but NOT send the email. Will return the number of contacts your filters will cull your contact list down to.
 }
 ```
 A sample 200 response is below. Sending to a contact list will respond with a status of "queued".
