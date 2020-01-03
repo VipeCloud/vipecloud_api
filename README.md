@@ -401,7 +401,7 @@ contact_list_id | integer | yes or emails | Required param if sending to contact
 subject | string | yes or email_template_id | Required if no email_template_id.
 message | string | yes or email_template_id | Required if no email_template_id.
 email_template_id | integer | yes or subject and message | Send email to email template. Replaces requirement for subject and message.
-filters | array of arrays | no | Filter contact within a contact list at the time of send. If you include the filters parameter our system will create a new, system-generated list based on which contacts meet your filters within the contact_list_id that is also submitted. Each filter must include a field_type (standard or custom), id (if standard a slug, if custom the custom_field_id), an operator (accepted values include equals, less_than, greater_than, less_than_or_equal_to, or greater_than_or_equal_to), and a value.
+filters | array of arrays | no | Filter contacts within a contact list at the time of send. If you include the filters parameter our system will create a new, system-generated list based on which contacts meet your filters within the contact_list_id that is also submitted. Each filter must include a field_type (standard or custom), id (if standard a slug, if custom the custom_field_id), an operator (accepted values include equals, less_than, greater_than, less_than_or_equal_to, or greater_than_or_equal_to), and a value.
 test_filters | boolean | no | Will test your filters and NOT send the email. Will return the number of contacts your filters will cull your contact list down to.
 
 
