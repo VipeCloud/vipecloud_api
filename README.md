@@ -432,17 +432,23 @@ Sample body.
 ```
 Sample 200 responses:
 
-Email Type | Response
+Post Type | Response
 --- | ---
 Specific emails | `{"emails":[{"email":"roadrunner@acme.com","status":"correct"},{"email":"wile.e.coyote@acme.com","status":"correct"}]}`
 Contact list | `{"emails":"queued"}`
+Test filters | `{"original_list_contacts": 100, "filtered_list_contacts" : 15 }`
 
 Sample 422 responses:
 
-Error | Message
---- | ---
-Include filters param but no filters | No filters submitted.
-
+Response Message
+--- |
+No filters submitted.
+You don't have access to that contact list.
+No contacts in contact list, so not processing email.
+You don't have access to that email template.
+All filters are required to have field_type, id, operator, and value parameters.
+ABCXYZ is not a valid contact standard field.
+ABCXYZ is not a valid operator.
 
 
 
