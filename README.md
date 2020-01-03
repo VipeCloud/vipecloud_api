@@ -401,7 +401,12 @@ contact_list_id | integer | yes or emails | Required param if sending to contact
 subject | string | yes or email_template_id | Required if no email_template_id.
 message | string | yes or email_template_id | Required if no email_template_id.
 email_template_id | integer | yes or subject and message | Send email to email template. Replaces requirement for subject and message.
-filters | array | no | Filter contact within a contact list at the time of send. If you include the filters parameter our system will create a new, system-generated list based on which contacts meet your filters within the contact_list_id that is also submitted.
+filters | array of arrays | no | Filter contact within a contact list at the time of send. If you include the filters parameter our system will create a new, system-generated list based on which contacts meet your filters within the contact_list_id that is also submitted. Sample filter: ```[
+      "field_type" : "standard",
+      "id" : "first_name",
+      "operator" : "equals", 
+      "value" : "Wiley"
+    ]```
 test_filters | boolean | no | Will test your filters and NOT send the email. Will return the number of contacts your filters will cull your contact list down to.
 
 
