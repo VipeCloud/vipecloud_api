@@ -395,19 +395,27 @@ POST /emails
 
 Attribute | type | required | description
 --- | --- | --- | ---
-emails | string | yes | comma or semicolon separated string of emails
+emails | string | yes | Comma or semicolon separated string of emails.
+cc_emails | string | no | Comma or semicolon separated string of emails.
+contact_list_id | integer | yes | Required param if sending to contact list. Include emails OR contact_list_id.
+subject | string | yes | Required if no email_template_id.
+message | string | yes | Required if no email_template_id.
+email_template_id | integer | no | Send email to email template. Replaces requirement for subject and message.
+filters | array | no | Filter contact within a contact list at the time of send. If you include the filters parameter our system will create a new, system-generated list based on which contacts meet your filters within the contact_list_id that is also submitted.
+test_filters | boolean | no | Will test your filters and NOT send the email. Will return the number of contacts your filters will cull your contact list down to.
 
-Sample body. If you include the filters parameter our system will create a new, system-generated list based on which contacts meet your filters within the contact_list_id that is also submitted.
+
+Sample body. 
 
 ```   
 {
-  "emails":"roadrunner@acme.com", //
-  "cc_emails":"wile.e.coyote@acme.com", //comma or semicolon separated string of emails
-  "contact_list_id": 12345, //optional param if sending to contact list. POST to include emails OR contact_list_id.
-  "email_template_id": 67890, //optional param used to send email to email template
-  "subject":"Can you point me in the right direction?", //req'd if no email_template_id
-  "message":"<p>Dear Wiley,</p><p>Good luck catching me.</p><p>-Road Runner</p>", //req'd if no email_template_id
-  "filters":[ //optional parameter to allow for filtering of contacts within a contact list at the time of send.
+  "emails":"roadrunner@acme.com",
+  "cc_emails":"wile.e.coyote@acme.com",
+  "contact_list_id": 12345,
+  "email_template_id": 67890,
+  "subject":"Can you point me in the right direction?", 
+  "message":"<p>Dear Wiley,</p><p>Good luck catching me.</p><p>-Road Runner</p>",
+  "filters":[
     "0" : [
       "field_type" : "standard", //accepted values are standard or custom
       "id" : "first_name", //if standard, we test against allowed contact standard fields, if custom provide the id (e.g. "123")
@@ -415,7 +423,7 @@ Sample body. If you include the filters parameter our system will create a new, 
       "value" : "Wiley"
     ]
   ],
-  "test_filters" : true //optional parameter which will test your filters but NOT send the email. Will return the number of contacts your filters will cull your contact list down to.
+  "test_filters" : true
 }
 ```
 A sample 200 response is below. Sending to a contact list will respond with a status of "queued".
