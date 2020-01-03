@@ -440,7 +440,6 @@ Test filters | `{"original_list_contacts": 100, "filtered_list_contacts" : 15 }`
 
 Sample 422 responses:
 
-Response Message
 --- |
 No filters submitted.
 You don't have access to that contact list.
