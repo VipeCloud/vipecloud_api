@@ -413,8 +413,6 @@ Sample body.
   "cc_emails":"wile.e.coyote@acme.com",
   "contact_list_id": 12345,
   "email_template_id": 67890,
-  "subject":"Can you point me in the right direction?", 
-  "message":"<p>Dear Wiley,</p><p>Good luck catching me.</p><p>-Road Runner</p>",
   "filters":[
     "0" : [
       "field_type" : "standard", //accepted values are standard or custom
