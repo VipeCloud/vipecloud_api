@@ -431,12 +431,14 @@ Sample body.
 }
 ```
 Sample 200 responses:
+
 Email Type | Response
 --- | ---
-Specific emails |`{"emails":[{"email":"roadrunner@acme.com","status":"correct"},{"email":"wile.e.coyote@acme.com","status":"correct"}]}`
+Specific emails | `{"emails":[{"email":"roadrunner@acme.com","status":"correct"},{"email":"wile.e.coyote@acme.com","status":"correct"}]}`
 Contact list | `{"emails":"queued"}`
 
 Sample 422 responses:
+
 Error | Message
 --- | ---
 Include filters param but no filters | No filters submitted.
