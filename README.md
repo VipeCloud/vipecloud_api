@@ -393,11 +393,15 @@ Send emails via a POST.
 POST /emails
 ``` 
 
-Body params. If you include the filters parameter our system will create a new, system-generated list based on which contacts meet your filters within the contact_list_id that is also submitted.
+Attribute | type | required | description
+--- | --- | --- | ---
+emails | string | yes | comma or semicolon separated string of emails
+
+Sample body. If you include the filters parameter our system will create a new, system-generated list based on which contacts meet your filters within the contact_list_id that is also submitted.
 
 ```   
 {
-  "emails":"roadrunner@acme.com", //comma or semicolon separated string of emails
+  "emails":"roadrunner@acme.com", //
   "cc_emails":"wile.e.coyote@acme.com", //comma or semicolon separated string of emails
   "contact_list_id": 12345, //optional param if sending to contact list. POST to include emails OR contact_list_id.
   "email_template_id": 67890, //optional param used to send email to email template
