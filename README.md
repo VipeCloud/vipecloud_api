@@ -435,7 +435,7 @@ Sample 200 responses:
 Post Type | Response
 --- | ---
 Specific emails | `{"emails":[{"email":"roadrunner@acme.com","status":"correct"},{"email":"wile.e.coyote@acme.com","status":"correct"}]}`
-Contact list | `{"emails":"queued"}`
+Contact list | `{"emails":"queue"}`
 Test filters | `{"original_list_contacts": 100, "filtered_list_contacts" : 15 }`
 
 Sample 422 responses:
