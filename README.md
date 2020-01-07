@@ -311,7 +311,7 @@ Sample response
 ```
 
 
-<a name="#email-templates-post--get"></a>Email Templates (POST/GET)
+<a name="#email-templates-post--get"></a>Email Templates (POST / GET)
 -------------
 If you are migrating from another email sending provider and more email templates than you can manually transfer over, you can import them using the /email_templates endpoint.
 
