@@ -12,7 +12,7 @@ Endpoints
 4. [Contact Lists (POST/GET)](#contact-lists-post--get)
 5. [User Reputation (GET)](#user-reputation-get)
 6. [Log Completed Task (POST)](#log-completed-task-post)
-7. [Email Templates (POST)](#email-templates-post)
+7. [Email Templates (POST/GET)](#email-templates-post--get)
 8. [Files (POST/GET)](#files-post--get)
 9. [Emails (POST)](#emails-post)
 
@@ -311,7 +311,7 @@ Sample response
 ```
 
 
-<a name="#email-templates"></a>Email Templates (POST)
+<a name="#email-templates"></a>Email Templates (POST/GET)
 -------------
 If you are migrating from another email sending provider and more email templates than you can manually transfer over, you can import them using the /email_templates endpoint.
 
@@ -339,6 +339,47 @@ Sample response
     "landing_page": "link goes here" //only if you enable a landing page for the email template
 }
 ```
+
+#### GET Templates(s)
+```
+GET /email_templates
+```
+GET a list of your email templates or a specific template by id. If no email template is found, the response will be code 422 with the message "No template was found."
+
+Sample responses
+```   
+GET /email_templates
+{ 
+  [
+    "0" : [
+      "email_template_id" : 123
+      "title" : "This is my title",
+      "update_date" : 2020-01-05 04:00:11
+    ]
+  ]
+}
+
+GET /email_templates?query=title
+{ 
+  [
+    "0" : [
+      "email_template_id" : 123
+      "title" : "This is my title",
+      "update_date" : 2020-01-05 04:00:11
+    ]
+  ]
+}
+
+GET /email_templates/123
+{ 
+  "email_template_id" : 123
+  "title" : "This is my title",
+  "subject" : "This is my subject",
+  "copy" : "<div>html of your email template here</div>"
+}
+
+```
+
 
 <a name="#files-post--get"></a>Files (POST / GET)
 -------------
