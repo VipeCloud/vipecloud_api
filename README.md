@@ -344,7 +344,7 @@ Sample response
 ```
 GET /email_templates
 ```
-GET a list of your email templates or a specific template by id. If no email template is found, the response will be code 422 with the message "No template was found."
+GET a list of your email templates, search for an email template by title, or a get specific template by id. If no email template is found, the response will be code 422 with the message "No template was found."
 
 Sample responses
 ```   
