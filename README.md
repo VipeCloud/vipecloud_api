@@ -346,6 +346,8 @@ GET /email_templates
 ```
 GET a list of your email templates, search for an email template by title, or a get specific template by id. If no email template is found, the response will be code 422 with the message "No template was found."
 
+A note on access: in the API we only return email templates *owned* by the user. We do not return email templates the user can access via Shared With Me.
+
 Sample responses
 ```   
 GET /email_templates
