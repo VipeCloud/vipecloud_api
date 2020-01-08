@@ -246,7 +246,7 @@ The response to this POST will be a status of success or error. On success the c
 ```
 GET /contact_lists(/:id)
 ```
-Returns an individual record or array of the lists that a user has in VipeCloud
+Returns an individual record or array of the lists that a user has in VipeCloud. Optionally add the parameter hide_system_lists to the url to remove system lists from the result (e.g. /contact_lists?hide_system_lists=1)
 ```   
 { 
   [
@@ -255,6 +255,7 @@ Returns an individual record or array of the lists that a user has in VipeCloud
       "contact_list_name" : "New Customers",  
       "create_date" : "2014-09-03 08:30:39",
       "active_count": 16 //note that bounces, unsubscribes, and verified undeliverable contacts are automatically removed
+      "source" : "upload_csv"
     },
     {
     ...
@@ -444,7 +445,7 @@ contact_list_id | integer | yes or emails | Required param if sending to contact
 subject | string | yes or email_template_id | Required if no email_template_id.
 message | string | yes or email_template_id | Required if no email_template_id.
 email_template_id | integer | yes or subject and message | Send email to email template. Replaces requirement for subject and message.
-filters | array of arrays | no | Filter contacts within a contact list at the time of send. If you include the filters parameter our system will create a new, system-generated list based on which contacts meet your filters within the contact_list_id that is also submitted. Each filter must include a field_type (standard or custom), id (if standard a slug, if custom the custom_field_id), an operator (accepted values include equals, less_than, greater_than, less_than_or_equal_to, or greater_than_or_equal_to), and a value.
+filters | array | no | Filter contacts within a contact list at the time of send. If you include the filters parameter our system will create a new, system-generated list based on which contacts meet your filters within the contact_list_id that is also submitted. Each group of filters within the filters array must include a field_type (standard or custom), id (if standard a slug, if custom the custom_field_id), an operator (accepted values include equals, less_than, greater_than, less_than_or_equal_to, or greater_than_or_equal_to), and a value. Contacts that meet all filters within any of the filter groups will be added to the system-generated list.
 test_filters | boolean | no | Will test your filters and NOT send the email. Will return the number of contacts in your original list and after your filters have been applied.
 
 
@@ -458,16 +459,18 @@ Sample body.
   "email_template_id": 67890,
   "filters":[
     "0" : [
-      "field_type" : "standard",
-      "id" : "first_name", 
-      "operator" : "equals",
-      "value" : "Wiley"
-    ],
-    "1" : [
-      "field_type" : "custom",
-      "id" : "123", 
-      "operator" : "greater_than",
-      "value" : "1000"
+      "0" : [
+        "field_type" : "standard",
+        "id" : "first_name", 
+        "operator" : "equals",
+        "value" : "Wiley"
+      ],
+      "1" : [
+        "field_type" : "custom",
+        "id" : "123", 
+        "operator" : "greater_than",
+        "value" : "1000"
+      ]
     ]
   ],
   "test_filters" : true
