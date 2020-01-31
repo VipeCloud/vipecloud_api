@@ -389,6 +389,8 @@ GET /email_templates/123
 -------------
 Add, update, and retrieve files from your user accounts. If you are migrating from another system and have more files than you can manually transfer over (images, videos, documents, etc.), you can import them using the /files endpoint.
 
+#### POST File(s)
+
 ```
 POST /files(/:id)
 ``` 
@@ -414,7 +416,7 @@ Sample response
 }
 ```
 
-Sample body when *updating* an existing file (e.g. POST to /files/123 ). You can update the file_name or tags associated with a file.
+Sample body when *updating* an existing file (e.g. POST to /files/123 ). You can update the file_name or tag_ids associated with a file.
 
 ```   
 {
@@ -472,6 +474,8 @@ Sample response to get files by file_name (url encoded) or tag_id. Array of file
 <a name="#emails-post"></a>Emails (POST)
 -------------
 Send emails via a POST. 
+
+#### POST Email(s)
 
 ```
 POST /emails
@@ -535,6 +539,97 @@ You don't have access to that email template.
 All filters are required to have field_type, id, operator, and value parameters.
 ABCXYZ is not a valid contact standard field.
 ABCXYZ is not a valid operator.
+
+
+<a name="#tags-post--get--delete"></a>Tags (POST / GET / DELETE)
+-------------
+Create, update, retrieve, and delete tags for your users. Tags utilized via the API can be attributed to files. 
+
+#### POST Tag(s)
+
+```
+POST /tags(/:id)
+``` 
+
+Sample body when *creating* a new tag
+
+```   
+{
+  "tag_name" : "My Tag Name", //required
+}
+```
+
+Sample response
+```
+{
+    "status": "success",
+    "tag_id" : "123"
+}
+```
+
+Sample body when *updating* an existing tag (e.g. POST to /tags/123 ). You can update the tag_name.
+
+```   
+{
+  "tag_name" : "My Tag Name 2", //required
+}
+```
+
+Sample response
+```
+{
+    "status": "success",
+    "tag_id" : "123",
+    "tag_name" : "My Tag Name 2"
+}
+```
+
+#### GET Tag
+```
+GET /tags(/:id)
+```
+Retrieve tags by id or as a group. If no tag is found, the response will be code 422 with the message "No tag was found."
+
+Sample response to get tag by id. GET /tags/123
+```   
+{     
+    "tag_id" : "123",
+    "tag_name" : "My Tag Name 2"
+}
+```
+
+Sample response to get tags with no id. Array of tags is returned. GET /tags
+```   
+{ 
+    [
+      "id": "123",
+      "tag_name" : "My Tag Name 2"
+    ],...
+}
+```
+
+#### DELETE Tag
+```
+DLETE /tags/:id
+```
+Delete tag by id. If no tag is found, the response will be code 422 with the message "No tag was found."
+
+Sample response to delete tag by id. DELETE /tags/123
+```   
+{     
+    "status" : "success
+}
+```
+
+
+
+
+
+
+
+
+
+
 
 
 
