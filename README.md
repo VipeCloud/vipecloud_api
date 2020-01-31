@@ -15,6 +15,7 @@ Endpoints
 7. [Email Templates (POST/GET)](#email-templates-post--get)
 8. [Files (POST/GET)](#files-post--get)
 9. [Emails (POST)](#emails-post)
+10. [Tags (POST/GET/DELETE)](#tags-post--get--delete)
 
 
 <a name="#overview"></a>Overview
@@ -386,13 +387,13 @@ GET /email_templates/123
 
 <a name="#files-post--get"></a>Files (POST / GET)
 -------------
-If you are migrating from another system and have more files than you can manually transfer over (images, videos, documents, etc.), you can import them using the /files endpoint.
+Add, update, and retrieve files from your user accounts. If you are migrating from another system and have more files than you can manually transfer over (images, videos, documents, etc.), you can import them using the /files endpoint.
 
 ```
-POST /files
+POST /files(/:id)
 ``` 
 
-Body params
+Sample body when *creating* a new file
 
 ```   
 {
@@ -406,19 +407,43 @@ Sample response
 ```
 {
     "status": "success",
+    "id" : "123",
     "download_link": "link goes here",
     "trackable_link": "link goes here" //this is a trackable VipeCloud link
     "thumb_url": "link goes here" //only included for video file uploads
 }
 ```
 
-#### GET File
+Sample body when *updating* a new file (e.g. POST to /files/123 ). You can update the file_name or tags associated with a file.
+
+```   
+{
+  "file_name" : "My File",
+  "tag_ids" : ["1","2"]
+}
 ```
-GET /files?file_name=MyImage.png
-```
-Search your account for a file by a urlencoded file_name. If no file is found, the response will be code 422 with the message "No file was found."
 
 Sample response
+```
+{
+    "id": "123",
+    "file_name" : "My File",
+    "download_link": "link goes here",
+    "trackable_link": "link goes here" //this is a trackable VipeCloud link
+    "create_date": "2020-01-28 23:03:23", 
+    "tag_ids" : ["1","2"]
+}
+```
+
+
+
+#### GET File
+```
+GET /files(/:id)
+```
+Retrieve files by id or search your account for files by file_name (url encoded) or tag_id. Responses are limited to a maximum of 50 files. If no file is found, the response will be code 422 with the message "No file was found."
+
+Get file by id sample response. GET /files/123
 ```   
 { 
     "status" : "success",
