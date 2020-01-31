@@ -414,7 +414,7 @@ Sample response
 }
 ```
 
-Sample body when *updating* a new file (e.g. POST to /files/123 ). You can update the file_name or tags associated with a file.
+Sample body when *updating* an existing file (e.g. POST to /files/123 ). You can update the file_name or tags associated with a file.
 
 ```   
 {
@@ -443,14 +443,29 @@ GET /files(/:id)
 ```
 Retrieve files by id or search your account for files by file_name (url encoded) or tag_id. Responses are limited to a maximum of 50 files. If no file is found, the response will be code 422 with the message "No file was found."
 
-Get file by id sample response. GET /files/123
+Sample response to get file by id. GET /files/123
 ```   
 { 
-    "status" : "success",
-    "file_name" : "MyImage.png", 
+    "id": "123",
+    "file_name" : "My File",
     "download_link": "link goes here",
     "trackable_link": "link goes here" //this is a trackable VipeCloud link
-    "thumb_url": "link goes here" //only included for video file uploads 
+    "create_date": "2020-01-28 23:03:23", 
+    "tag_ids" : ["1","2"]
+}
+```
+
+Sample response to get files by file_name (url encoded) or tag_id. Array of files is returned. GET /files?file_name=My%20File or /files?tag_id=1
+```   
+{ 
+    [
+      "id": "123",
+      "file_name" : "My File",
+      "download_link": "link goes here",
+      "trackable_link": "link goes here" //this is a trackable VipeCloud link
+      "create_date": "2020-01-28 23:03:23", 
+      "tag_ids" : ["1","2"]
+    ],...
 }
 ```
 
