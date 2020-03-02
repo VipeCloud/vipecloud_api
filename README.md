@@ -111,6 +111,7 @@ Sample post body below.
    "state" : "CA", 
    "zip" : "12345", 
    "country" : "USA", 
+   "unsubscribe" : 0,
    "personal_linkedin_url" : "https://www.linkedin.com/...",
    "personal_twitter_url" : "https://www.twitter.com/...",
    "personal_facebook_url" : "https://www.facebook.com/...",
