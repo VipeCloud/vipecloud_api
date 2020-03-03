@@ -688,7 +688,7 @@ Attribute | type | required | description
 id | integer | yes if update / no if create | AutoResponder id 
 contact_list_id | integer | yes | Contact list id 
 template_type | enum | yes | "email" or "series" 
-contact_list_id | integer | yes | The id of the email or series template 
+template_id | integer | yes | The id of the email or series template 
 trigger | enum | yes | "contact" or "recurring" or "custom_field"<br>Trigger details:<br>- If "contact" must also include "delay_days", "delay_hours", and "delay_min" paramenters.<br>- If "recurring" must also include "day", "hour", "min", and "ampm" parameters. Optionally "weekday_only" can be set to "on".<br>- If "custom_field" must also include "custom_field_id", "hour", "min", and "ampm" parameters.
 
 
