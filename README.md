@@ -17,6 +17,7 @@ Endpoints
 9. [Emails (POST)](#emails-post)
 10. [Tags (POST/GET/DELETE)](#tags-post--get--delete)
 11. [User Merge Tags (POST/GET)](#user-merge-tags-post--get)
+12. [AutoResponders (POST/GET)](#autoresponders-post--get)
 
 
 <a name="#overview"></a>Overview
@@ -672,6 +673,74 @@ Sample response to get all user merge tags. GET /user_merge_tags
       "id": "123",
       "merge_tag" : "%YOUR_USER_MERGE_TAG%",
       "value" : "New Value"
+    ],...
+}
+```
+
+<a name="#autoresponders-post--get"></a>AutoResponders (POST / GET)
+-------------
+Create, update, and retrieve AutoResponders from your user accounts. 
+
+#### POST AutoResponder
+
+Attribute | type | required | description |
+--- | --- | --- | --- |
+id | integer | yes if update / no if create | AutoResponder id |
+contact_list_id | integer | yes | Contact list id |
+template_type | enum | yes | "email" or "series" |
+contact_list_id | integer | yes | The id of the email or series template |
+trigger | enum | yes | "contact" or "recurring" or "custom_field"
+Trigger details:
+If "contact" must also include "delay_days", "delay_hours", and "delay_min" paramenters.
+If "recurring" must also include "day", "hour", "min", and "ampm" parameters. Optionally "weekday_only" can be set to "on"
+If "custom_field" must also include "custom_field_id", "hour", "min", and "ampm" parameters. |
+
+
+```
+POST /autoresponders(/:id)
+``` 
+
+
+#### GET AutoResponders
+```
+GET /autoresponders(/:id)
+```
+Retrieve autoresponders by id or retrieve a list of all autoresponder in the user's account. 
+
+Sample response to get user_merge_tag by id. GET /autoresponders/123
+```   
+{ 
+    "id" : 123,
+    "contact_list_id" : 123,
+    "contact_list_name" : "My contact list",
+    "template_type" : "email",
+    "template_id" : 123,
+    "template_title" : "My email template",
+    "trigger" : "contact",
+    "delay_days" : 0,
+    "delay_hours" : 0,
+    "delay_min" : 0,
+    "schedule_data" : null,
+    "weekday_only" : null
+}
+```
+
+Sample response to get all user merge tags. GET /autoresponders
+```   
+{ 
+    [
+      "id" : 123,
+      "contact_list_id" : 123,
+      "contact_list_name" : "My contact list",
+      "template_type" : "email",
+      "template_id" : 123,
+      "template_title" : "My email template",
+      "trigger" : "contact",
+      "delay_days" : 0,
+      "delay_hours" : 0,
+      "delay_min" : 0,
+      "schedule_data" : null,
+      "weekday_only" : null
     ],...
 }
 ```
