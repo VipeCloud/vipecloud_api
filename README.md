@@ -18,6 +18,7 @@ Endpoints
 10. [Tags (POST/GET/DELETE)](#tags-post--get--delete)
 11. [User Merge Tags (POST/GET)](#user-merge-tags-post--get)
 12. [AutoResponders (POST/GET)](#autoresponders-post--get)
+13. [Series Templates (POST/GET)](#series-templates-post--get)
 
 
 <a name="#overview"></a>Overview
@@ -715,9 +716,9 @@ Sample body when creating an AutoResponder.
 ```
 GET /autoresponders(/:id)
 ```
-Retrieve autoresponders by id or retrieve a list of all autoresponder in the user's account. 
+Retrieve autoresponders by id or retrieve a list of all autoresponders in the user's account. 
 
-Sample response to get user_merge_tag by id. GET /autoresponders/123
+Sample response to get autoresponders by id. GET /autoresponders/123
 ```   
 { 
     "id" : 123,
@@ -735,7 +736,7 @@ Sample response to get user_merge_tag by id. GET /autoresponders/123
 }
 ```
 
-Sample response to get all user merge tags. GET /autoresponders
+Sample response to get all autoresponders. GET /autoresponders
 ```   
 { 
     [
@@ -751,6 +752,49 @@ Sample response to get all user merge tags. GET /autoresponders
       "delay_min" : 0,
       "schedule_data" : null,
       "weekday_only" : null
+    ],...
+}
+```
+
+<a name="#series-templates-post--get"></a>Series Templates (POST / GET)
+-------------
+Create, update, and retrieve Series Templates from your user accounts. 
+
+#### POST Series Template
+
+Attribute | type | required | description 
+--- | --- | --- | --- 
+id | integer | yes if update / no if create | Series template id 
+
+
+
+```
+POST /series_templates(/:id)
+``` 
+
+
+#### GET Series Templates
+```
+GET /series_templates(/:id)
+```
+Retrieve series templates by id or retrieve a list of all series templates in the user's account. 
+
+Sample response to get series templates by id. GET /series_templates/123
+```   
+{ 
+    "id" : 123,
+    "title" : "My Series Template,
+    "update_date" : "2019-07-24 23:00:31"
+}
+```
+
+Sample response to get all series templates. GET /series_templates
+```   
+{ 
+    [
+      "id" : 123,
+      "title" : "My Series Template,
+      "update_date" : "2019-07-24 23:00:31"
     ],...
 }
 ```
