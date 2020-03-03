@@ -700,10 +700,8 @@ Sample body when creating an AutoResponder.
 ```   
 {
     "contact_list_id" : 123,
-    "contact_list_name" : "My contact list",
     "template_type" : "email",
     "template_id" : 123,
-    "template_title" : "My email template",
     "trigger" : "contact",
     "delay_days" : 0,
     "delay_hours" : 0,
