@@ -816,7 +816,7 @@ Create, update, and retrieve Series Template Steps from your user accounts. Use 
 Attribute | type | required | description 
 --- | --- | --- | --- 
 delay_days | integer | yes | The number of days to delay this step after the prior step. Note that the first step in a series template will always have the delay days set to 0, regardless of this value.
-template | integer | yes | Email template id
+email_template_id | integer | yes | Email template id
 series_template_id | integer | no | Note the system will automatically assign this value when the series template step id is included in a POST to /series_templates. IMPORTANT: a series template step can only be associated with ONE series template. 
 action | string | no | This value will ALWAYS be set to "send a new email" for series template steps created via the API.
 hour | integer | no | Optionally set the hour of the day this step will process. Disregarded for the first step.
@@ -832,7 +832,7 @@ Sample body when creating a Series Template Step. NOTE - if you UPDATE a series 
 ```   
 {
     "delay_days" : 7,
-    "template" : 123,
+    "email_template_id" : 123,
     "hour" : 12,
     "min" : 0,
     "ampm" : "pm",
@@ -854,7 +854,7 @@ Sample response to get series template steps by id. GET /series_template_steps/1
     "series_template_id" : 123,
     "delay_days" : 7,
     "action" : "send a new email",
-    "template" : 123,
+    "email_template_id" : 123,
     "weekday" : true,
     "hour" : 12,
     "min" : 0,
@@ -870,7 +870,7 @@ Sample response to get all series template steps. GET /series_template_steps
       "series_template_id" : 123,
       "delay_days" : 7,
       "action" : "send a new email",
-      "template" : 123,
+      "email_template_id" : 123,
       "weekday" : true,
       "hour" : 12,
       "min" : 0,
