@@ -21,6 +21,7 @@ Endpoints
 13. [Series Templates (POST/GET)](#series-templates-post--get)
 13. [Series Template Steps (POST/GET)](#series-template-steps-post--get)
 14. [Social Accounts (GET)](#social-accounts-get)
+10. [Social Post (POST/GET/DELETE)](#social-post-post--get--delete)
 
 
 <a name="#overview"></a>Overview
@@ -883,7 +884,7 @@ Sample response to get all series template steps. GET /series_template_steps
 
 <a name="#social-accounts-get"></a>Social Accounts (GET)
 -------------------------------------
-Get a user's connected social accounts.
+Retrieve a user's connected social accounts.
 
 #### GET account custom fields
 ```
@@ -901,5 +902,77 @@ The response to this GET will be an array of the user's social accounts or the d
       "create_date" => "2020-03-22 16:45:37"
     }
   ]
+}
+```
+
+<a name="#social-post-post--get--delete"></a>Social Post (POST / GET / DELETE)
+-------------
+Create, update, retrieve, and delete social posts for your users.
+
+#### POST Social Post
+
+Attribute | type | required | description 
+--- | --- | --- | --- 
+social_account_id | integer | yes | The id for the social account of the user to make the post.
+comment_data | array | yes | The comment_data array can support three keys: comment (string), images (array), and link (string). It is required to have at least one of the comment or the images keys in your post.
+schedule_data | array | yes | The schedule_data array requires four keys: scheduled_date (string), hour (string), min (string), and ampm (string).
+
+```
+POST /social_post(/:id)
+``` 
+Sample body when creating a Social Post.
+
+```   
+{
+    "social_account_id" : 123,
+    "comment_data" : [
+        "comment" : "Hello World!",
+        "images" : [],
+        "link" : ""
+    ],
+    "schedule_data" : [
+        "scheduled_date" : "2020-03-23",
+        "hour" : "5",
+        "min" : "0",
+        "ampm" : "pm"
+    ]
+}
+```
+
+
+#### GET Social Post
+```
+GET /social_post(/:id)
+```
+Retrieve the most recent 50 social posts or a single social post by id.
+```   
+{ 
+    [
+      {
+        "social_account_id" : 123,
+        "comment_data" : [
+            "comment" : "Hello World!",
+            "images" : [],
+            "link" : ""
+        ],
+        "schedule_data" : [
+            "scheduled_date" : "2020-03-23",
+            "hour" : "5",
+            "min" : "0",
+            "ampm" : "pm"
+        ]
+      }
+    ]
+}
+```
+
+#### DELETE Social Post
+```
+DELETE /social_post/:id
+```
+Delete a social post by id.
+```   
+{ 
+    "status" : "success"
 }
 ```
