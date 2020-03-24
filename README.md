@@ -881,7 +881,7 @@ Sample response to get all series template steps. GET /series_template_steps
 ```
 
 
-<a name="#social-accounts-get"></a>Social Acounts (GET)
+<a name="#social-accounts-get"></a>Social Accounts (GET)
 -------------------------------------
 Get a user's connected social accounts.
 
