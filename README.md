@@ -499,6 +499,7 @@ message | string | yes or email_template_id | Required if no email_template_id.
 email_template_id | integer | yes or subject and message | Send email to email template. Replaces requirement for subject and message.
 filters | array | no | Filter contacts within a contact list at the time of send. If you include the filters parameter our system will create a new, system-generated list based on which contacts meet your filters within the contact_list_id that is also submitted. Each group of filters within the filters array must include a field_type (standard or custom), id (if standard a slug, if custom the custom_field_id), an operator (accepted values include equals, less_than, greater_than, less_than_or_equal_to, or greater_than_or_equal_to), and a value. Contacts that meet all filters within any of the filter groups will be added to the system-generated list.
 test_filters | boolean | no | Will test your filters and NOT send the email. Will return the number of contacts in your original list and after your filters have been applied.
+schedule_data | array | no | The schedule_data array requires four keys: scheduled_date (string), hour (string), min (string), and ampm (string).
 
 
 Sample body. 
@@ -525,7 +526,13 @@ Sample body.
       ]
     ]
   ],
-  "test_filters" : true
+  "test_filters" : true,
+  "schedule_data" : [
+      "scheduled_date" : "2020-06-30",
+      "hour" : "12",
+      "min" : "15",
+      "ampm" : "pm"
+  ]
 }
 ```
 Sample 200 responses:
@@ -535,6 +542,7 @@ Post Type | Response
 Specific emails | `{"emails":[{"email":"roadrunner@acme.com","status":"correct"},{"email":"wile.e.coyote@acme.com","status":"correct"}]}`
 Contact list | `{"emails":"queue"}`
 Test filters | `{"original_list_contacts": 100, "filtered_list_contacts" : 15, "view_filtered_contacts" : link_to_system_generated_contact_list }`
+Scheduled email | `{"emails":"scheduled"}`
 
 Sample 422 responses:
 
