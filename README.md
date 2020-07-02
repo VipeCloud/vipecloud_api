@@ -499,7 +499,7 @@ message | string | yes or email_template_id | Required if no email_template_id.
 email_template_id | integer | yes or subject and message | Send email to email template. Replaces requirement for subject and message.
 filters | array | no | Filter contacts within a contact list at the time of send. If you include the filters parameter our system will create a new, system-generated list based on which contacts meet your filters within the contact_list_id that is also submitted. Each group of filters within the filters array must include a field_type (standard or custom), id (if standard a slug, if custom the custom_field_id), an operator (accepted values include equals, less_than, greater_than, less_than_or_equal_to, or greater_than_or_equal_to), and a value. Contacts that meet all filters within any of the filter groups will be added to the system-generated list.
 test_filters | boolean | no | Will test your filters and NOT send the email. Will return the number of contacts in your original list and after your filters have been applied.
-schedule_data | array | no | The schedule_data array requires four keys: scheduled_date (string), hour (string), min (string), and ampm (string).
+schedule_data | array | no | The schedule_data array requires four keys: scheduled_date (string formmated as YYYY-MM-DD), hour (string, no leading 0), min (string, no leading 0), and ampm (string).
 
 
 Sample body. 
@@ -701,7 +701,7 @@ Attribute | type | required | description
 contact_list_id | integer | yes | Contact list id 
 template_type | enum | yes | "email" or "series" 
 template_id | integer | yes | The id of the email or series template 
-trigger | enum | yes | "contact" or "recurring" or "custom_field"<br>Trigger details:<br>- If "contact" must also include "delay_days", "delay_hours", and "delay_min" paramenters.<br>- If "recurring" must also include "day", "hour", "min", and "ampm" parameters. Optionally "weekday_only" can be set to "on".<br>- If "custom_field" must also include "custom_field_id", "hour", "min", and "ampm" parameters.
+trigger | enum | yes | "contact" or "recurring" or "custom_field"<br>Trigger details:<br>- If "contact" must also include "delay_days", "delay_hours", and "delay_min" paramenters.<br>- If "recurring" must also include "day", "hour", "min", and "ampm" parameters (no leading 0's). Optionally "weekday_only" can be set to "on".<br>- If "custom_field" must also include "custom_field_id", "hour", "min", and "ampm" parameters.
 
 
 ```
@@ -830,8 +830,8 @@ delay_days | integer | yes | The number of days to delay this step after the pri
 email_template_id | integer | yes | Email template id
 series_template_id | integer | no | Note the system will automatically assign this value when the series template step id is included in a POST to /series_templates. IMPORTANT: a series template step can only be associated with ONE series template. 
 action | string | no | This value will ALWAYS be set to "send a new email" for series template steps created via the API.
-hour | integer | no | Optionally set the hour of the day this step will process. Disregarded for the first step.
-min | integer | no | Optionally set the minute of the hour this step will process. Disregarded for the first step.
+hour | integer | no | Optionally set the hour of the day this step will process. Disregarded for the first step. No leading zero.
+min | integer | no | Optionally set the minute of the hour this step will process. Disregarded for the first step. No leading zero.
 ampm | enum "am" or "pm" | no | Optionally set the am or pm of the day this step will process. Disregarded for the first step. NOTE to set the time for the step to process EACH of the hour, min, and ampm parameters need to be set.
 weekday | boolean | no | Optionally set the step to only process on a weekday.
 
@@ -924,7 +924,7 @@ Attribute | type | required | description
 --- | --- | --- | --- 
 social_account_id | integer | yes | The id for the social account of the user to make the post.
 comment_data | array | yes | The comment_data array can support three keys: comment (string), images (array of URL strings), and link (string). It is required to have at least one of the comment or the images keys in your post.
-schedule_data | array | yes | The schedule_data array requires four keys: scheduled_date (string), hour (string), min (string), and ampm (string).
+schedule_data | array | yes | The schedule_data array requires four keys: scheduled_date (string, formatted YYYY-MM-DD), hour (string, no leading zero), min (string, no leading zero), and ampm (string).
 
 ```
 POST /social_post(/:id)
@@ -996,7 +996,7 @@ Attribute | type | required | description
 --- | --- | --- | --- 
 social_group_id | integer | yes | The id for the social group of the user to make the post.
 comment_data | array | yes | The comment_data array can support three keys: comment (string), images (array of URL strings), and link (string). It is required to have at least one of the comment or the images keys in your post.
-schedule_data | array | yes | The schedule_data array requires four keys: scheduled_date (string), hour (string), min (string), and ampm (string).
+schedule_data | array | yes | The schedule_data array requires four keys: scheduled_date (string, formatted YYYY-MM-DD), hour (string, no leading zero), min (string, no leading zero), and ampm (string).
 
 ```
 POST /social_group_post(/:id)
