@@ -1141,7 +1141,7 @@ Send texts via a POST.
 #### POST Text(s)
 
 ```
-POST /text
+POST /texts
 ``` 
 
 Attribute | type | required | description
