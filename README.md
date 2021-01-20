@@ -25,6 +25,7 @@ Endpoints
 17. [Social Group Post (POST/GET/DELETE)](#social-group-post-post--get--delete)
 18. [Text Templates (POST/GET)](#text-templates-post--get)
 19. [Texts (POST)](#texts-post)
+20. [Unsubscribes (POST)](#unsubscribes-post)
 
 
 <a name="#overview"></a>Overview
@@ -1206,3 +1207,35 @@ You don't have access to that text template.
 All filters are required to have field_type, id, operator, and value parameters.
 ABCXYZ is not a valid contact standard field.
 ABCXYZ is not a valid operator.
+
+
+<a name="#unsubscribes-post"></a>Unsubscribes (POST)
+-------------
+Manually add unsubscribed email addresses for a user via a POST. 
+
+#### POST Unsubscribe
+
+```
+POST /unsubscribes
+``` 
+
+Attribute | type | required | description
+--- | --- | --- | ---
+email | string | yes | The email address to add to the unsubscribe list for this user.
+
+Sample body. 
+
+```   
+{
+  "email": "wiley.e.coyote@acme.com"
+}
+```
+
+Sample 200 response below. Note that if an email is already unsubscribed for this user the response will still be a 200 but the status will say 'already_unsubscribed'.
+```   
+{
+  "email": "wiley.e.coyote@acme.com",
+  "status": "success"
+}
+```
+
