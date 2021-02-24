@@ -1255,8 +1255,8 @@ Story Attribute | type | required | description
 --- | --- | --- | ---
 id | integer | yes if updating, no if creating new | The id of the story.
 title | string | yes | The title of your story. Text string.
-description | string | yes | The description for your story. HTMl allowed. Empty value also allowed.
-call_to_action | string | yes | The call to action for your story. HTMl allowed. Empty value also allowed (though not suggested).
+description | string | yes | The description for your story. HTML allowed. Empty value also allowed.
+call_to_action | string | yes | The call to action for your story. HTML allowed. Empty value also allowed (though not suggested).
 bg_music | integer | no | The id of the music track.
 chapters | array | yes | Your story chapters. See Chapter Attributes below.
 update_video | integer | no | Set to 1 if you want to encode the story as a video.
