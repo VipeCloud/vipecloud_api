@@ -107,11 +107,11 @@ Sample post body below.
 { 
    "first_name" : "Road", //required
    "last_name" : "Runner", 
-   "email" : "email", //required
+   "email" : "email", //email or mobile_phone required
    "title" : "Evader",
    "website" : "www.acme.com", 
    "work_phone" : "1234567890", 
-   "mobile_phone" : "1234567891", 
+   "mobile_phone" : "1234567891", //email or mobile_phone required
    "direct_phone" : "1234567892", 
    "phone" : "1234567893", 
    "company_name" : "Acme", 
