@@ -6,7 +6,7 @@ VipeCloud API v3.1
 
 Endpoints
 -------------
-1. [Users (GET)](#user-get)
+1. [Users (GET)](#users-get)
 2. [Contacts (POST/GET)](#contacts-post--get)
 3. [Custom Fields (GET)](#custom-fields-get)
 4. [Contact Lists (POST/GET)](#contact-lists-post--get)
