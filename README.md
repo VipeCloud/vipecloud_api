@@ -135,7 +135,9 @@ Sample post body below.
    "contact_lists" : [ //an array of contact_list_ids.
       "0" => 123,
       "1" => 1234
-   ]
+   ],
+   "add_to_contact_lists" : [ 123 ], //optional parameter that accepts an array of contact_list_ids to add the contact directly to a set of lists
+   "remove_from_contact_lists" : [ 1234 ] //optional parameter that accepts an array of contact_list_ids to remove the contact directly from a set of lists
 }
 ```
 
