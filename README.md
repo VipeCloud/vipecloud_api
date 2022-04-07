@@ -29,6 +29,7 @@ Endpoints
 21. [Stories (POST/GET)](#stories-post--get)
 22. [Social Connect (POST)](#social-connect-post)
 23. [Social Account Groups (POST/GET)](#social-account-groups-post--get)
+24. [Zoom Background (POST)](#zoom-background-post)
 
 
 <a name="#overview"></a>Overview
@@ -710,7 +711,7 @@ Attribute | type | required | description
 contact_list_id | integer | yes | Contact list id 
 template_type | enum | yes | "email" or "series" 
 template_id | integer | yes | The id of the email or series template 
-trigger | enum | yes | "contact" or "recurring" or "custom_field"<br>Trigger details:<br>- If "contact" must also include "delay_days", "delay_hours", and "delay_min" paramenters.<br>- If "recurring" must also include "day", "hour", "min", and "ampm" parameters (no leading 0's). Optionally "weekday_only" can be set to "on".<br>- If "custom_field" must also include "custom_field_id", "hour", "min", and "ampm" parameters.
+trigger | enum | yes | "contact" or "recurring" or "custom_field"<br>Trigger details:<br>- If "contact" must also include "delay_days", "delay_hours", and "delay_min" parameters. May also include "contact_trigger_hours" (1/0), "contact_trigger_from_hour" (1-12), "contact_trigger_from_min" (0-59), "contact_trigger_from_ampm" (am/pm), "contact_trigger_to_hour" (1-12), "contact_trigger_to_min" (0-59), "contact_trigger_to_ampm" (am/pm)<br>- If "recurring" must also include "day", "hour", "min", and "ampm" parameters (no leading 0's). Optionally "weekday_only" can be set to "on".<br>- If "custom_field" must also include "custom_field_id", "hour", "min", and "ampm" parameters.
 
 
 ```
@@ -1490,4 +1491,49 @@ GET /social_account_groups/123
   'create_date' : '2021-09-14 21:45:44'
 }
 
+```
+
+<a name="#zoom-background-post"></a>Zoom Background (POST)
+-------------
+Create and upload custom virtual backgrounds with a QR Code to your Zoom account. 
+
+NOTE: This endpoint is in BETA and requires invite only access.
+
+#### POST Zoom Background
+
+```
+POST /zoom_background
+``` 
+
+Attribute | type | required | description
+--- | --- | --- | ---
+title | string | yes | The title of the image to add to your Zoom virtual background library.
+action | enum (create_preview, upload_image_url) | yes | Which virtual background action is this endpoint taking?
+image_url | string | yes | The image you want to use as your background. Will be cropped to 16x9 if it is not submitted in those dimensions.
+url | string | no | The url destination for the QR Code.
+url_location | enum (top-right (default), top-left, bottom-right, bottom-left) | yes if url parameter provided | The location of the QR Code on the image
+text | array | no | An array of up to 3 strings for 3 rows of text (e.g. Your Name, Your Title, Your Company Name)
+text_location | enum (top-right, top-left (default), bottom-right, bottom-left) | yes if text parameter provided | The location of your text on your image.
+font_color | enum (white (default) or black) | yes if text parameter provided | The color of the text overlay.
+
+
+
+Sample body. 
+
+```   
+{
+  "title": "My First Background",
+  "action" : "create_preview",
+  "image_url" : "https://myimageurl.com", //a 16x9 image
+  "url" : "https://vipecloud.com",
+  "url_location" : "top-right"
+}
+```
+
+Sample 200 response below.
+```   
+{
+  "status": "success",
+  "background_url" : "https://vipecloud.com/your_zoom_virtual_background"
+}
 ```
