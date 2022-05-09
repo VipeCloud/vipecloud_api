@@ -12,7 +12,7 @@ Endpoints
 4. [Contact Lists (POST/GET)](#contact-lists-post--get)
 5. [User Reputation (GET)](#user-reputation-get)
 6. [Log Completed Task (POST)](#log-completed-task-post)
-7. [Email Templates (POST/GET)](#email-templates-post--get)
+7. [Email Templates (POST/PUT/GET)](#email-templates-post--put--get)
 8. [Files (POST/GET)](#files-post--get)
 9. [Emails (POST)](#emails-post)
 10. [Tags (POST/GET/DELETE)](#tags-post--get--delete)
@@ -330,10 +330,11 @@ Sample response
 ```
 
 
-<a name="#email-templates-post--get"></a>Email Templates (POST / GET)
+<a name="#email-templates-post--put--get"></a>Email Templates (POST / PUT / GET)
 -------------
-If you are migrating from another email sending provider and more email templates than you can manually transfer over, you can import them using the /email_templates endpoint.
+If you are migrating from another email sending provider and more email templates than you can manually transfer over, you can import them using the /email_templates endpoint. You can also edit your email templates with a PUT.
 
+#### POST Template
 ```
 POST /email_templates
 ``` 
@@ -359,7 +360,32 @@ Sample response
 }
 ```
 
-#### GET Templates(s)
+#### PUT Template
+```
+PUT /email_templates/:id
+``` 
+
+Body params
+
+```   
+{
+  "title" : "My Email Template", //optional
+  "subject" : "My Email Subject", //optional
+  "copy" : "Hi there, this is my email template copy....", //optional. HTML is allowed.
+  "landing_page" : 1, //optional, can be a 1 or a 0. If a 1 we will respond with a link to the landing page
+}
+```
+
+Sample response
+```
+{
+    "status": "success",
+    "email_template_id": 123,
+    "landing_page": "link goes here" //only if you enable a landing page for the email template
+}
+```
+
+#### GET Template(s)
 ```
 GET /email_templates
 ```
