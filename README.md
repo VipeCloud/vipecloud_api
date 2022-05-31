@@ -67,7 +67,7 @@ curl_setopt($curl, CURLOPT_HTTPHEADER, array("Authorization: Basic $auth", "Acce
 ?>
 ```
 
-<a name="#users-get--post--put"></a>Users (GET/POST/PUT)
+<a name="#users-get--post--put"></a>Users (GET / POST / PUT)
 -------------
 ### GET all active users within your account
 
