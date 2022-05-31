@@ -6,7 +6,7 @@ VipeCloud API v3.1
 
 Endpoints
 -------------
-1. [Users (GET)](#users-get)
+1. [Users (GET/POST/PUT)](#users-get--post--put)
 2. [Contacts (POST/GET)](#contacts-post--get)
 3. [Custom Fields (GET)](#custom-fields-get)
 4. [Contact Lists (POST/GET)](#contact-lists-post--get)
@@ -67,7 +67,7 @@ curl_setopt($curl, CURLOPT_HTTPHEADER, array("Authorization: Basic $auth", "Acce
 ?>
 ```
 
-<a name="#user-get"></a>Users (GET)
+<a name="#users-get--post--put"></a>Users (GET/POST/PUT)
 -------------
 ### GET all active users within your account
 
@@ -93,6 +93,85 @@ The response to this GET will be a list of the currently active VipeCloud users 
   ]
 }
 ```
+
+### POST create a new user
+
+NOTE: this endpoint is in beta and requires invite-only access
+
+```
+POST /users
+``` 
+Only authenticated Admin users can use this endpoint.
+
+Attribute | type | required | description
+--- | --- | --- | ---
+first_name | string | yes | First name.
+last_name | string | yes | Last name.
+email | string | yes | Email address (this is the email the user will send email from).
+phone | string | yes | Phone office.
+company_name | string | yes | Company name.
+user_role | enum (Admin,Manager,Member) | yes | The role the new user will have within your account.
+
+Sample post body:
+```
+{ 
+  "first_name"  : "Wiley", 
+  "last_name"  : "Coyote", 
+  "email"  : "wiley.coyote@acme.com",
+  "phone"  : "123-456-7890",
+  "company_name" : "Acme",
+  "user_role" : 'Member'
+}
+```
+
+Sample 200 response:
+```
+{ 
+  "first_name"  : "Wiley", 
+  "last_name"  : "Coyote", 
+  "email"  : "wiley.coyote@acme.com",
+  "phone"  : "123-456-7890",
+  "company_name" : "Acme",
+  "user_role" : 'Member'
+}
+```
+
+### PUT update a user
+
+NOTE: this endpoint is in beta and requires invite-only access
+
+```
+PUT /users
+``` 
+
+Attribute | type | required | description
+--- | --- | --- | ---
+first_name | string | no | First name.
+last_name | string | no | Last name.
+email | string | no | Email address (this is the email the user will send email from).
+phone | string | no | Phone office.
+company_name | no | yes | Company name.
+user_role | enum (Admin,Manager,Member) | no | The role the new user will have within your account.
+
+Sample body:
+```
+{ 
+  "first_name"  : "Elmer" 
+}
+```
+
+Sample 200 response:
+```
+{ 
+  "first_name"  : "Elmer", 
+  "last_name"  : "Coyote", 
+  "email"  : "wiley.coyote@acme.com",
+  "phone"  : "123-456-7890",
+  "company_name" : "Acme",
+  "user_role" : 'Member'
+}
+```
+
 
 <a name="#contacts-post--get"></a>Contacts (POST / GET)
 -------------------------------------
