@@ -132,7 +132,8 @@ Sample 200 response:
   "email"  : "wiley.coyote@acme.com",
   "phone"  : "123-456-7890",
   "company_name" : "Acme",
-  "user_role" : 'Member'
+  "user_role" : 'Member',
+  "api_keys" : ["123456XYZ"] //save this to authenticate directly into this user's account
 }
 ```
 
@@ -168,7 +169,8 @@ Sample 200 response:
   "email"  : "wiley.coyote@acme.com",
   "phone"  : "123-456-7890",
   "company_name" : "Acme",
-  "user_role" : 'Member'
+  "user_role" : 'Member',
+  "api_keys" : ["123456XYZ"] //save this to authenticate directly into this user's account
 }
 ```
 
