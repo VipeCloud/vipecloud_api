@@ -274,7 +274,7 @@ Full contact record:
 
 #### DELETE Contacts
 ```
-DELETE /contacts(/:id)
+DELETE /contacts/:id
 ```
 If the contact cannot be found, or has already been deleted, a 422 will be returned with the message 'No contact was found'. Upon successful deletion of a contact, a status of success will be returned.
 
