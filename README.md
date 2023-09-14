@@ -7,7 +7,7 @@ VipeCloud API v3.1
 Endpoints
 -------------
 1. [Users (GET/POST/PUT)](#users-get--post--put)
-2. [Contacts (POST/GET)](#contacts-post--get)
+2. [Contacts (POST/GET/DELETE)](#contacts-post--get)
 3. [Custom Fields (GET)](#custom-fields-get)
 4. [Contact Lists (POST/GET)](#contact-lists-post--get)
 5. [User Reputation (GET)](#user-reputation-get)
@@ -175,14 +175,14 @@ Sample 200 response:
 ```
 
 
-<a name="#contacts-post--get"></a>Contacts (POST / GET)
+<a name="#contacts-post--get"></a>Contacts (POST / GET / DELETE)
 -------------------------------------
 
 #### Create new / update existing Contacts in VipeCloud
 ```
 POST /contacts(/:id)
 ```
-When POSTing to /contacts, the body can either be an individual contact record or an array of contact records. If you are updating existing contacts, it is recommended that you include a contacts_master_id parameter for the contact. If not, the system will search for existing contacts based on the unique setting for your contact email address (account-wide, per user, or none). If submitting an array of contact records to create or update, first_name and email are always required.
+When POSTing to /contacts, the body can either be an individual contact record or an array of contact records. If you are updating existing contacts, it is recommended that you include a contacts_master_id parameter for the contact. If not, the system will search for existing contacts based on the unique setting for your contact email address (account-wide, per user, or none). If submitting an array of contact records to create, first_name and either email or mobile_phone are always required. If a contacts_master_id is given for a contact to update, the requirement of first_name and either email or mobile_phone is not required. 
 
 You can, optionally, include a "contact_lists" parameter to your contact POST body. If you do, we will assume the contact_list_ids you submit represent the ENTIRETY of the contact lists the contact should be a part of. We will compare your POSTed contact_list_ids to any existing contact_lists for the contact. If the contact is part of contact lists not in your POST they will be removed from the list. And if contacts in your POST are not on the list they will be added. To remove a contact from ALL contact lists they are on, submit "0" as the contact_list_id (e.g. contact_lists : ["0"]).
 
@@ -270,6 +270,17 @@ Full contact record:
     }
   ]
 }
+```
+
+#### DELETE Contacts
+```
+DELETE /contacts(/:id)
+```
+If the contact cannot be found, or has already been deleted, a 422 will be returned with the message 'No contact was found'. Upon successful deletion of a contact, a status of success will be returned.
+
+Example Response
+```
+{ status: "success" }
 ```
 
 <a name="#custom-fields-get"></a>Custom Fields (GET)
