@@ -7,7 +7,7 @@ VipeCloud API v3.1
 Endpoints
 -------------
 1. [Users (GET/POST/PUT)](#users-get--post--put)
-2. [Contacts (POST/GET/DELETE)](#contacts-post--get)
+2. [Contacts (POST/GET/DELETE)](#contacts-post--get--delete)
 3. [Custom Fields (GET)](#custom-fields-get)
 4. [Contact Lists (POST/GET)](#contact-lists-post--get)
 5. [User Reputation (GET)](#user-reputation-get)
@@ -175,7 +175,7 @@ Sample 200 response:
 ```
 
 
-<a name="#contacts-post--get"></a>Contacts (POST / GET / DELETE)
+<a name="#contacts-post--get--delete"></a>Contacts (POST / GET / DELETE)
 -------------------------------------
 
 #### Create new / update existing Contacts in VipeCloud
