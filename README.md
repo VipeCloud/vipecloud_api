@@ -278,9 +278,17 @@ DELETE /contacts(/:id)
 ```
 If the contact cannot be found, or has already been deleted, a 422 will be returned with the message 'No contact was found'. Upon successful deletion of a contact, a status of success will be returned.
 
-Example Response
+Example error response
 ```
-{ status: "success" }
+{
+  "status" : "error",
+  "message" : "No contact was found."
+}
+```
+
+Example Success Response
+```
+{ "status" : "success" }
 ```
 
 <a name="#custom-fields-get"></a>Custom Fields (GET)
