@@ -414,7 +414,6 @@ Body params
   "details" : "Created trial via website", 
   "contact_tags" : ["BusinessTrial","Annual"], //VipeCloud will create a contact if it doesn't exist. Values must be array
   "source" : "Website signup", //free form
-  "company_tags" : ["BusinessTrial","Annual"] //VipeCloud will create a company if it doesn't exist. Values must be array
 }
 ```
 
