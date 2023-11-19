@@ -1,6 +1,6 @@
 Summary Of Endpoints
 -------------
-1. [AutoResponders (POST/GET)](#autoresponders-post--get)
+1. [AutoResponders (POST/GET)](autoresponders.md)
 2. [Contact Lists (POST/GET)](#contact-lists-post--get)
 3. [Contacts (POST/GET/DELETE)](#contacts-post--get--delete)
 4. [Custom Fields (GET)](#custom-fields-get)
