@@ -3,7 +3,7 @@ Products (coming soon)
 Create, update, get, and delete products (or services). 
 
 <details>
-  <summary><code>POST</code> /products Create a product</summary>
+  <summary><code>SCHEMA</code></summary>
 
   Attribute | type | required | description 
   --- | --- | --- | --- 
@@ -17,5 +17,12 @@ Create, update, get, and delete products (or services).
   taxable | boolean | no | Is the product taxable? Defaults to No if not provided.
   tax_rate | float | yes if taxable is true | The tax rate. Supports up to one decimal point of a percentage (e.g. 9.1%)
   image_url | varchar(100) | no | A url to an image of the product or service. Used on Sign Up Forms. Square is best.
+  
+</details>
+
+<details>
+  <summary><code>POST</code> /products Create a product</summary>
+
+  
   
 </details>
