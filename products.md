@@ -14,7 +14,7 @@ Create, update, get, and delete products (or services).
 </details>
 <br>
 <details>
-  <summary><code>POST</code> **/products** Create a product</summary>
+  <summary><code>POST</code> <b>/products</b> Create a product</summary>
 
   
   
