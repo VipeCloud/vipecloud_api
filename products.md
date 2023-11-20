@@ -9,6 +9,8 @@ Create, update, get, and delete products (or services).
   Key | Description | Required | Type | Default | Valid Values 
   --- | --- | --- | --- | --- | ---
   <code>name</code> | The product name. | Yes | String (Max Length 100) | - | -
+  <code>description</code> | The description of the product. | no | Text | - | -
+  <code>code</code> | The code or id of your product. If one is not provided, it will be created for you. | No | String (Max Length 100) | - | - 
   
   <br>
 </details>
