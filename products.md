@@ -6,7 +6,7 @@ Create, update, get, and delete products (or services).
   <summary><code>SCHEMA</code></summary>
   <br>
   Key | Description | Required | Type | Default | Valid Values 
-  --- | --- | --- | --- 
+  --- | --- | --- | --- | --- | ---
   name | varchar(100) | yes | The product name.
   description | text | no | The description of the product.
   code | varchar(100) | no | The code or id of your product. If one is not provided, it will be created for you.
