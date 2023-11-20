@@ -3,7 +3,7 @@ Products (coming soon)
 Create, update, get, and delete products (or services). 
 
 <details>
-  <summary>```POST``` /products Create a product</summary>
+  <summary><code>POST</code> /products Create a product</summary>
 
   Attribute | type | required | description 
   --- | --- | --- | --- 
