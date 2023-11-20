@@ -4,10 +4,10 @@ Create, update, get, and delete products (or services).
 
 <details>
   <summary><code>SCHEMA</code></summary>
-  <br>
+  
   Key | Description | Required | Type | Default | Valid Values 
   --- | --- | --- | --- | --- | ---
-  name | The product name. | yes | String (Max Length 100) | - | -
+  name | The product name. | yes | String (Max Length 100) | -- | --
   
   
 </details>
