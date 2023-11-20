@@ -40,7 +40,7 @@ curl_setopt($curl, CURLOPT_HTTPHEADER, array("Authorization: Basic $auth", "Acce
 ```
 
 
-
+Next Step: [Summary of Endpoints](SUMMARY.md)
 
 
 
