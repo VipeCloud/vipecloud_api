@@ -12,7 +12,7 @@ Create, update, get, and delete products (or services).
   
   <br><br>
 </details>
-
+<br><br>
 <details>
   <summary><code>POST</code> /products Create a product</summary>
 
