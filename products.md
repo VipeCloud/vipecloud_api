@@ -10,9 +10,9 @@ Create, update, get, and delete products (or services).
   --- | --- | --- | --- | --- | ---
   <code>name</code> | The product name. | Y | String (Max Length 100) | - | -
   
-  <br><br>
+  <br>
 </details>
-<br><br>
+<br>
 <details>
   <summary><code>POST</code> /products Create a product</summary>
 
