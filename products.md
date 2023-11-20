@@ -4,7 +4,7 @@ Create, update, get, and delete products (or services).
 
 <details>
   <summary><code>SCHEMA</code></summary>
-     
+  <br /><br />
   Key | Description | Required | Type | Default | Valid Values 
   --- | --- | --- | --- | --- | ---
   <code>name</code> | The product name. | Y | String (Max Length 100) | - | -
