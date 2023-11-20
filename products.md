@@ -4,8 +4,8 @@ Create, update, get, and delete products (or services).
 
 <details>
   <summary><code>SCHEMA</code></summary>
-
-  Attribute | type | required | description 
+  <br>
+  Key | Description | Required | Type | Default | Valid Values 
   --- | --- | --- | --- 
   name | varchar(100) | yes | The product name.
   description | text | no | The description of the product.
