@@ -72,14 +72,44 @@ Create, update, get, and delete products (or services).
 <details>
   <summary><code>PUT</code> <b>/products/{id}</b> Update a product</summary>
   <br>
-  Coming Soon
+  Update any parameter of a product. All submitted fields will overwrite existing values. 
+
+  ```json
+  {
+      "name" : "My Product Updated",
+      "description" : "This is still the best product ever.",
+      "code" : "ABC1234",
+      "parent_ref" : 323,
+      "list_price" : 11.99,
+      "product_type" : "Donation",
+      "taxable" : false,
+      "tax_rate" : "",
+      "image_url" : "https://linktomysquareimage.com/123456"
+  }
+  ```
+  A successful response will be a status 200 and return the same data as Get Product Details.
+  
+  ```json
+  {
+      "id" : 123
+      "name" : "My Product Updated",
+      "description" : "This is still the best product ever.",
+      "code" : "ABC1234",
+      "parent_ref" : 323,
+      "list_price" : 11.99,
+      "product_type" : "Donation",
+      "taxable" : false,
+      "tax_rate" : "",
+      "image_url" : "https://linktomysquareimage.com/123456"
+  }
+  ```
   <br>
 </details>
 
 <details>
   <summary><code>GET</code> <b>/products</b> Search products</summary>
   <br>
-  Coming Soon
+  Search your products by any combination of <code>name</code>, <code>code</code>, <code>parent_ref</code>, <code>product_type</code>, <code>taxable</code>, <code>tax_rate</code>. A maximum of 100 matching products will be returned. 
   <br>
 </details>
 
