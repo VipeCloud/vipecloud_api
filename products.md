@@ -100,14 +100,12 @@ Create, update, get, and delete products (or services).
       "image_url" : "https://linktomysquareimage.com/123456"
   }
   ```
-  <br>
 </details>
 <hr>
 <details>
   <summary><code>GET</code> <b>/products</b> Search products</summary>
   <br>
   Search your products by any combination of <code>name</code>, <code>code</code>, <code>parent_ref</code>, <code>product_type</code>, <code>taxable</code>, and <code>tax_rate</code>. A maximum of 100 matching products will be returned. 
-  <br>
 </details>
 <hr>
 <details>
@@ -129,7 +127,6 @@ Create, update, get, and delete products (or services).
       "image_url" : "https://linktomysquareimage.com/123"
   }
   ```
-  <br>
 </details>
 <hr>
 <details>
@@ -142,5 +139,4 @@ Create, update, get, and delete products (or services).
       "status" : "success"
   }
   ```
-  <br>
 </details>
