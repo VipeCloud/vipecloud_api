@@ -42,6 +42,13 @@ Create, update, get, and delete products (or services).
       "image_url" : "https://linktomysquareimage.com/123"
   }
   ```
+  To create a product category via the API, submit the following POST body
+  ```json
+  {
+      "name" : "My First Category",
+      "product_type" : "Category"
+  }
+  ```
   A successful response will be a status 200 and return the same data as Get Product Details.
   ```json
   {
