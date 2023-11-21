@@ -107,6 +107,7 @@ Create, update, get, and delete products (or services).
   <br>
   Search your products by any combination of <code>name</code>, <code>code</code>, <code>parent_ref</code>, <code>product_type</code>, <code>taxable</code>, and <code>tax_rate</code>. If supplied, <code>parent_ref</code>, <code>product_type</code>, and <code>taxable</code> must be exact matches. A maximum of 100 matching products will be returned. 
 
+  
   A sample query might be <code>/products?name=My&code=123&parent_ref=323</code>
 
   A successful response will be a status 200 and return an array of up to 100 products.
