@@ -43,3 +43,10 @@ Create, update, get, and delete products (or services).
   Coming Soon
   <br>
 </details>
+
+<details>
+  <summary><code>DELETE</code> <b>/products/{id}</b> Delete a product</summary>
+  <br>
+  Coming Soon
+  <br>
+</details>
