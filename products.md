@@ -16,6 +16,7 @@ Create, update, get, and delete products (or services).
   <code>parent_ref</code> | An id of the product category that is the parent of this product. | No | Integer | - | -
   <code>product_type</code> | Type of product offered. | No | String | <code>Service</code> | <ul><li><code>Service</code></li><li><code>Digital</code></li><li><code>Inventory</code></li><li><code>Donation</code></li><li><code>Category</code></li></ul>
   <code>taxable</code> | Is the product taxable? | No | Boolean | <code>false</code> | <ul><li><code>true</code></li><li><code>false</code></li></ul>
+  <code>tax_rate</code> | The tax rate. Supports up to one decimal point of a percentage (e.g. 9.1%) | Yes if <code>taxable</code> is <code>true</code> | Float | - | -
   
   
   <br>
