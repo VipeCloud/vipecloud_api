@@ -27,7 +27,16 @@ Create, update, get, and delete products (or services).
 <details>
   <summary><code>POST</code> <b>/products</b> Create a product</summary>
   <br>
-  Coming Soon
+  Sample body when creating a product
+
+  ```   
+  {
+      "name" : "My Product",
+      "description" : "This is the best product ever.",
+      "code" : "ABC123",
+      "parent_ref" : 0
+  }
+  ```
   <br>
 </details>
 
