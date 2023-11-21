@@ -29,12 +29,32 @@ Create, update, get, and delete products (or services).
   <br>
   Sample body when creating a product
 
-  ```   
+  ```json
   {
       "name" : "My Product",
       "description" : "This is the best product ever.",
       "code" : "ABC123",
-      "parent_ref" : 0
+      "parent_ref" : 0,
+      "list_price" : 10.00,
+      "product_type" : "Service",
+      "taxable" : true,
+      "tax_rate" : 9.1,
+      "image_url" : "https://linktomysquareimage.com/123"
+  }
+  ```
+  A successful response will be a status 200 and return the same data as Get Product Details.
+  ```json
+  {
+      "id" : 123
+      "name" : "My Product",
+      "description" : "This is the best product ever.",
+      "code" : "ABC123",
+      "parent_ref" : 0,
+      "list_price" : 10.00,
+      "product_type" : "Service",
+      "taxable" : true,
+      "tax_rate" : 9.1,
+      "image_url" : "https://linktomysquareimage.com/123"
   }
   ```
   <br>
