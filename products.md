@@ -105,7 +105,7 @@ Create, update, get, and delete products (or services).
 <details>
   <summary><code>GET</code> <b>/products</b> Search products</summary>
   <br>
-  Search your products by any combination of <code>name</code>, <code>code</code>, <code>parent_ref</code>, <code>product_type</code>, <code>taxable</code>, and <code>tax_rate</code>. <code>parent_ref</code>, <code>product_type</code>, and <code>taxable</code> if supplied must be exact matches. A maximum of 100 matching products will be returned. 
+  Search your products by any combination of <code>name</code>, <code>code</code>, <code>parent_ref</code>, <code>product_type</code>, <code>taxable</code>, and <code>tax_rate</code>. If supplied, <code>parent_ref</code>, <code>product_type</code>, and <code>taxable</code> must be exact matches. A maximum of 100 matching products will be returned. 
 </details>
 <hr>
 <details>
