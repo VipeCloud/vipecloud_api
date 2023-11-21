@@ -25,7 +25,7 @@ Create, update, get, and delete products (or services).
 <details>
   <summary><code>POST</code> <b>/products</b> Create a product</summary>
   <br>
-  Sample body when creating a product
+  Sample body when creating a product:
 
   ```json
   {
@@ -40,7 +40,7 @@ Create, update, get, and delete products (or services).
       "image_url" : "https://linktomysquareimage.com/123"
   }
   ```
-  To create a product category via the API, submit the following POST body
+  To create a product category via the API, submit the following POST body:
   
   ```json
   {
@@ -48,7 +48,7 @@ Create, update, get, and delete products (or services).
       "product_type" : "Category"
   }
   ```
-  A successful response will be a status 200 and return the same data as Get Product Details.
+  A successful response will be a status 200 and return the same data as Get Product Details:
   
   ```json
   {
@@ -105,7 +105,7 @@ Create, update, get, and delete products (or services).
 <details>
   <summary><code>GET</code> <b>/products</b> Search products</summary>
   <br>
-  Search your products by any combination of <code>name</code>, <code>code</code>, <code>parent_ref</code>, <code>product_type</code>, <code>taxable</code>, and <code>tax_rate</code>. A maximum of 100 matching products will be returned. 
+  Search your products by any combination of <code>name</code>, <code>code</code>, <code>parent_ref</code>, <code>product_type</code>, <code>taxable</code>, and <code>tax_rate</code>. <code>parent_ref</code>, <code>product_type</code>, and <code>taxable</code> if supplied must be exact matches. A maximum of 100 matching products will be returned. 
 </details>
 <hr>
 <details>
@@ -132,7 +132,7 @@ Create, update, get, and delete products (or services).
 <details>
   <summary><code>DELETE</code> <b>/products/{id}</b> Delete a product</summary>
   <br>
-  A successful response will be a status 200 with a success message
+  A successful response will be a status 200 with a success message.
 
   ```json
   {
