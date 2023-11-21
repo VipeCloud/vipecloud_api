@@ -84,7 +84,21 @@ Create, update, get, and delete products (or services).
 <details>
   <summary><code>GET</code> <b>/products/{id}</b> Get product details</summary>
   <br>
-  Coming Soon
+  A successful response will be a status 200 and return the same data as Get Product Details.
+  ```json
+  {
+      "id" : 123
+      "name" : "My Product",
+      "description" : "This is the best product ever.",
+      "code" : "ABC123",
+      "parent_ref" : 0,
+      "list_price" : 10.00,
+      "product_type" : "Service",
+      "taxable" : true,
+      "tax_rate" : 9.1,
+      "image_url" : "https://linktomysquareimage.com/123"
+  }
+  ```
   <br>
 </details>
 
