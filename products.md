@@ -19,6 +19,16 @@ Create, update, get, and delete products (or services).
 <details>
   <summary><code>POST</code> <b>/products</b> Create a product</summary>
 
-  
-  
+  Coming Soon
+</details>
+<br>
+<details>
+  <summary><code>PUT</code> <b>/products/{id}</b> Update a product</summary>
+
+  Coming Soon
+</details>
+<details>
+  <summary><code>GET</code> <b>/products(/{id})</b> Get a product or Get all products</summary>
+
+  Coming Soon
 </details>
