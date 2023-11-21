@@ -20,8 +20,6 @@ Create, update, get, and delete products (or services).
   <code>tax_rate</code> | The tax rate. Supports up to one decimal point of a percentage (e.g. 9.1%) | Yes if <code>taxable</code> is <code>true</code> | Float | - | -
   <code>image_url</code> | A url to an image of the product or service. Used on Sign Up Forms. Square is best. | No | String (Max length 100) | - | -
   
-  
-  <br>
 </details>
 <hr>
 <details>
@@ -66,7 +64,6 @@ Create, update, get, and delete products (or services).
       "image_url" : "https://linktomysquareimage.com/123"
   }
   ```
-  <br>
 </details>
 <hr>
 <details>
