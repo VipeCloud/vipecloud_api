@@ -23,7 +23,7 @@ Create, update, get, and delete products (or services).
   
   <br>
 </details>
----
+<hr>
 <details>
   <summary><code>POST</code> <b>/products</b> Create a product</summary>
   <br>
