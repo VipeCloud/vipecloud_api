@@ -8,6 +8,7 @@ Create, update, get, and delete products (or services).
   
   Key | Description | Required | Type | Default | Valid Values 
   --- | --- | --- | --- | --- | ---
+  <code>id</code> | The product id. | Yes for PUT and GET details. | Integer | - | -
   <code>name</code> | The product name. | Yes | String (Max length 100) | - | -
   <code>description</code> | The description of the product. | No | Text | - | -
   <code>code</code> | The code or id of your product. If one is not provided, it will be created for you. | No | String (Max length 100) | - | - 
