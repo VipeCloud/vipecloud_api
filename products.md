@@ -31,21 +31,21 @@ Create, update, get, and delete products (or services).
 </details>
 
 <details>
-  <summary><code>PUT</code> <b>/products/{id}</b> Update a product</summary>
+  <summary><code>PUT</code> <b>/products/:id</b> Update a product</summary>
   <br>
   Coming Soon
   <br>
 </details>
 
 <details>
-  <summary><code>GET</code> <b>/products(/{id})</b> Get a product or Get all products</summary>
+  <summary><code>GET</code> <b>/products(/:id)</b> Get a product or Get all products</summary>
   <br>
   Coming Soon
   <br>
 </details>
 
 <details>
-  <summary><code>DELETE</code> <b>/products/{id}</b> Delete a product</summary>
+  <summary><code>DELETE</code> <b>/products/:id</b> Delete a product</summary>
   <br>
   Coming Soon
   <br>
