@@ -43,6 +43,7 @@ Create, update, get, and delete products (or services).
   }
   ```
   To create a product category via the API, submit the following POST body
+  
   ```json
   {
       "name" : "My First Category",
@@ -50,6 +51,7 @@ Create, update, get, and delete products (or services).
   }
   ```
   A successful response will be a status 200 and return the same data as Get Product Details.
+  
   ```json
   {
       "id" : 123
@@ -85,6 +87,7 @@ Create, update, get, and delete products (or services).
   <summary><code>GET</code> <b>/products/{id}</b> Get product details</summary>
   <br>
   A successful response will be a status 200 and return the same data as Get Product Details.
+  
   ```json
   {
       "id" : 123
@@ -105,6 +108,12 @@ Create, update, get, and delete products (or services).
 <details>
   <summary><code>DELETE</code> <b>/products/{id}</b> Delete a product</summary>
   <br>
-  Coming Soon
+  A successful response will be a status 200 with a success message
+
+  ```json
+  {
+      "status" : "success"
+  }
+  ```
   <br>
 </details>
