@@ -68,7 +68,7 @@ Create, update, get, and delete products (or services).
   ```
   <br>
 </details>
----
+<hr>
 <details>
   <summary><code>PUT</code> <b>/products/{id}</b> Update a product</summary>
   <br>
@@ -105,14 +105,14 @@ Create, update, get, and delete products (or services).
   ```
   <br>
 </details>
----
+<hr>
 <details>
   <summary><code>GET</code> <b>/products</b> Search products</summary>
   <br>
   Search your products by any combination of <code>name</code>, <code>code</code>, <code>parent_ref</code>, <code>product_type</code>, <code>taxable</code>, and <code>tax_rate</code>. A maximum of 100 matching products will be returned. 
   <br>
 </details>
----
+<hr>
 <details>
   <summary><code>GET</code> <b>/products/{id}</b> Get product details</summary>
   <br>
@@ -134,7 +134,7 @@ Create, update, get, and delete products (or services).
   ```
   <br>
 </details>
----
+<hr>
 <details>
   <summary><code>DELETE</code> <b>/products/{id}</b> Delete a product</summary>
   <br>
