@@ -1,4 +1,4 @@
-Teams (coming soon)
+Teams
 -----------
 Get a list of teams that you own.
 

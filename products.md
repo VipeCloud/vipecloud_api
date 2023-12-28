@@ -1,4 +1,4 @@
-Products (coming soon)
+Products
 -----------
 Create, update, get, and delete products (or services). 
 
