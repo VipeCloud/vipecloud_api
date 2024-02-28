@@ -51,8 +51,52 @@ Sample post body below.
 GET /contacts(/:id)
 ```
 If no id, returns an array of the contacts for the authenticated user. If id, returns the details for a contact. If you only require certain contact parameters, append them (comma-separated) as a "to_get" parameter: 
+
 ```
 E.g. GET /contacts/123?to_get=contacts_master_id,first_name 
+```
+
+NEW: Contact records returned through this endpoint will always return "contacts_master_id" and "id" parameters. The new "id" parameter is part of a movement towards id parameter consistency across item types.
+
+```
+E.g. GET /contacts?to_get=first_name
+
+[
+   {
+      'contacts_master_id': 123,
+      'id': 123,
+      'first_name': "Road"
+   },
+   {
+      'contacts_master_id': 124,
+      'id': 124,
+      'first_name': "Runner"
+   }
+]
+```
+
+
+Custom Fields: If a "to_get" parameter is not used, custom fields will be included in the contact record(s) returned. If you want to include custom fields while using the "to_get" query parameter, please include "custom_fields" within the param value
+
+```
+E.g. GET /contacts?to_get=first_name,custom_fields
+
+[
+   {
+      'contacts_master_id': 123,
+      'id': 123,
+      'first_name': "Road",
+      'custom_field_1': "value 1"
+      'custom_field_2': "value 2" 
+   },
+   {
+      'contacts_master_id': 124,
+      'id': 124,
+      'first_name': "Runner",
+      'custom_field_1': "value 3"
+      'custom_field_2': "value 4" 
+   }
+]
 ```
 
 Full contact record:
