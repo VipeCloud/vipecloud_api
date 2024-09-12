@@ -1,8 +1,8 @@
-AutoResponders (POST / GET)
+Automations (POST / GET)
 -------------
-Create, update, and retrieve AutoResponders from your user accounts. 
+Create, update, and retrieve Automations (formerly AutoResponders) from your user accounts. NOTE - /autoresponders will continue to work for the time being.
 
-#### POST AutoResponder
+#### POST Automations
 
 Attribute | type | required | description 
 --- | --- | --- | --- 
@@ -13,9 +13,9 @@ trigger | enum | yes | "contact" or "recurring" or "custom_field"<br>Trigger det
 
 
 ```
-POST /autoresponders(/:id)
+POST /automations(/:id)
 ``` 
-Sample body when creating an AutoResponder.
+Sample body when creating an Automation.
 
 ```   
 {
@@ -31,13 +31,13 @@ Sample body when creating an AutoResponder.
 
 
 
-#### GET AutoResponders
+#### GET Automations
 ```
-GET /autoresponders(/:id)
+GET /automations(/:id)
 ```
-Retrieve autoresponders by id or retrieve a list of all autoresponders in the user's account. 
+Retrieve automations by id or retrieve a list of all automations in the user's account. 
 
-Sample response to get autoresponders by id. GET /autoresponders/123
+Sample response to get automations by id. GET /automations/123
 ```   
 { 
     "id" : 123,
@@ -55,7 +55,7 @@ Sample response to get autoresponders by id. GET /autoresponders/123
 }
 ```
 
-Sample response to get all autoresponders. GET /autoresponders
+Sample response to get all automations. GET /automations
 ```   
 { 
     [
