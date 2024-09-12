@@ -9,6 +9,7 @@ Attribute | type | required | description
 title | string | yes | The title of your series template
 steps | array | yes | Array of series step ids
 cancel_all_inbound | boolean | no | Optionally set a flag to cancel following steps of a series if the user receives an inbound email from the series recipient. This requires the user to have connected their inbox to VipeCloud to work.
+cancel_all_if_joined_suite | integer | no | Optionally set the suite_id to cancel following steps of a series if the recipient joins the suite. This requires the user to have the Community Add-On and be the owner of the Suite.
 
 ```
 POST /series_templates(/:id)
