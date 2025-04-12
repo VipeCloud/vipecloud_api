@@ -14,7 +14,7 @@ Note that VipeCloud will not add contacts that have unsubscribed from any user i
 When submitting contacts include the contacts_master_id of the contact record, or use this endpoint as a way to create contacts and add them to the list. 
 - To create a contact using this endpoint, the same requirements have to be met as creating a contact via the /contacts endpoint (first_name and either mobile_phone or email). Additionally, all account required fields have to be present on the contact, and at least 1 unique field must be present.
 
-"Synced lists": A parameter "is_synced_list" can be found on returned contact_lists, as well as put in POST calls to the contact_lists API. By setting "is_synced_list" to 1, The user will see a badge indicating that the contact list is a synced list, and they will no longer be able to direclty add/remove contacts from the contact lists page. This should make it significantly easier to users from accidentally messing with a contact list that isn't the source of truth for that data.
+"Synced lists": A boolean parameter "is_synced_list" can be found on returned contact_lists, as well as put in POST calls to the contact_lists API. By setting "is_synced_list" to true, The user will see a badge indicating that the contact list is a synced list, and they will no longer be able to direclty add/remove contacts from the contact lists page. This should make it significantly easier to users from accidentally messing with a contact list that isn't the source of truth for that data.
 
 ```   
 { 
