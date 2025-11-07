@@ -25,6 +25,25 @@ The response to this GET will be a list of the currently active VipeCloud users 
 }
 ```
 
+```
+GET /users/:id
+```
+
+Getting an individual user will return a single user's information if the calling user has the authorization to view that record. Additionally, the "digital_business_card_link" parameter will be returned if the card is configured and active.
+```
+{ 
+  "first_name"  : "Wiley", 
+  "last_name"  : "Coyote", 
+  "email"  : "wiley.coyote@acme.com",
+  "phone"  : "123-456-7890",
+  "company_name" : "Acme",
+  "api_keys" : ["123456XYZ"],
+  "user_role" : 'Admin'
+  "digital_business_card_link" : "https://v.vipecloud.com/bcard/XXXX/first_name" //Link to the user's digital business card (if available)
+}
+
+```
+
 ### POST create a new user
 
 NOTE: this endpoint is in beta and requires invite-only access
