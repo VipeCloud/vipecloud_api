@@ -57,7 +57,9 @@ Sample post body below.
 ```
 GET /contacts(/:id)
 ```
-If no id, returns an array of the contacts for the authenticated user. If id, returns the details for a contact. If you only require certain contact parameters, append them (comma-separated) as a "to_get" parameter: 
+If no id, returns an array of the contacts for the authenticated user. If id, returns the details for a contact. If you only require certain contact parameters, append them (comma-separated) as a "to_get" parameter:
+
+**Pagination and Sorting:** When retrieving all contacts (no id), you can use `page`, `length`, `sort_by`, and `sort_direction` query parameters to paginate and sort results. See [README](README.md#pagination-and-sorting) for details. 
 
 ```
 E.g. GET /contacts/123?to_get=contacts_master_id,first_name 

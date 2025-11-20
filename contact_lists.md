@@ -124,6 +124,8 @@ GET /contact_lists
 GET /contact_lists/:id
 ```
 Returns an individual record (with ID) or array of all lists that a user has in VipeCloud. Optionally add the parameter hide_system_lists to the url to remove system lists from the result (e.g. /contact_lists?hide_system_lists=1)
+
+**Pagination and Sorting:** When retrieving all contact lists (no id), you can use `page`, `length`, `sort_by`, and `sort_direction` query parameters to paginate and sort results. See [README](README.md#pagination-and-sorting) for details.
 ```   
 { 
   [

@@ -58,7 +58,9 @@ Sample body when creating an Automation for canceling templates. Upon being adde
 ```
 GET /automations(/:id)
 ```
-Retrieve automations by id or retrieve a list of all automations in the user's account. 
+Retrieve automations by id or retrieve a list of all automations in the user's account.
+
+**Pagination and Sorting:** When retrieving all automations (no id), you can use `page`, `length`, `sort_by`, and `sort_direction` query parameters to paginate and sort results. See [README](README.md#pagination-and-sorting) for details. 
 
 Sample response to get automations by id. GET /automations/123
 ```   

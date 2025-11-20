@@ -37,6 +37,8 @@ GET /series_templates/:id
 ```
 Retrieve a series template by id or retrieve a list of all series templates in the user's account. To refine the return to a particular folder within a user's account, a "folder_id" query parameter can be provided. By default, all templates regardless of folders are returned via the endpoint, however if folder_id=0 is provided then only templates in the user's base folder are returned.
 
+**Pagination and Sorting:** When retrieving all series templates (no id), you can use `page`, `length`, `sort_by`, and `sort_direction` query parameters to paginate and sort results. See [README](README.md#pagination-and-sorting) for details.
+
 Sample response to get series templates by id. GET /series_templates/123
 ```   
 { 

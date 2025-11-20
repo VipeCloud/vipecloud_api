@@ -59,6 +59,19 @@ All endpoint documentation follows this pattern:
 - Current branch: `version_4`
 - Origin: `https://github.com/VipeCloud/vipecloud_api.git`
 
+## Test Suite
+
+**Location:** The comprehensive API test suite is located in the **`../vc3/tests/`** directory (sibling repository).
+
+The test suite provides:
+- Comprehensive coverage of all v4.0 endpoints
+- Deterministic, replicable tests with seeded data
+- Automatic resource cleanup
+- Full CRUD testing for all endpoints
+- 70+ tests with 200+ assertions
+
+See `../vc3/tests/README.md` for complete documentation on running and extending the test suite.
+
 ## Common Tasks
 
 When updating API documentation:
@@ -67,6 +80,7 @@ When updating API documentation:
 3. Include sample request/response JSON with proper formatting
 4. Update `SUMMARY.md` if adding new endpoints
 5. Ensure backwards compatibility notes are included when deprecating endpoints
+6. If adding new endpoints, consider adding corresponding tests in `../vc3/tests/`
 
 ## Documentation Standards
 

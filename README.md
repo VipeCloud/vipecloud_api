@@ -19,6 +19,10 @@ Overview
 #### Interested in receiving webhooks?
    * Learn about our webhooks API: [Webhooks v1.0](webhooks_v1_0.md)
 
+#### Testing the API
+   * Comprehensive test suite available: [See Testing Guide](TESTING.md)
+   * Test suite location: `../vc3/tests/`
+
 #### Responses
    * 200 for success
    * 422 for incorrect post
@@ -55,6 +59,24 @@ VipeCloud API v4.0 follows standard REST conventions using HTTP methods:
   * `DELETE /endpoint/:id` - Delete a specific resource by ID
 
 **Note:** Not all endpoints support all HTTP methods. See individual endpoint documentation for supported operations.
+
+Pagination and Sorting
+-------------
+All GET endpoints that return lists of resources support pagination and sorting through query parameters:
+
+* **page** - The page number to retrieve (default: 1)
+* **length** - Number of items per page (default: 20, max: 1000)
+* **sort_by** - Field name to sort by (e.g., 'id', 'create_date', 'title')
+* **sort_direction** - Sort direction, either 'ASC' or 'DESC' (default: 'ASC')
+
+**Examples:**
+```
+GET /contacts?page=2&length=50
+GET /contacts?sort_by=create_date&sort_direction=DESC
+GET /email_templates?page=1&length=10&sort_by=title&sort_direction=ASC
+```
+
+**Note:** These parameters only affect GET requests that return lists. Individual resource requests (GET /endpoint/:id) are not affected.
 
 
 Next Step: [Summary of Endpoints](SUMMARY.md)

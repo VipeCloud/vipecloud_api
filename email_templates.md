@@ -61,6 +61,8 @@ GET a list of your email templates, search for an email template by title, or a 
 
 A note on access: in the API we only return email templates *owned* by the user. We do not return email templates the user can access via Shared With Me.
 
+**Pagination and Sorting:** When retrieving all email templates (no id), you can use `page`, `length`, `sort_by`, and `sort_direction` query parameters to paginate and sort results. See [README](README.md#pagination-and-sorting) for details.
+
 Sample responses
 ```   
 GET /email_templates

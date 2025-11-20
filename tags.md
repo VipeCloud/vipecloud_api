@@ -53,6 +53,8 @@ GET /tags/:id
 ```
 Retrieve a tag by id or all tags. If no tag is found, the response will be code 422 with the message "No tag was found."
 
+**Pagination and Sorting:** When retrieving all tags (no id), you can use `page`, `length`, `sort_by`, and `sort_direction` query parameters to paginate and sort results. See [README](README.md#pagination-and-sorting) for details.
+
 Sample response to get tag by id. GET /tags/123
 ```   
 {     
