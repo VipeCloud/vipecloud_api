@@ -1,12 +1,19 @@
-Stories (POST / GET)
+Stories (GET / POST / PUT / PATCH / DELETE)
 -------------
-Create, update, and retrieve Stories for your users. 
+Create, update, retrieve, and delete Stories for your users.
 
+#### Create Story
 ```
-POST /stories/:id
-``` 
+POST /stories
+```
 
-A note on chapters: when sending a POST to a Story, the chapter order is defined by your submitted array of chapters. If you are updating a Story, any previously existing Story chapters not included in your POST will be deleted.
+#### Update Story
+```
+PUT /stories/:id
+PATCH /stories/:id
+```
+
+A note on chapters: when creating or updating a Story, the chapter order is defined by your submitted array of chapters. When updating a Story, any previously existing Story chapters not included in your request will be deleted.
 
 
 Story Attribute | type | required | description
@@ -70,9 +77,10 @@ Sample response
 
 #### GET Stories
 ```
+GET /stories
 GET /stories/:id
 ```
-GET a list of your Stories, search for a Story by title, or a get specific Story by id. If no story is found, the response will be code 422 with the message "No story was found."
+GET a list of all your Stories, search for a Story by title (query param), or get a specific Story by id. If no story is found, the response will be code 422 with the message "No story was found."
 
 A note on access: in the API we only return stories *owned* by the user. We do not return stories the user can access via Shared With Me.
 
@@ -130,3 +138,9 @@ GET /stories/123
 }
 
 ```
+
+#### DELETE Story
+```
+DELETE /stories/:id
+```
+Delete a story by ID. Returns status of success upon successful deletion.

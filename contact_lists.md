@@ -1,11 +1,17 @@
-Contact Lists (POST / GET)
+Contact Lists (GET / POST / PUT / PATCH / DELETE)
 -------------------------------------
 
-#### Create new / update existing Contact List in VipeCloud
+#### Create new Contact List in VipeCloud
 ```
-POST /contact_lists(/:id)
+POST /contact_lists
 ```
-If creating a new list, a list name must be present. Creating an "empty" list - a list with a list_name and no contacts is allowed. 
+When creating a new list, a list name must be present. Creating an "empty" list - a list with a list_name and no contacts is allowed.
+
+#### Update existing Contact List in VipeCloud
+```
+PUT /contact_lists/:id
+PATCH /contact_lists/:id
+``` 
 
 When POSTing contacts to an existing list, we will assume the contacts you submit represent the ENTIRETY of the contact list if using the 'contacts' parameter. We will compare your POSTed contacts to any existing contacts on the list. If contacts on the list are not in your POST they will be removed from the list. And if contacts in your POST are not on the list they will be added. The 'add_contacts' parameter can be used if you simply want to add contacts to the list, without submitting the entirety of the contact list. Each call may only include ONE of 'contacts' or 'add_contacts'. If both are provided, then the call will fail. If the "skip_autoresponders" key is provided and set to true, then autoresponders for the given contact list will NOT run for contacts added during this call. If neither the 'add_contacts' parameter or the 'contacts' parameters are provided, then no contacts will be added/removed by the call. We've added a parameter to the response body, 'worked_contacts', which is a boolean indicating whether or not contact addition/subtraction calculations occurred during the call. We've added this functionality to allow for editing contact_list data without having to worry about all contacts being removed accidentally, and removing the need to send the entirety of the contact list if you just wanted to change the name or a setting.
 
@@ -52,9 +58,9 @@ When submitting contacts include the contacts_master_id of the contact record, o
 }
 ```
 
-An example of a call which does NOT empty out the list
+An example of an update call which does NOT empty out the list
 
-POST /contact_lists/1234
+PUT /contact_lists/1234
 ```
 {
   "is_synced_list": 1
@@ -62,11 +68,11 @@ POST /contact_lists/1234
 }
 ```
 
-The response to this POST will be a status of success or error. On success the contact_list_id will be included in addition to a *count* of successful emails added to the list, the net change, contacts removed. Additionally, a *list* of contacts that were not added, with a message detailing why the contact wasn't added.
+The response to this call will be a status of success or error. On success the contact_list_id will be included in addition to a *count* of successful emails added to the list, the net change, contacts removed. Additionally, a *list* of contacts that were not added, with a message detailing why the contact wasn't added.
 
 If contact data without a contacts_master_id is input into the list, these will be split up into two additional *lists*: contacts_not_created and contacts_created. Created contacts witin the created_contacts body parameter will mirror the data sent in to the API, along with an appended "contacts_master_id" parameter. contacts_not_created will mirror the data sent into the api, indicating that this data could not be used.
 
-We now also return the data for contacts that were removed, that way those contacts_master_id's can be used for subsequent calls. An example of this would be calling a POST /contact_list/(/:id) endpoint for a list, and then making an additional call for any contacts removed to add them to another list via a second POST /contact_list(/:id) endpoint with the "add_contacts" parameter
+We now also return the data for contacts that were removed, that way those contacts_master_id's can be used for subsequent calls. An example of this would be updating a contact list, and then making an additional call for any contacts removed to add them to another list via PUT /contact_lists/:id with the "add_contacts" parameter
 
 #### Example Post Response 
 ```
@@ -114,9 +120,10 @@ We now also return the data for contacts that were removed, that way those conta
 
 #### GET list of existing Contact Lists a user has in VipeCloud
 ```
-GET /contact_lists(/:id)
+GET /contact_lists
+GET /contact_lists/:id
 ```
-Returns an individual record or array of the lists that a user has in VipeCloud. Optionally add the parameter hide_system_lists to the url to remove system lists from the result (e.g. /contact_lists?hide_system_lists=1)
+Returns an individual record (with ID) or array of all lists that a user has in VipeCloud. Optionally add the parameter hide_system_lists to the url to remove system lists from the result (e.g. /contact_lists?hide_system_lists=1)
 ```   
 { 
   [
@@ -134,3 +141,9 @@ Returns an individual record or array of the lists that a user has in VipeCloud.
   ]
 }
 ```
+
+#### DELETE Contact Lists
+```
+DELETE /contact_lists/:id
+```
+Delete a contact list by ID. Returns status of success upon successful deletion.

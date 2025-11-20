@@ -1,12 +1,12 @@
-User Merge Tags (POST / GET)
+User Merge Tags (GET / PUT / PATCH)
 -------------
 Update and retrieve user_merge_tags from your user accounts. Create the user_merge_tag for the account in your parent user account.
 
-#### POST User Merge Tag
-
+#### Update User Merge Tag
 ```
-POST /user_merge_tags(/:id)
-``` 
+PUT /user_merge_tags/:id
+PATCH /user_merge_tags/:id
+```
 
 Sample body when updating a merge tag value.
 
@@ -27,9 +27,10 @@ Sample response
 
 #### GET User Merge Tags
 ```
-GET /user_merge_tags(/:id)
+GET /user_merge_tags
+GET /user_merge_tags/:id
 ```
-Retrieve user merge tags by id or retrieve a list of all user_merge_tags in your account. 
+Retrieve a user merge tag by id, or retrieve a list of all user_merge_tags in your account. 
 
 Sample response to get user_merge_tag by id. GET /user_merge_tags/123
 ```   

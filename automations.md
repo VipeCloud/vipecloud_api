@@ -1,8 +1,17 @@
-Automations (POST / GET)
+Automations (GET / POST / PUT / PATCH / DELETE)
 -------------
-Create, update, and retrieve Automations (formerly AutoResponders) from your user accounts. NOTE - /autoresponders will continue to work for the time being.
+Create, update, retrieve, and delete Automations (formerly AutoResponders) from your user accounts. NOTE - /autoresponders will continue to work for the time being.
 
-#### POST Automations
+#### Create Automations
+```
+POST /automations
+```
+
+#### Update Automations
+```
+PUT /automations/:id
+PATCH /automations/:id
+```
 
 Attribute | type | required | description 
 --- | --- | --- | --- 
@@ -13,9 +22,6 @@ trigger_type | enum | yes | "contact" or "recurring" or "custom_field"<br>Trigge
 template_ids | integer[] | cond. | Required if template_type is in ["cancel_series", "cancel_email", "cancel_text"]. Contains a list of ids for the specified template type (email template ids for "cancel_email", text template ids for "cancel_text", etc. to cancel (if any scheduled items - or steps in the case of series - based off of the template ids are active for the user) when the automation is fired).
 
 
-```
-POST /automations(/:id)
-``` 
 Sample body when creating an Automation.
 
 ```   
@@ -30,9 +36,6 @@ Sample body when creating an Automation.
 }
 ```
 
-```
-POST /automations(/:id)
-``` 
 Sample body when creating an Automation for canceling templates. Upon being added to the list, if the added contact has a scheduled email set to go out based on the templates 1234, 5678, or 9012, those scheduled sends will be canceled.
 
 ```   
@@ -94,3 +97,9 @@ Sample response to get all automations. GET /automations
     ],...
 }
 ```
+
+#### DELETE Automations
+```
+DELETE /automations/:id
+```
+Delete an automation by ID. Returns status of success upon successful deletion.

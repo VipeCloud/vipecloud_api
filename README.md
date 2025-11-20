@@ -7,13 +7,13 @@ Overview
    * Connect proprietary or other 3rd party systems to VipeCloud
 
 #### Current Version
-   * v3.1
+   * v4.0
 
 #### General Information
    * Your account must gain authorization to use the VipeCloud API. Email support@vipecloud.com to request authorization
    * All requests must by made from HTTPS
    * All data sent should be JSON encoded (all data received will be JSON encoded)
-   * Base URL for these functions: https://v.vipecloud.com/api/v3.1
+   * Base URL for these functions: https://v.vipecloud.com/api/v4.0
    * API usage is currently throttled at 10 calls per 2 seconds per user
    
 #### Interested in receiving webhooks?
@@ -38,6 +38,23 @@ curl_setopt($curl, CURLOPT_HTTPHEADER, array("Authorization: Basic $auth", "Acce
 
 ?>
 ```
+
+REST Conventions (v4.0)
+-------------
+VipeCloud API v4.0 follows standard REST conventions using HTTP methods:
+
+* **GET** - Retrieve resources
+  * `GET /endpoint` - Retrieve all resources
+  * `GET /endpoint/:id` - Retrieve a specific resource by ID
+* **POST** - Create new resources
+  * `POST /endpoint` - Create a new resource
+* **PUT/PATCH** - Update existing resources
+  * `PUT /endpoint/:id` - Update a specific resource by ID
+  * `PATCH /endpoint/:id` - Partially update a specific resource by ID
+* **DELETE** - Delete resources
+  * `DELETE /endpoint/:id` - Delete a specific resource by ID
+
+**Note:** Not all endpoints support all HTTP methods. See individual endpoint documentation for supported operations.
 
 
 Next Step: [Summary of Endpoints](SUMMARY.md)

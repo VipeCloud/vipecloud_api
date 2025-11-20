@@ -1,8 +1,17 @@
-Series Templates (POST / GET)
+Series Templates (GET / POST / PUT / PATCH / DELETE)
 -------------
-Create, update, and retrieve Series Templates from your user accounts. Use in conjunction with the /series_template_steps endpoint.
+Create, update, retrieve, and delete Series Templates from your user accounts. Use in conjunction with the /series_template_steps endpoint.
 
-#### POST Series Template
+#### Create Series Template
+```
+POST /series_templates
+```
+
+#### Update Series Template
+```
+PUT /series_templates/:id
+PATCH /series_templates/:id
+```
 
 Attribute | type | required | description 
 --- | --- | --- | --- 
@@ -11,10 +20,7 @@ steps | array | yes | Array of series step ids
 cancel_all_inbound | boolean | no | Optionally set a flag to cancel following steps of a series if the user receives an inbound email from the series recipient. This requires the user to have connected their inbox to VipeCloud to work.
 cancel_all_if_joined_suite | integer | no | Optionally set the suite_id to cancel following steps of a series if the recipient joins the suite. This requires the user to have the Community Add-On and be the owner of the Suite.
 
-```
-POST /series_templates(/:id)
-``` 
-Sample body when creating an Series Template.
+Sample body when creating a Series Template.
 
 ```   
 {
@@ -26,9 +32,10 @@ Sample body when creating an Series Template.
 
 #### GET Series Templates
 ```
-GET /series_templates(/:id)
+GET /series_templates
+GET /series_templates/:id
 ```
-Retrieve series templates by id or retrieve a list of all series templates in the user's account. To refine the return to a particular folder within a user's account, a "folder_id" query parameter can be provided. By default, all templates regardless of folders are returned via the endpoint, however if folder_id=0 is provided then only templates in the user's base folder are returned.
+Retrieve a series template by id or retrieve a list of all series templates in the user's account. To refine the return to a particular folder within a user's account, a "folder_id" query parameter can be provided. By default, all templates regardless of folders are returned via the endpoint, however if folder_id=0 is provided then only templates in the user's base folder are returned.
 
 Sample response to get series templates by id. GET /series_templates/123
 ```   
@@ -49,3 +56,9 @@ Sample response to get all series templates. GET /series_templates
     ],...
 }
 ```
+
+#### DELETE Series Templates
+```
+DELETE /series_templates/:id
+```
+Delete a series template by ID. Returns status of success upon successful deletion.

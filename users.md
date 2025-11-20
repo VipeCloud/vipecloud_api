@@ -1,5 +1,7 @@
-Users (GET / POST / PUT)
+Users (GET)
 -------------
+**Note:** In v4.0, the Users endpoint only supports GET operations. POST and PUT operations for user management are no longer available via the API.
+
 ### GET all active users within your account
 
 ```
@@ -46,12 +48,17 @@ Getting an individual user will return a single user's information if the callin
 
 ### POST create a new user
 
-NOTE: this endpoint is in beta and requires invite-only access
+**DEPRECATED in v4.0:** This endpoint is no longer available in API v4.0.
+
+<details>
+<summary>Legacy v3.1 documentation (not available in v4.0)</summary>
+
+NOTE: this endpoint was in beta and required invite-only access
 
 ```
 POST /users
-``` 
-Only authenticated Admin users can use this endpoint.
+```
+Only authenticated Admin users could use this endpoint.
 
 Attribute | type | required | description
 --- | --- | --- | ---
@@ -87,9 +94,16 @@ Sample 200 response:
 }
 ```
 
+</details>
+
 ### PUT update a user
 
-NOTE: this endpoint is in beta and requires invite-only access
+**DEPRECATED in v4.0:** This endpoint is no longer available in API v4.0.
+
+<details>
+<summary>Legacy v3.1 documentation (not available in v4.0)</summary>
+
+NOTE: this endpoint was in beta and required invite-only access
 
 ```
 PUT /users
@@ -113,9 +127,9 @@ Sample body:
 
 Sample 200 response:
 ```
-{ 
-  "first_name"  : "Elmer", 
-  "last_name"  : "Coyote", 
+{
+  "first_name"  : "Elmer",
+  "last_name"  : "Coyote",
   "email"  : "wiley.coyote@acme.com",
   "phone"  : "123-456-7890",
   "company_name" : "Acme",
@@ -123,3 +137,5 @@ Sample 200 response:
   "api_keys" : ["123456XYZ"] //save this to authenticate directly into this user's account
 }
 ```
+
+</details>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
+         bootstrap="bootstrap.php"
+         colors="true"
+         verbose="true"
+         stopOnFailure="false"
+         beStrictAboutOutputDuringTests="true"
+         beStrictAboutTestsThatDoNotTestAnything="true">
+    <testsuites>
+        <testsuite name="VipeCloud API v4.0 Test Suite">
+            <directory>.</directory>
+        </testsuite>
+    </testsuites>
+    <php>
+        <env name="API_BASE_URL" value="https://v.vipecloud.com/api/v4.0"/>
+        <env name="API_USER_EMAIL" value=""/>
+        <env name="API_KEY" value=""/>
+    </php>
+</phpunit>

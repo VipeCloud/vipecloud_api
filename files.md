@@ -1,12 +1,11 @@
-Files (POST / GET)
+Files (GET / POST / PUT / PATCH / DELETE)
 -------------
-Add, update, and retrieve files from your user accounts. If you are migrating from another system and have more files than you can manually transfer over (images, videos, documents, etc.), you can import them using the /files endpoint.
+Add, update, retrieve, and delete files from your user accounts. If you are migrating from another system and have more files than you can manually transfer over (images, videos, documents, etc.), you can import them using the /files endpoint.
 
-#### POST File(s)
-
+#### Create File
 ```
-POST /files(/:id)
-``` 
+POST /files
+```
 
 Sample body when *creating* a new file
 
@@ -29,7 +28,13 @@ Sample response
 }
 ```
 
-Sample body when *updating* an existing file (e.g. POST to /files/123 ). You can update the file_name or tag_ids associated with a file.
+#### Update File
+```
+PUT /files/:id
+PATCH /files/:id
+```
+
+Sample body when *updating* an existing file. You can update the file_name or tag_ids associated with a file.
 
 ```   
 {
@@ -54,9 +59,10 @@ Sample response
 
 #### GET File
 ```
-GET /files(/:id)
+GET /files
+GET /files/:id
 ```
-Retrieve files by id or search your account for files by file_name (url encoded) or tag_id. Responses are limited to a maximum of 50 files. If no file is found, the response will be code 422 with the message "No file was found."
+Retrieve a file by id, or search your account for files by file_name (url encoded) or tag_id (as query params). Responses are limited to a maximum of 50 files. If no file is found, the response will be code 422 with the message "No file was found."
 
 Sample response to get file by id. GET /files/123
 ```   
@@ -83,3 +89,9 @@ Sample response to get files by file_name (url encoded) or tag_id. Array of file
     ],...
 }
 ```
+
+#### DELETE File
+```
+DELETE /files/:id
+```
+Delete a file by ID. Returns status of success upon successful deletion.

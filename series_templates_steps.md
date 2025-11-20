@@ -1,8 +1,17 @@
-Series Template Steps (POST / GET)
+Series Template Steps (GET / POST / PUT / PATCH / DELETE)
 -------------
-Create, update, and retrieve Series Template Steps from your user accounts. Use in conjunction with the /series_templates endpoint.
+Create, update, retrieve, and delete Series Template Steps from your user accounts. Use in conjunction with the /series_templates endpoint.
 
-#### POST Series Template Step
+#### Create Series Template Step
+```
+POST /series_template_steps
+```
+
+#### Update Series Template Step
+```
+PUT /series_template_steps/:id
+PATCH /series_template_steps/:id
+```
 
 Attribute | type | required | description 
 --- | --- | --- | --- 
@@ -15,9 +24,6 @@ min | integer | no | Optionally set the minute of the hour this step will proces
 ampm | enum "am" or "pm" | no | Optionally set the am or pm of the day this step will process. Disregarded for the first step. NOTE to set the time for the step to process EACH of the hour, min, and ampm parameters need to be set.
 weekday | boolean | no | Optionally set the step to only process on a weekday.
 
-```
-POST /series_template_steps(/:id)
-``` 
 Sample body when creating a Series Template Step. NOTE - if you UPDATE a series template step ALREADY associated with a series template you must ALSO update the series template to save the step changes.
 
 ```   
@@ -34,9 +40,10 @@ Sample body when creating a Series Template Step. NOTE - if you UPDATE a series 
 
 #### GET Series Template Steps
 ```
-GET /series_template_steps(/:id)
+GET /series_template_steps
+GET /series_template_steps/:id
 ```
-Retrieve series template steps by id, by series_template_id, or retrieve a list of all series template steps in the user's account. 
+Retrieve a series template step by id, by series_template_id (as query param), or retrieve a list of all series template steps in the user's account. 
 
 Sample response to get series template steps by id. GET /series_template_steps/123 or /series_template_steps?series_template_id=123
 ```   
@@ -69,3 +76,9 @@ Sample response to get all series template steps. GET /series_template_steps
     ],...
 }
 ```
+
+#### DELETE Series Template Steps
+```
+DELETE /series_template_steps/:id
+```
+Delete a series template step by ID. Returns status of success upon successful deletion.

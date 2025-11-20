@@ -1,12 +1,11 @@
-Tags (POST / GET / DELETE)
+Tags (GET / POST / PUT / PATCH / DELETE)
 -------------
-Create, update, retrieve, and delete tags for your users. Tags utilized via the API can be attributed to files. 
+Create, update, retrieve, and delete tags for your users. Tags utilized via the API can be attributed to files.
 
-#### POST Tag(s)
-
+#### Create Tag
 ```
-POST /tags(/:id)
-``` 
+POST /tags
+```
 
 Sample body when *creating* a new tag
 
@@ -24,7 +23,13 @@ Sample response
 }
 ```
 
-Sample body when *updating* an existing tag (e.g. POST to /tags/123 ). You can update the tag_name.
+#### Update Tag
+```
+PUT /tags/:id
+PATCH /tags/:id
+```
+
+Sample body when *updating* an existing tag. You can update the tag_name.
 
 ```   
 {
@@ -43,9 +48,10 @@ Sample response
 
 #### GET Tag
 ```
-GET /tags(/:id)
+GET /tags
+GET /tags/:id
 ```
-Retrieve tags by id or as a group. If no tag is found, the response will be code 422 with the message "No tag was found."
+Retrieve a tag by id or all tags. If no tag is found, the response will be code 422 with the message "No tag was found."
 
 Sample response to get tag by id. GET /tags/123
 ```   
@@ -67,9 +73,9 @@ Sample response to get tags with no id. Array of tags is returned. GET /tags
 
 #### DELETE Tag
 ```
-DLETE /tags/:id
+DELETE /tags/:id
 ```
-Delete tag by id. If no tag is found, the response will be code 422 with the message "No tag was found."
+Delete a tag by id. If no tag is found, the response will be code 422 with the message "No tag was found."
 
 Sample response to delete tag by id. DELETE /tags/123
 ```   

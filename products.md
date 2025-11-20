@@ -67,9 +67,9 @@ Create, update, get, and delete products (or services).
 </details>
 <hr>
 <details>
-  <summary><code>PUT</code> <b>/products/{id}</b> Update a product</summary>
+  <summary><code>PUT/PATCH</code> <b>/products/{id}</b> Update a product</summary>
   <br>
-  Update any parameter of a product. All submitted fields will overwrite existing values. 
+  Update any parameter of a product using PUT or PATCH. All submitted fields will overwrite existing values. 
 
   ```json
   {

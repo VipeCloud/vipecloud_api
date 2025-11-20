@@ -1,6 +1,6 @@
-Email Templates (POST / PUT / GET)
+Email Templates (GET / POST / PUT / PATCH / DELETE)
 -------------
-If you are migrating from another email sending provider and more email templates than you can manually transfer over, you can import them using the /email_templates endpoint. You can also edit your email templates with a PUT.
+If you are migrating from another email sending provider and more email templates than you can manually transfer over, you can import them using the /email_templates endpoint. You can also edit your email templates with a PUT or PATCH, and delete them with DELETE.
 
 #### POST Template
 ```
@@ -9,13 +9,12 @@ POST /email_templates
 
 Body params
 
-```   
+```
 {
   "title" : "My Email Template", //required and used to identify the contact
   "subject" : "My Email Subject", //required
   "copy" : "Hi there, this is my email template copy....", //required. HTML is allowed.
   "landing_page" : 1, //optional, can be a 1 or a 0. If a 1 we will respond with a link to the landing page
-  "email_template_id" : 123, //optional, can be used to update one of your existing email templates
 }
 ```
 
@@ -28,10 +27,11 @@ Sample response
 }
 ```
 
-#### PUT Template
+#### PUT/PATCH Template
 ```
 PUT /email_templates/:id
-``` 
+PATCH /email_templates/:id
+```
 
 Body params
 
@@ -94,3 +94,9 @@ GET /email_templates/123
 }
 
 ```
+
+#### DELETE Template
+```
+DELETE /email_templates/:id
+```
+Delete an email template by ID. Returns status of success upon successful deletion.

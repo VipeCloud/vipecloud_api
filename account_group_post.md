@@ -1,8 +1,17 @@
-Account Group Post (POST / GET / DELETE)
+Account Group Post (GET / POST / PUT / PATCH / DELETE)
 -------------
 Create, update, retrieve, and delete account group posts.
 
-#### POST Account Group Post
+#### Create Account Group Post
+```
+POST /account_group_post
+```
+
+#### Update Account Group Post
+```
+PUT /account_group_post/:id
+PATCH /account_group_post/:id
+```
 
 Attribute | type | required | description 
 --- | --- | --- | --- 
@@ -10,10 +19,7 @@ account_group_id | integer | yes | The id for the account group of the user to m
 comment_data | array | yes | The comment_data array can support three keys: comment (string), images (array of URL strings), and link (string). It is required to have at least one of the comment or the images keys in your post.
 schedule_data | array | yes | The schedule_data array requires four keys: scheduled_date (string, formatted YYYY-MM-DD), hour (string, no leading zero), min (string, no leading zero), and ampm (string).
 
-```
-POST /account_group_post(/:id)
-``` 
-Sample body when creating a Account Group Post. (The /social_group_post endpoint is still supported.)
+Sample body when creating an Account Group Post. (The /social_group_post endpoint is still supported.)
 
 ```   
 {
@@ -35,9 +41,10 @@ Sample body when creating a Account Group Post. (The /social_group_post endpoint
 
 #### GET Account Group Post
 ```
-GET /account_group_post(/:id)
+GET /account_group_post
+GET /account_group_post/:id
 ```
-Retrieve the most recent 50 account group posts or a single account group post by id. (The /social_group_post endpoint is still supported.)
+Retrieve the most recent 50 account group posts, or a single account group post by id. (The /social_group_post endpoint is still supported.)
 ```   
 { 
     [
