@@ -91,14 +91,16 @@ GET /schedulers(/:id)
 If no id, returns an array of the schedulers for the authenticated user. If id, returns the details for a specific scheduler.
 
 **Query Parameters:**
-- `query` - Search filter for scheduler name or title
-- `page` - Page number for pagination (default: 1)
-- `length` - Number of items per page (default: 20, max: 1000)
-- `sort_by` - Field name to sort by (e.g., 'id', 'name', 'create_date', 'update_date')
-- `sort_direction` - Sort direction: 'ASC' or 'DESC' (default: 'DESC')
+- `query` - Search filter for scheduler name or title (list only)
+- `page` - Page number for pagination (default: 1) (list only)
+- `length` - Number of items per page (default: 20, max: 1000) (list only)
+- `sort_by` - Field name to sort by (e.g., 'id', 'name', 'create_date', 'update_date') (list only)
+- `sort_direction` - Sort direction: 'ASC' or 'DESC' (default: 'DESC') (list only)
+- `include_fields` - Set to `1` or `true` to include sign up form fields in the response (single scheduler only)
 
 ```
 E.g. GET /schedulers?query=meeting&page=1&length=10
+E.g. GET /schedulers/123?include_fields=1
 ```
 
 Sample response for list:
@@ -157,6 +159,40 @@ Sample response for single scheduler:
 }
 ```
 
+Sample response for single scheduler with `include_fields=1`:
+```
+{
+   "id" : 123,
+   "name" : "My Meeting Scheduler",
+   "slug" : "my-meeting",
+   "title" : "Book a Meeting with Me",
+   "is_active" : 1,
+   "calendar_type" : "vipecloud",
+   "calendar_id" : 456,
+   "calendar_name" : "My Calendar (VipeCloud)",
+   "event_type" : "one_on_one",
+   "duration" : 30,
+   "url" : "https://v.vipecloud.com/schedulers/view/my-meeting",
+   "daily_availability" : { ... },
+   "create_date" : "2024-01-15 10:30:00",
+   "update_date" : "2024-01-20 14:45:00",
+   "fields" : [
+      {
+         "slug" : "first_name",
+         "label" : "First Name",
+         "type" : "text",
+         "required" : true
+      },
+      {
+         "slug" : "email",
+         "label" : "Email",
+         "type" : "email",
+         "required" : true
+      }
+   ]
+}
+```
+
 #### GET Scheduler Availability
 ```
 GET /schedulers/:slug/availability
@@ -185,6 +221,69 @@ Sample response:
          { "start" : "14:00", "end" : "14:30" }
       ]
    }
+}
+```
+
+#### GET Scheduler Sign Up Form Fields
+```
+GET /schedulers/:id/fields
+```
+Returns the sign up form fields for a scheduler. These are the fields that contacts will fill out when booking a meeting through the scheduler.
+
+Sample response:
+```
+{
+   "status" : "success",
+   "scheduler_id" : 123,
+   "scheduler_name" : "My Meeting Scheduler",
+   "scheduler_slug" : "my-meeting",
+   "contact_list_id" : 456,
+   "fields" : [
+      {
+         "slug" : "first_name",
+         "label" : "First Name",
+         "type" : "text",
+         "required" : true,
+         "order" : 1
+      },
+      {
+         "slug" : "last_name",
+         "label" : "Last Name",
+         "type" : "text",
+         "required" : false,
+         "order" : 2
+      },
+      {
+         "slug" : "email",
+         "label" : "Email",
+         "type" : "email",
+         "required" : true,
+         "order" : 3
+      },
+      {
+         "slug" : "mobile_phone",
+         "label" : "Phone Number",
+         "type" : "phone",
+         "required" : false,
+         "order" : 4
+      }
+   ]
+}
+```
+
+Example error response (scheduler not found):
+```
+{
+   "status" : "error",
+   "message" : "Scheduler not found."
+}
+```
+
+Example error response (no active sign up form):
+```
+{
+   "status" : "error",
+   "message" : "The scheduler's contact list does not have an active sign up form."
 }
 ```
 
