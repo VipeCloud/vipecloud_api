@@ -174,11 +174,14 @@ The response matches the same format as `GET /users/:id`, including the activati
 Status | Message | Description
 --- | --- | ---
 403 | "Only account owners can create users via API." | The authenticated user is not the account owner
+422 | "Invalid request body format." | The request body is not valid JSON
 422 | "Missing required field: first_name, last_name, or email." | One or more required fields are missing
 422 | "Invalid email address provided." | The email format is invalid
 422 | "This email belongs to a deleted user within your account." | The email was previously used by a deleted user in your account
 422 | "This email is unavailable. Please contact support." | The email is in use by another account or is otherwise unavailable
 422 | "You don't have enough seats available for this product." | Your account has reached its user seat limit
+500 | "Failed to create user." | User creation failed unexpectedly
+500 | "Error creating user, please contact support." | An exception occurred during user creation
 
 #### What Happens When You Create a User
 
