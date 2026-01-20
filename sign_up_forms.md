@@ -66,6 +66,10 @@ Returns a single sign up form's information along with the `contacts_master_ids`
 ```
 GET /sign_up_forms/:id/data?contacts_master_id=:contacts_master_id
 ```
+OR
+```
+GET /sign_up_forms/:id/data/:contacts_master_id
+```
 
 Returns the actual data submitted by a specific contact through a sign up form. This includes all form field values that were submitted.
 
