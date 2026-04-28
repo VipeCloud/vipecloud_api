@@ -250,3 +250,217 @@ curl "https://v.vipecloud.com/api/v3.1/custom_fields" \
 ```
 
 This returns custom field definitions including labels, types, and dropdown options.
+
+---
+
+### GET /sign_up_forms/:id/fields
+
+Returns the full schema of a sign-up form: form-level metadata, submittability state, and per-field constraints. Use this endpoint to discover what to send in `POST /sign_up_forms/:id/data`.
+
+```
+GET /sign_up_forms/:id/fields
+```
+
+**Sample response** (200 OK):
+
+```json
+{
+  "status": "success",
+  "contact_list_id": 123,
+  "form": {
+    "title": "Newsletter Signup",
+    "description": "Sign up for our weekly digest",
+    "action_text": "Subscribe",
+    "captcha_required": true,
+    "scheduler_attached": false,
+    "payment_required": false,
+    "active": true,
+    "form_disabled": false,
+    "submission_limit_reached": false,
+    "form_submittable": true
+  },
+  "fields": [
+    {
+      "slug": "email",
+      "name": "Email",
+      "type": "email",
+      "required": true,
+      "standard": true,
+      "custom_field": false,
+      "validation": "email",
+      "max_length": 255,
+      "min_length": null,
+      "default_value": null,
+      "options": null
+    },
+    {
+      "slug": "favorite_color",
+      "name": "Favorite Color",
+      "type": "Dropdown",
+      "required": false,
+      "standard": false,
+      "custom_field": true,
+      "validation": null,
+      "max_length": null,
+      "min_length": null,
+      "default_value": null,
+      "options": ["red", "green", "blue"]
+    }
+  ]
+}
+```
+
+**Form fields**
+
+| Field | Description |
+|---|---|
+| `form.title` | Form title shown to end users |
+| `form.description` | HTML description shown above the form |
+| `form.action_text` | Submit button label |
+| `form.captcha_required` | Whether the rendered web form shows a captcha. The API submission endpoint **bypasses** captcha for authenticated requests, so this is informational only. |
+| `form.scheduler_attached` | If true, the form has a scheduler attached. `POST /sign_up_forms/:id/data` will reject. |
+| `form.payment_required` | If true, the form takes payment. `POST /sign_up_forms/:id/data` will reject. |
+| `form.active` | Whether the contact list has `active_sign_up = 1`. |
+| `form.form_disabled` | Whether the form has been disabled. |
+| `form.submission_limit_reached` | Whether the form's `sign_up_limit` has been reached. |
+| `form.form_submittable` | Aggregate boolean: true iff active && !form_disabled && !scheduler_attached && !payment_required && !submission_limit_reached. Use this to short-circuit a POST. |
+
+**Per-field keys**
+
+| Field | Description |
+|---|---|
+| `slug` | Unique field key. Use this as the key in `POST /data` `fields` body. |
+| `name` | Human-readable label. |
+| `type` | Field type (text, email, phone, url, numeric, Dropdown, Picklist, etc.). |
+| `required` | Whether the field is required. |
+| `validation` | Format validator (email, phone, url, numeric) or null. |
+| `max_length`/`min_length` | Length bounds, or null if unlimited. |
+| `default_value` | Default value, or null. |
+| `options` | Array of allowed values for Dropdown/Picklist; null otherwise. |
+| `standard` | True for built-in fields (email, first_name, etc.). |
+| `custom_field` | Custom field ID, or false. |
+
+**Errors**
+
+| HTTP | When |
+|---|---|
+| 401 | Authentication failed |
+| 404 | Form not found or not owned by your account |
+
+**Example**
+
+```bash
+curl https://v.vipecloud.com/api/v3.1/sign_up_forms/123/fields \
+  -H "Authorization: Basic $(echo -n 'you@example.com:YOUR_API_KEY' | base64)"
+```
+
+---
+
+### POST /sign_up_forms/:id/data
+
+> **Authorization required:** This endpoint requires support team approval. Contact VipeCloud support to request access (`api_sign_up_form_submissions_enabled` account flag) before this endpoint will accept submissions.
+>
+> **Captcha:** Bypassed automatically for authenticated API submissions.
+>
+> **Scope limitation:** Sign-up forms with payment processors or attached schedulers cannot be submitted via this endpoint.
+
+Submit a new entry to a sign-up form. Creates or updates the contact in the associated contact list and triggers the form's automations (unless `skip_automations` is true).
+
+```
+POST /sign_up_forms/:id/data
+```
+
+**Body**
+
+```json
+{
+  "fields": {
+    "email": "jane@example.com",
+    "first_name": "Jane",
+    "favorite_color": "blue",
+    "custom_field_456": "anything"
+  },
+  "skip_automations": false
+}
+```
+
+| Field | Required | Description |
+|---|---|---|
+| `fields` | yes | Object mapping field slugs (from `GET /fields`) to values |
+| `skip_automations` | no | If true, suppresses notifications and automations triggered by this form. Default false. |
+
+**Sample success response** (200 OK):
+
+```json
+{
+  "status": "success",
+  "contacts_master_id": 9876,
+  "created": true
+}
+```
+
+`created: true` means a new contact was created. `created: false` means an existing contact (matched by email or another unique field) was updated.
+
+**Errors**
+
+| HTTP | `message` | Notes |
+|---|---|---|
+| 401 | Authentication failed | |
+| 403 | "Sign-up form submission via the API is not enabled for your account. Please contact VipeCloud support to request access." | Account flag missing or 0 |
+| 404 | "Sign-up form not found." | Form does not exist or is not owned by your account |
+| 422 | "This sign-up form is not currently accepting submissions." | `active_sign_up = 0` |
+| 422 | "This sign-up form is disabled." | `form_disabled = 1` |
+| 422 | "This sign-up form has a scheduler attached and cannot be submitted via the V3.1 API." | Scheduler attached |
+| 422 | "This sign-up form requires payment and cannot be submitted via the API." | Payment processor configured |
+| 422 | "This sign-up form has reached its submission limit." | `sign_up_limit` reached |
+| 422 | "Validation failed." | Per-field validation; see `errors[]` |
+
+**Multi-error validation response** — all per-field errors are returned at once:
+
+```json
+{
+  "status": "error",
+  "message": "Validation failed.",
+  "errors": [
+    {"slug": "email", "message": "Email is required."},
+    {"slug": "phone", "message": "Phone must be a valid US phone number."},
+    {"slug": "favorite_color", "message": "Value must be one of: red, green, blue."}
+  ]
+}
+```
+
+**Examples**
+
+Basic submission:
+
+```bash
+curl https://v.vipecloud.com/api/v3.1/sign_up_forms/123/data \
+  -H "Authorization: Basic $(echo -n 'you@example.com:KEY' | base64)" \
+  -H "Content-Type: application/json" \
+  -X POST -d '{
+    "fields": {"email": "jane@example.com", "first_name": "Jane"}
+  }'
+```
+
+Submission without automations:
+
+```bash
+curl https://v.vipecloud.com/api/v3.1/sign_up_forms/123/data \
+  -H "Authorization: Basic $(echo -n 'you@example.com:KEY' | base64)" \
+  -H "Content-Type: application/json" \
+  -X POST -d '{
+    "fields": {"email": "jane@example.com"},
+    "skip_automations": true
+  }'
+```
+
+Handling a multi-error 422:
+
+```bash
+curl -i https://v.vipecloud.com/api/v3.1/sign_up_forms/123/data \
+  -H "Authorization: Basic $(echo -n 'you@example.com:KEY' | base64)" \
+  -H "Content-Type: application/json" \
+  -X POST -d '{ "fields": {} }'
+# HTTP/1.1 422 Unprocessable Entity
+# {"status":"error","message":"Validation failed.","errors":[{"slug":"email","message":"Email is required."}]}
+```
