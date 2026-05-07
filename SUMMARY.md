@@ -11,7 +11,7 @@ Summary Of Endpoints
 9. [Products (POST/GET/DELETE)](products.md)
 10. [Series Templates (POST/GET)](series_templates.md)
 11. [Series Template Steps (POST/GET)](series_template_steps.md)
-12. [Sign Up Forms (GET)](sign_up_forms.md)
+12. [Sign Up Forms (GET/POST)](sign_up_forms.md)
 13. [Social Accounts (GET)](social_accounts.md)
 14. [Account Groups (POST/GET)](account_groups.md)
 15. [Social Connect (POST)](social_connect.md)
