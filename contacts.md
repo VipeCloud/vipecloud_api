@@ -87,17 +87,32 @@ E.g. GET /contacts?to_get=first_name,custom_fields
       'id': 123,
       'first_name': "Road",
       'custom_field_1': "value 1"
-      'custom_field_2': "value 2" 
+      'custom_field_2': "value 2"
    },
    {
       'contacts_master_id': 124,
       'id': 124,
       'first_name': "Runner",
       'custom_field_1': "value 3"
-      'custom_field_2': "value 4" 
+      'custom_field_2': "value 4"
    }
 ]
 ```
+
+#### Custom field visibility
+Custom field values returned with each contact respect the account's
+visibility rules:
+
+- **Admin users** see every custom field value.
+- **Non-admin users** see values only for fields they have visibility on. A
+  field restricted to a team the user is not a member of is omitted from the
+  returned object (the key/value pair is absent — not present-with-null).
+- **"Record Owner Only"** fields are included only on contacts the
+  authenticated user owns. The same field may appear on one contact in the
+  response and be absent on another.
+
+To see the visibility rules in effect for the authenticated user, request
+`GET /custom_fields` — it returns the same filtered list.
 
 Full contact record:
 ```   
