@@ -255,6 +255,8 @@ This returns custom field definitions including labels, types, and dropdown opti
 
 ### GET /sign_up_forms/:id/fields
 
+> **Required-field contract:** Each field's `required` key is always returned as a boolean. Fields default to `required: true` when the form-builder did not explicitly toggle them off. The `POST /sign_up_forms/:id/data` validator enforces this exact value — the schema you see here matches what the submission endpoint will reject for.
+
 Returns the full schema of a sign-up form: form-level metadata, submittability state, and per-field constraints. Use this endpoint to discover what to send in `POST /sign_up_forms/:id/data`.
 
 ```
@@ -332,7 +334,7 @@ GET /sign_up_forms/:id/fields
 | `slug` | Unique field key. Use this as the key in `POST /data` `fields` body. |
 | `name` | Human-readable label. |
 | `type` | Field type (text, email, phone, url, numeric, Dropdown, Picklist, etc.). |
-| `required` | Whether the field is required. |
+| `required` | Boolean. **Always present** in the response — never absent. `true` when the field must be supplied to submit; `false` only when the form-builder has explicitly toggled the field off. Fields default to `required: true` when the form-builder did not write a value (matches the form-builder UX, where new fields are required by default). The submission validator at `POST /sign_up_forms/:id/data` enforces this exact value — the schema and validator share a single source of truth, so a field shown as `required: true` here will produce a `422 Validation failed.` with `{slug, message}` in `errors[]` when omitted from a submission body. |
 | `validation` | Format validator (email, phone, url, numeric) or null. |
 | `max_length`/`min_length` | Length bounds, or null if unlimited. |
 | `default_value` | Default value, or null. |
