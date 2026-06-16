@@ -10,10 +10,12 @@ delay_days | integer | yes | The number of days to delay this step after the pri
 email_template_id | integer | yes | Email template id
 series_template_id | integer | no | Note the system will automatically assign this value when the series template step id is included in a POST to /series_templates. IMPORTANT: a series template step can only be associated with ONE series template. 
 action | string | no | This value will ALWAYS be set to "send a new email" for series template steps created via the API.
-hour | integer | no | Optionally set the hour of the day this step will process. Disregarded for the first step. No leading zero.
-min | integer | no | Optionally set the minute of the hour this step will process. Disregarded for the first step. No leading zero.
-ampm | enum "am" or "pm" | no | Optionally set the am or pm of the day this step will process. Disregarded for the first step. NOTE to set the time for the step to process EACH of the hour, min, and ampm parameters need to be set.
+hour | integer | no | Optionally set the hour of the day this step will process. Disregarded for the first step. No leading zero. Defaults to 10 on a delayed step launched without a complete send time.
+min | integer | no | Optionally set the minute of the hour this step will process. Disregarded for the first step. No leading zero. Defaults to 00 on a delayed step launched without a complete send time.
+ampm | enum "am" or "pm" | no | Optionally set the am or pm of the day this step will process. Disregarded for the first step. NOTE to set the time for the step to process EACH of the hour, min, and ampm parameters need to be set. Defaults to am on a delayed step launched without a complete send time.
 weekday | boolean | no | Optionally set the step to only process on a weekday.
+
+NOTE on step timing: it is recommended to set an explicit send time (hour, min, and ampm together) on every delayed step. A step with `delay_days` greater than 0 that is launched without a complete send time will process at 10:00 am in the user's local timezone. The first step in a series always processes when the series is launched and disregards these time values.
 
 ```
 POST /series_template_steps(/:id)
