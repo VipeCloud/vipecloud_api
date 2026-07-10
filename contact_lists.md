@@ -7,7 +7,9 @@ POST /contact_lists(/:id)
 ```
 If creating a new list, a list name must be present. Creating an "empty" list - a list with a list_name and no contacts is allowed. 
 
-When POSTing contacts to an existing list, we will assume the contacts you submit represent the ENTIRETY of the contact list if using the 'contacts' parameter. We will compare your POSTed contacts to any existing contacts on the list. If contacts on the list are not in your POST they will be removed from the list. And if contacts in your POST are not on the list they will be added. The 'add_contacts' parameter can be used if you simply want to add contacts to the list, without submitting the entirety of the contact list. Each call may only include ONE of 'contacts' or 'add_contacts'. If both are provided, then the call will fail. If the "skip_autoresponders" key is provided and set to true, then autoresponders for the given contact list will NOT run for contacts added during this call. If neither the 'add_contacts' parameter or the 'contacts' parameters are provided, then no contacts will be added/removed by the call. We've added a parameter to the response body, 'worked_contacts', which is a boolean indicating whether or not contact addition/subtraction calculations occurred during the call. We've added this functionality to allow for editing contact_list data without having to worry about all contacts being removed accidentally, and removing the need to send the entirety of the contact list if you just wanted to change the name or a setting.
+When POSTing contacts to an existing list, we will assume the contacts you submit represent the ENTIRETY of the contact list if using the 'contacts' parameter. We will compare your POSTed contacts to any existing contacts on the list. If contacts on the list are not in your POST they will be removed from the list. And if contacts in your POST are not on the list they will be added. The 'add_contacts' parameter can be used if you simply want to add contacts to the list, without submitting the entirety of the contact list. The 'remove_contacts' parameter can be used if you simply want to remove specific contacts from the list, without submitting the entirety of the contact list. Each call may only include ONE of 'contacts', 'add_contacts', or 'remove_contacts'. If more than one is provided, then the call will fail. If the "skip_autoresponders" key is provided and set to true, then autoresponders for the given contact list will NOT run for contacts added during this call. If none of the 'contacts', 'add_contacts', or 'remove_contacts' parameters are provided, then no contacts will be added/removed by the call. We've added a parameter to the response body, 'worked_contacts', which is a boolean indicating whether or not contact addition/subtraction calculations occurred during the call. We've added this functionality to allow for editing contact_list data without having to worry about all contacts being removed accidentally, and removing the need to send the entirety of the contact list if you just wanted to change the name or a setting.
+
+Each entry in 'remove_contacts' must include the contacts_master_id of the contact to remove — unlike 'contacts' and 'add_contacts', contact data (email, mobile_phone, etc.) cannot be used to identify a contact to remove. Entries missing a contacts_master_id, and entries whose contact is not currently on the list, are skipped and reported in the 'contacts_not_removed' response list with a message explaining why. Contacts successfully removed are counted in 'contacts_removed' and returned in 'contacts_removed_data'.
 
 Note that VipeCloud will not add contacts that have unsubscribed from any user in your account, bounced, or have an email which has verified as undeliverable. 
 
@@ -35,7 +37,7 @@ When submitting contacts include the contacts_master_id of the contact record, o
       "first_name" : "John"
     }
  ],
- // Can only submit EITHER 'contacts', 'add_contacts', or neither in a single call. If BOTH are passed, then the call will fail
+ // Can only submit ONE of 'contacts', 'add_contacts', or 'remove_contacts' (or none) in a single call. If more than one is passed, then the call will fail
  "add_contacts": [
     {
       "contacts_master_id" : 123
@@ -47,6 +49,14 @@ When submitting contacts include the contacts_master_id of the contact record, o
     {
       "mobile_phone": "1234567890",
       "first_name" : "John"
+    }
+ ],
+ "remove_contacts": [
+    {
+      "contacts_master_id" : 123 // required for every remove_contacts entry
+    },
+    {
+      "contacts_master_id" : 456
     }
  ]
 }
@@ -106,6 +116,15 @@ We now also return the data for contacts that were removed, that way those conta
   "contacts_removed_data": [
     {
       "contacts_master_id":12345
+    }
+  ],
+  // Populated when using the 'remove_contacts' parameter: entries that could
+  // not be removed, with a message explaining why (e.g. missing
+  // contacts_master_id, or the contact is not on this list)
+  "contacts_not_removed": [
+    {
+      "contacts_master_id": 12345,
+      "message": "Contact is not on this list."
     }
   ]
 
