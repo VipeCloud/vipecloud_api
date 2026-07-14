@@ -34,9 +34,10 @@ Sample post body below.
    "personal_facebook_url" : "https://www.facebook.com/...",
    "tags" : ["Speedy"], 
    "verify" : 0, //if this is 1 AND you are an enterprise user AND this user has less than 10K verifications this month, we will verify the contact's email address on import
-   "custom_fields" : [ //an array of the custom fields. Key value is the custom field id.
-      id : "value" 
-   ],
+   "custom_fields" : { //an object of custom field values, keyed by custom field id OR field name (names are matched case-insensitively against your account's contact custom fields — use GET /custom_fields to list them). Keys that don't match a custom field on your account are skipped.
+      "528" : "value",
+      "Liquid Assets" : "value"
+   },
    "contact_lists" : [ //an array of contact_list_ids.
       "0" => 123,
       "1" => 1234
