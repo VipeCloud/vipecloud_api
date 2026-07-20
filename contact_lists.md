@@ -9,7 +9,12 @@ If creating a new list, a list name must be present. Creating an "empty" list - 
 
 When POSTing contacts to an existing list, we will assume the contacts you submit represent the ENTIRETY of the contact list if using the 'contacts' parameter. We will compare your POSTed contacts to any existing contacts on the list. If contacts on the list are not in your POST they will be removed from the list. And if contacts in your POST are not on the list they will be added. The 'add_contacts' parameter can be used if you simply want to add contacts to the list, without submitting the entirety of the contact list. The 'remove_contacts' parameter can be used if you simply want to remove specific contacts from the list, without submitting the entirety of the contact list. Each call may only include ONE of 'contacts', 'add_contacts', or 'remove_contacts'. If more than one is provided, then the call will fail. If the "skip_autoresponders" key is provided and set to true, then autoresponders for the given contact list will NOT run for contacts added during this call. If none of the 'contacts', 'add_contacts', or 'remove_contacts' parameters are provided, then no contacts will be added/removed by the call. We've added a parameter to the response body, 'worked_contacts', which is a boolean indicating whether or not contact addition/subtraction calculations occurred during the call. We've added this functionality to allow for editing contact_list data without having to worry about all contacts being removed accidentally, and removing the need to send the entirety of the contact list if you just wanted to change the name or a setting.
 
-Each entry in 'remove_contacts' must include the contacts_master_id of the contact to remove — unlike 'contacts' and 'add_contacts', contact data (email, mobile_phone, etc.) cannot be used to identify a contact to remove. Entries missing a contacts_master_id, and entries whose contact is not currently on the list, are skipped and reported in the 'contacts_not_removed' response list with a message explaining why. Contacts successfully removed are counted in 'contacts_removed' and returned in 'contacts_removed_data'.
+Each entry in 'remove_contacts' must include the contacts_master_id of the contact to remove — unlike 'contacts' and 'add_contacts', contact data (email, mobile_phone, etc.) cannot be used to identify a contact to remove. Entries that cannot be removed are skipped and reported in the 'contacts_not_removed' response list, each with a 'message' explaining why. There are two cases, which return different shapes:
+
+- An entry that is missing a contacts_master_id (or whose contacts_master_id is not numeric) is returned with the fields you submitted echoed back, plus the message "A contacts_master_id is required to remove a contact from a list." No contacts_master_id is added to it.
+- An entry whose contact is not currently on the list is returned as `{ "contacts_master_id": <id>, "message": "Contact is not on this list." }`.
+
+Contacts successfully removed are counted in 'contacts_removed' and returned (as contacts_master_ids only) in 'contacts_removed_data'.
 
 Note that VipeCloud will not add contacts that have unsubscribed from any user in your account, bounced, or have an email which has verified as undeliverable. 
 
@@ -72,7 +77,7 @@ POST /contact_lists/1234
 }
 ```
 
-The response to this POST will be a status of success or error. On success the contact_list_id will be included in addition to a *count* of successful emails added to the list, the net change, contacts removed. Additionally, a *list* of contacts that were not added, with a message detailing why the contact wasn't added.
+The response to this POST will be a status of success or error. On success the contact_list_id will be included in addition to a *count* of successful emails added to the list, the net change (`net_change`, which may be positive or negative — e.g. `+3` or `-2`), contacts removed. Additionally, a *list* of contacts that were not added, with a message detailing why the contact wasn't added.
 
 If contact data without a contacts_master_id is input into the list, these will be split up into two additional *lists*: contacts_not_created and contacts_created. Created contacts witin the created_contacts body parameter will mirror the data sent in to the API, along with an appended "contacts_master_id" parameter. contacts_not_created will mirror the data sent into the api, indicating that this data could not be used.
 
@@ -81,22 +86,19 @@ We now also return the data for contacts that were removed, that way those conta
 #### Example Post Response 
 ```
 {
-  "status" : "success",
-  "contact_list_id" : 123,
-  "contacts_added" : 123,
-  "is_synced_list" : 1,
-  "worked_contacts" : 1,
+  "status": "success",
+  "contact_list_id": 123,
+  "contacts_added": 123,
+  "is_synced_list": 1,
+  "worked_contacts": 1,
   "contacts_not_added": [
     {
       "contacts_master_id": 123,
-      "message":"Contact unsubscribed."
-    },
-    {
-      ...
+      "message": "Contact unsubscribed."
     }
   ],
   "contacts_removed": 0,
-  "net_change": "0", // could be +X, -X
+  "net_change": "0",
   "contacts_not_created": [
     {
       "first_name": "Jane"
@@ -107,27 +109,23 @@ We now also return the data for contacts that were removed, that way those conta
       "email": "example@example.com",
       "first_name": "Jane",
       "contacts_master_id": 12345
-    },
-    {
-      ...
     }
   ],
-  // Only returns CMIDs
   "contacts_removed_data": [
     {
-      "contacts_master_id":12345
+      "contacts_master_id": 12345
     }
   ],
-  // Populated when using the 'remove_contacts' parameter: entries that could
-  // not be removed, with a message explaining why (e.g. missing
-  // contacts_master_id, or the contact is not on this list)
   "contacts_not_removed": [
     {
       "contacts_master_id": 12345,
       "message": "Contact is not on this list."
+    },
+    {
+      "email": "example@example.com",
+      "message": "A contacts_master_id is required to remove a contact from a list."
     }
   ]
-
 }
 ```
 
