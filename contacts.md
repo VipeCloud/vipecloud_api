@@ -9,6 +9,8 @@ When POSTing to /contacts, the body can either be an individual contact record o
 
 You can, optionally, include a "contact_lists" parameter to your contact POST body. If you do, we will assume the contact_list_ids you submit represent the ENTIRETY of the contact lists the contact should be a part of. We will compare your POSTed contact_list_ids to any existing contact_lists for the contact. If the contact is part of contact lists not in your POST they will be removed from the list. And if contacts in your POST are not on the list they will be added. To remove a contact from ALL contact lists they are on, submit "0" as the contact_list_id (e.g. contact_lists : ["0"]).
 
+Suppression enforcement: when a contact is created or added to a contact list through the API, VipeCloud re-checks the account's standing suppression records (email unsubscribes, bounced addresses, and text opt-outs). If the submitted email address or mobile phone is suppressed, the contact and its new list memberships are created with the matching flags (`unsubscribe`, `bounced`, `text_opt_out`) set. A suppressed address cannot be returned to a mailable or textable state by omitting these flags — or setting them to 0 — in the request body.
+
 Sample post body below.
 ```   
 { 
