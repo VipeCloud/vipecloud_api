@@ -18,6 +18,8 @@ Sample body when *creating* a new file
 }
 ```
 
+`thumb_url` is required whenever the imported file is treated as a video (any file that is not a recognized document, image, or audio type). Omitting it is rejected with a 422 and the message `Thumb_url is required when importing a video file.` — nothing is stored.
+
 Sample response
 ```
 {
