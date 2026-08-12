@@ -83,7 +83,40 @@ If contact data without a contacts_master_id is input into the list, these will 
 
 We now also return the data for contacts that were removed, that way those contacts_master_id's can be used for subsequent calls. An example of this would be calling a POST /contact_list/(/:id) endpoint for a list, and then making an additional call for any contacts removed to add them to another list via a second POST /contact_list(/:id) endpoint with the "add_contacts" parameter
 
-#### Example Post Response 
+#### Example Create Response (POST /contact_lists)
+
+Creating a list reports the outcome of every contact in the payload. Contacts submitted inline (without a `contacts_master_id`) are created and listed under `contacts_created` with the assigned id appended; any that cannot be created are listed under `contacts_not_created` with a message explaining why. A contact is never dropped without appearing in one of these lists.
+
+`contacts_processed` counts the contacts actually placed on the list. Two submitted contacts that share the same unique value (for example the same email address) resolve to a single contact record: both appear in `contacts_created` carrying the same `contacts_master_id`, and `contacts_processed` counts that contact once.
+
+```json
+{
+  "status": "success",
+  "contact_list_id": 7694,
+  "is_synced_list": 0,
+  "contacts_processed": 1,
+  "contacts_not_added": [],
+  "contacts_created": [
+    {
+      "first_name": "Jane",
+      "email": "jane@example.com",
+      "status": "success",
+      "contacts_master_id": 81025
+    }
+  ],
+  "contacts_not_created": [
+    {
+      "first_name": "Jane",
+      "message": "Missing unique fields."
+    }
+  ],
+  "contacts_bounced": [],
+  "contacts_unsubscribed": [],
+  "contacts_undeliverable": []
+}
+```
+
+#### Example Update Response (POST /contact_lists/:id)
 ```
 {
   "status": "success",
