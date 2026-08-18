@@ -351,14 +351,14 @@ HTTP | `message` | When
 501 | "The '{item_type}' item_type is supported in the web app but is not yet available via the API. It is planned for a future API release." | item_type is "email_parsed" or "fb_lead_ad"
 422 | "Unsupported item_type '{item_type}'." | item_type is any other unrecognized value
 422 | "Creating or updating an Automation requires a contact_list_id, template_type, and (template_id if not a cancel template_type or template_ids array if a cancel type)." | item_type "contact_list" is missing a required field
-503 | "Could not verify contact list. Please try again." | item_type "contact_list": the ownership lookup itself failed — retry, your input may be valid
+503 | "Could not verify contact list. Please try again." | item_type "contact_list": the ownership lookup itself failed — retry, your input may be valid. Also returned by template_type "add_to_list"/"remove_from_list" when the action_contact_list_id lookup itself fails.
 422 | "Contact list not found." | item_type "contact_list": contact_list_id doesn't belong to your account — also returned by add_to_list/remove_from_list when action_contact_list_id doesn't belong to your account
 422 | "That action is not available for this automation type." | template_type is not in the item_type's action allowlist (see [Actions](#actions-template_type))
 403 | "You do not have permission to create cancel automations." | template_type is cancel_email/cancel_text/cancel_series and your account permission is at or below the Standard role
 422 | "This add-to-list action would create a loop with another automation. Adjust the trigger or destination so no chain of add-to-list automations can return to its starting list." | template_type "add_to_list" on item_type "contact_list" would close a cycle in your account's add-to-list automation graph
 403 | "You do not have permission to create or edit opportunity automations." | item_type "opportunity" and your account permission is at or below the Standard role
 422 | "Creating or updating an Automation requires a stage_id and template_type." | item_type "opportunity" is missing a required field
-503 | "Could not verify opportunity stage. Please try again." | item_type "opportunity": the stage lookup itself failed — retry
+503 | "Could not verify opportunity stage. Please try again." | item_type "opportunity": the top-level stage_id lookup itself failed — retry. Also returned by template_type "move_opp_stage" when a per-pair stage lookup fails, and by "move_opp_stage_delayed" when the target_stage_id lookup fails.
 422 | "Opportunity stage not found." | item_type "opportunity": stage_id doesn't belong to your account
 422 | "Creating a suite_party automation requires suite_party_id and template_type." | item_type "suite_party" is missing a required field
 503 | "Could not verify suite/community. Please try again." | item_type "suite_party": the community lookup itself failed — retry
@@ -379,7 +379,7 @@ HTTP | `message` | When
 403 | "Vipe AI is not enabled for this account." | template_type "ai_brand_matching" and AI Brand Matching isn't enabled
 503 | "Could not verify brand documents. Please try again." | template_type "ai_brand_matching": the brand-document lookup itself failed — retry
 422 | "No brand documents found. Upload at least one brand document at Vipe AI > Matching before using AI Brand Matching in automations." | template_type "ai_brand_matching" and no brand documents exist for this account
-422 | "Vipe AI is not enabled for this account." | template_type "ai_contact_research" and AI Contact Research isn't enabled
+403 | "Vipe AI is not enabled for this account." | template_type "ai_contact_research" and AI Contact Research isn't enabled — matches the "ai_brand_matching" row above; both are entitlement failures, not bad requests
 422 | "Please choose a contact list." | template_type "add_to_list"/"remove_from_list" is missing action_contact_list_id
 422 | "You cannot assign this action to that user." | template_type "add_to_watchlist": watch_target_user_id isn't visible to the calling user
 422 | "Please add at least one pipeline and stage." | template_type "move_opp_stage": stage_moves is missing, not an array, or empty
