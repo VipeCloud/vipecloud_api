@@ -15,9 +15,9 @@ contact_list_id | integer | cond. | Required when item_type is "contact_list" (o
 suite_party_id | integer | cond. | Required when item_type is "suite_party".
 stage_id | integer | cond. | Required when item_type is "opportunity". Creating or editing an opportunity automation requires account permission above the Standard role.
 template_type | enum | yes | The action to perform. See [Actions](#actions-template_type) below for the full list and per-item_type availability.
-template_id | integer | cond. | Required for template-backed actions ("email", "series", "text", "social", "task", "opportunity"). Not used for "cancel_*", "custom_field", "no_template", or any of the other actions listed below.
+template_id | integer | cond. | Required (and used) for template-backed actions ("email", "series", "text", "social", "task", "opportunity") on every item_type. **On item_type "contact_list" only**, the `template_id` key must additionally be present in the body — any value, `0` is conventional — for every action except "cancel_*" and "custom_field", even actions that don't use the value at all ("ai_scheduling", "ai_brand_matching", "ai_contact_research", "add_to_list", "remove_from_list", "add_to_watchlist", "remove_from_watchlist"). See the footnote under [Actions](#actions-template_type) below. This presence-only requirement does NOT apply to item_type "contact", "opportunity", or "suite_party" — there, a missing template_id on a non-template-backed action is simply ignored.
 template_ids | integer[] | cond. | Required on item_type "contact_list" when template_type is "cancel_email", "cancel_text", or "cancel_series" (or send `cancel_template_ids` instead — see below). On other item_types this is not enforced as a required field, but a cancel_* automation without it will have no template ids to act on. Contains the template ids (of the matching type) whose scheduled sends/steps should be canceled when the automation fires.
-cancel_template_ids | integer[] | no | Accepted as an alias for `template_ids`, on any item_type, when `template_ids` is not present in the same request. If both are present, `template_ids` wins.
+cancel_template_ids | integer[] | no | Accepted as an alias for `template_ids`, on any item_type, when `template_ids` is not present in the same request AND `cancel_template_ids` is itself truthy (a present-but-empty array does not alias, and does not satisfy the `template_ids`-required check for "contact_list" — that combination still 422s). If both are present, `template_ids` wins.
 action_custom_field_id | integer | cond. | Required when template_type is "custom_field". Must be a "contact"-type custom field — an "opportunity"-type custom field is rejected even on an opportunity automation.
 action_custom_field_value | string/array | cond. | Required when template_type is "custom_field". For Checkbox fields, must be the string "true"/"false" **or** a JSON boolean (`true`/`false`) — both are accepted and normalized to the string form before storage. For Dropdown/Picklist fields, must be a valid option value (or an array of valid values).
 action_contact_list_id | integer | cond. | Required when template_type is "add_to_list" or "remove_from_list". The destination list.
@@ -62,16 +62,18 @@ email, series, text, social, task, opportunity | template_id | Yes | Yes | Yes |
 no_template | none | No | No | Yes | No
 cancel_email, cancel_text, cancel_series | template_ids (see above) — requires account permission above the Standard role (perm > 250) | Yes | Yes | Yes | Yes
 custom_field | action_custom_field_id, action_custom_field_value | Yes | Yes | Yes | Yes
-ai_scheduling | ai_scheduler_contact_list_id, ai_text_template_id | Yes | Yes | Yes | Yes
-ai_brand_matching | none required (optional ab_num_brands/ab_notify_inapp/ab_send_email) | Yes | Yes | No | No
-ai_contact_research | none required (optional acr_* fields) | Yes | Yes | No | No
-add_to_list, remove_from_list | action_contact_list_id | Yes | Yes | Yes | Yes
+ai_scheduling | ai_scheduler_contact_list_id, ai_text_template_id | Yes | Yes¹ | Yes | Yes
+ai_brand_matching | none required (optional ab_num_brands/ab_notify_inapp/ab_send_email) | Yes | Yes¹ | No | No
+ai_contact_research | none required (optional acr_* fields) | Yes | Yes¹ | No | No
+add_to_list, remove_from_list | action_contact_list_id | Yes | Yes¹ | Yes | Yes
 move_opp_stage | stage_moves | Yes | No | Yes | No
 move_opp_stage_delayed | target_stage_id | No | No | Yes | No
-add_to_watchlist | none required (optional watch_target_user_id) | Yes | Yes | Yes | Yes
-remove_from_watchlist | none | Yes | Yes | Yes | Yes
+add_to_watchlist | none required (optional watch_target_user_id) | Yes | Yes¹ | Yes | Yes
+remove_from_watchlist | none | Yes | Yes¹ | Yes | Yes
 
 `custom_field` note: the field referenced by `action_custom_field_id` must have `item_type = "contact"` regardless of which automation item_type you're building — an opportunity-type custom field is always rejected, even inside an item_type "opportunity" automation.
+
+¹ **`template_id` presence quirk, item_type "contact_list" only:** the required-field check for this item_type does not inspect which action was requested — it requires `contact_list_id`, `template_type`, and `template_id` to all be present, with `template_id` exempted only for "cancel_*" and "custom_field". So on "contact_list" (and only on "contact_list"), every action marked Yes¹ above requires a `template_id` key in the body even though the action doesn't use its value — send `"template_id": 0`. Omitting it returns the same 422 as omitting `contact_list_id`: `"Creating or updating an Automation requires a contact_list_id, template_type, and (template_id if not a cancel template_type or template_ids array if a cancel type)."` This does not apply on item_type "contact", "opportunity", or "suite_party".
 
 #### Triggers (trigger_type)
 
@@ -83,10 +85,10 @@ custom_field | custom_field_id, hour, min, ampm | contact_list, contact | This i
 sign_up_form | delay_days, delay_hours, delay_min | contact_list | Fires on sign-up form completion. Reachable today; previously undocumented.
 scheduler_completion | delay_days, delay_hours, delay_min | contact_list | Fires when a scheduler meeting is booked. Reachable today; previously undocumented.
 meeting_reminder_follow_up | delay_days, delay_hours, delay_min, send_before_or_after ("before" or "after") | contact_list | contact_trigger_hours is ignored for this trigger (no time-of-day window). Reachable today; previously undocumented.
-opp_stage_change | delay_days, delay_hours, delay_min; optional opp_stage_change_add_list (a contact_list_id owned by this account) and cancel_primary_contact_series ("on") | opportunity | Used together with item_type "opportunity"'s required stage_id.
+opp_stage_change | delay_days, delay_hours, delay_min; optional opp_stage_change_add_list and cancel_primary_contact_series ("on") | opportunity | Used together with item_type "opportunity"'s required stage_id. opp_stage_change_add_list must be a contact_list_id owned by this account to take effect — a missing or unowned id is not rejected; it is silently dropped and the save succeeds without the add-to-list behavior.
 suite_party_joined | delay_days, delay_hours, delay_min | suite_party | Set automatically when item_type is "suite_party" — do not send trigger_type yourself.
-text_opt_out | scope ("user"/"account"/"contact_list"), plus scope_user_id (scope="user") or scope_contact_list_id (scope="contact_list") | contact | Non-admins are always forced to scope="user" targeting themselves, regardless of what is submitted. An admin's scope_user_id must belong to their own account or it is silently ignored and scope falls back to the caller.
-email_unsubscribe | scope ("user"/"account"/"contact_list"), plus scope_user_id (scope="user") or scope_contact_list_id (scope="contact_list") | contact | Same scoping rules as text_opt_out. **Not the same as the `email_unsubscribe` webhook event** documented in [Webhooks v1.0](webhooks_v1_0.md#webhook-events) — the webhook notifies your endpoint when a contact unsubscribes from email; this automation trigger fires an automation action (e.g. add to list, cancel a series) when that happens. They are two separate features that share a name.
+text_opt_out | scope ("user"/"account"/"contact_list"), plus scope_user_id (scope="user") or scope_contact_list_id (scope="contact_list") | contact | Non-admins are always forced to scope="user" targeting themselves, regardless of what is submitted. An admin's scope_user_id must belong to their own account or it is silently ignored and scope falls back to the caller. **scope="contact_list" with a missing or unowned scope_contact_list_id fails the save** — see the note on the generic 422 fallback in [Errors](#errors).
+email_unsubscribe | scope ("user"/"account"/"contact_list"), plus scope_user_id (scope="user") or scope_contact_list_id (scope="contact_list") | contact | Same scoping rules as text_opt_out, including the scope="contact_list" failure mode above. **Not the same as the `email_unsubscribe` webhook event** documented in [Webhooks v1.0](webhooks_v1_0.md#webhook-events) — the webhook notifies your endpoint when a contact unsubscribes from email; this automation trigger fires an automation action (e.g. add to list, cancel a series) when that happens. They are two separate features that share a name.
 
 A missing or unrecognized `trigger_type` is rejected — see the Errors table.
 
@@ -176,6 +178,24 @@ Sample body when creating an Automation for canceling templates. Upon being adde
     "template_ids" : [
         1234, 5678, 9012
     ]
+}
+```
+
+```http
+POST /automations(/:id)
+```
+Sample body when creating an Add-to-List Automation on item_type "contact_list". Note `template_id: 0` — see the `template_id` presence quirk documented above and footnoted in the [Actions](#actions-template_type) table: it is required here even though "add_to_list" never uses its value.
+
+```json
+{
+    "contact_list_id" : 123,
+    "template_type" : "add_to_list",
+    "template_id" : 0,
+    "action_contact_list_id" : 321,
+    "trigger_type" : "contact",
+    "delay_days" : 0,
+    "delay_hours" : 0,
+    "delay_min" : 0
 }
 ```
 
@@ -280,7 +300,7 @@ Sample response for a custom_field action automation. GET /automations/789
 }
 ```
 
-Sample response for an opportunity item_type automation. GET /automations/901. Unlike other item_types, `schedule_data` is returned as a decoded object (not a JSON-encoded string) here, and the response additionally includes `stage_info` and `pipeline_info` (the full target stage/pipeline records) plus `contact_list_name` (populated only when `schedule_data.opp_stage_change_add_list` is set).
+Sample response for an opportunity item_type automation. GET /automations/901. Unlike other item_types, `schedule_data` is returned as a decoded object (not a JSON-encoded string) here, and the response additionally includes `stage_info` and `pipeline_info` (the full target stage/pipeline database rows — abbreviated below to their id fields only; the real response includes every column) plus `contact_list_name` (populated only when `schedule_data.opp_stage_change_add_list` is set).
 
 ```json
 {
@@ -301,8 +321,8 @@ Sample response for an opportunity item_type automation. GET /automations/901. U
     "weekday_only" : null,
     "item_type" : "opportunity",
     "contact_list_name" : "",
-    "stage_info" : { "opportunity_stage_id" : 55, "pipeline_id" : 12 }, //full opportunity_stage row, additional columns omitted here
-    "pipeline_info" : { "pipeline_id" : 12 }, //full pipeline row, additional columns omitted here
+    "stage_info" : { "opportunity_stage_id" : 55, "pipeline_id" : 12 },
+    "pipeline_info" : { "pipeline_id" : 12 },
     "automation_data" : {
         "target_stage_id" : 60
     }
@@ -388,7 +408,7 @@ HTTP | `message` | When
 422 | "Please choose a target stage." | template_type "move_opp_stage_delayed" is missing target_stage_id
 422 | "Target stage not found." | template_type "move_opp_stage_delayed": target_stage_id doesn't belong to your account
 422 | "This action is only available for the Opportunity Stage Change trigger." | template_type "move_opp_stage_delayed" used with any trigger_type other than "opp_stage_change"
-422 | "Template not found." | template_type isn't one of the recognized action names above and doesn't resolve as a valid template_id for its own type
-422 | "Failed to create automation." | POST with no id: trigger_type is missing or not one of the recognized values in the Triggers table
-422 | "Automation not found or update failed." | POST with an id (update): the automation doesn't exist/isn't yours, or trigger_type is missing or not recognized
+422 | "Template not found." | template_type is one of the template-backed actions ("email", "series", "text", "social", "task", "opportunity" — it already passed the action allowlist above) but template_id doesn't resolve to a template of that type you can use (doesn't exist, wrong type, or not owned by your account)
+422 | "Failed to create automation." | POST with no id: trigger_type is missing or not one of the recognized values in the Triggers table. Also returned, with the same generic message, when trigger_type is "text_opt_out" or "email_unsubscribe" with scope="contact_list" and scope_contact_list_id is missing or doesn't belong to your account — that specific condition's message is not surfaced to the caller.
+422 | "Automation not found or update failed." | POST with an id (update): the automation doesn't exist/isn't yours, trigger_type is missing or not recognized, or (same as the create row above) a text_opt_out/email_unsubscribe scope="contact_list" save with a missing or unowned scope_contact_list_id
 
