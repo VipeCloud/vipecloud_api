@@ -27,6 +27,8 @@ target_loss_reason_id | integer | no | Optional with "move_opp_stage_delayed". O
 watch_target_user_id | integer | no | Optional with "add_to_watchlist". Must be a user visible to the caller (their own id is always allowed); when omitted, the action defaults to the run-context user at execution time.
 ai_scheduler_contact_list_id | integer | cond. | Required when template_type is "ai_scheduling". The contact list backing the scheduler to book.
 ai_text_template_id | integer | cond. | Required when template_type is "ai_scheduling". Must contain the AI Booking Agent merge tag.
+
+`ai_scheduling` is additionally restricted by `trigger_type` — see the footnote on the [Actions](#actions-template_type) table below. This is a real, enforced restriction, unlike the general `item_type`/`trigger_type` note further down.
 ab_num_brands | integer | no | Optional with "ai_brand_matching". Clamped to 1-10; defaults to 3.
 ab_notify_inapp | boolean | no | Optional with "ai_brand_matching".
 ab_send_email | boolean | no | Optional with "ai_brand_matching".
@@ -50,7 +52,7 @@ suite_party | suite_party_id | trigger_type is forced to "suite_party_joined" �
 
 Two item_types visible in the VipeCloud web app are **not yet available** through this endpoint and return `501`: `email_parsed` (automations attached to an inbox-sync rule) and `fb_lead_ad` (automations attached to a Facebook Lead Ad form). Support is planned for a future API release.
 
-`item_type` is not cross-validated against `trigger_type` — the pairings in the Triggers table below reflect the supported/intended combinations (what the web app builds), not an enforced allowlist. Sending an unsupported pairing is not guaranteed to be rejected.
+`item_type` is not cross-validated against `trigger_type` — the pairings in the Triggers table below reflect the supported/intended combinations (what the web app builds), not an enforced allowlist. Sending an unsupported pairing is not guaranteed to be rejected. **This general statement does not apply to `template_type` "ai_scheduling"**, which has its own real, enforced `trigger_type` restriction — see the footnote on the [Actions](#actions-template_type) table below.
 
 #### Actions (template_type)
 
@@ -62,7 +64,7 @@ email, series, text, social, task, opportunity | template_id | Yes | Yes | Yes |
 no_template | none | No | No | Yes | No
 cancel_email, cancel_text, cancel_series | template_ids (see above) — requires account permission above the Standard role (perm > 250) | Yes | Yes | Yes | Yes
 custom_field | action_custom_field_id, action_custom_field_value | Yes | Yes | Yes | Yes
-ai_scheduling | ai_scheduler_contact_list_id, ai_text_template_id | Yes | Yes¹ | Yes | Yes
+ai_scheduling² | ai_scheduler_contact_list_id, ai_text_template_id | Yes | Yes¹ | Yes | Yes
 ai_brand_matching | none required (optional ab_num_brands/ab_notify_inapp/ab_send_email) | Yes | Yes¹ | No | No
 ai_contact_research | none required (optional acr_* fields) | Yes | Yes¹ | No | No
 add_to_list, remove_from_list | action_contact_list_id | Yes | Yes¹ | Yes | Yes
@@ -74,6 +76,8 @@ remove_from_watchlist | none | Yes | Yes¹ | Yes | Yes
 `custom_field` note: the field referenced by `action_custom_field_id` must have `item_type = "contact"` regardless of which automation item_type you're building — an opportunity-type custom field is always rejected, even inside an item_type "opportunity" automation.
 
 ¹ **`template_id` presence quirk, item_type "contact_list" only:** the required-field check for this item_type does not inspect which action was requested — it requires `contact_list_id`, `template_type`, and `template_id` to all be present, with `template_id` exempted only for "cancel_*" and "custom_field". So on "contact_list" (and only on "contact_list"), every action marked Yes¹ above requires a `template_id` key in the body even though the action doesn't use its value — send `"template_id": 0`. Omitting it returns the same 422 as omitting `contact_list_id`: `"Creating or updating an Automation requires a contact_list_id, template_type, and (template_id if not a cancel template_type or template_ids array if a cancel type)."` This does not apply on item_type "contact", "opportunity", or "suite_party".
+
+² **`ai_scheduling` trigger restriction (independent of `item_type`):** this action is only allowed when `trigger_type` is `"sign_up_form"` or `"scheduler_completion"` — the two AI-Scheduling-allowed trigger values reachable through this endpoint. (The underlying allowlist also includes `"email_parsed"` and `"fb_lead_ad"`, but the item_types those triggers belong to are not yet available through this endpoint — see the note under [item_type reference](#item_type-reference) above — so they aren't reachable here.) Any other `trigger_type` returns 422 with `"AI Scheduling is only allowed for the following trigger types: email_parsed, fb_lead_ad, sign_up_form, scheduler_completion"` — see [Errors](#errors). In practice this means item_type "suite_party" (`trigger_type` is always forced to `"suite_party_joined"`) and item_type "opportunity" using its typical `"opp_stage_change"` trigger cannot successfully create an `ai_scheduling` automation through this endpoint, even though both are marked "Yes" above (the action is offered; the trigger requirement is what rejects them) — only item_type "contact"/"contact_list" with `trigger_type` explicitly set to `"sign_up_form"` or `"scheduler_completion"` can.
 
 #### Triggers (trigger_type)
 
@@ -391,6 +395,7 @@ HTTP | `message` | When
 422 | "Checkbox custom field value must be 'true' or 'false'." | template_type "custom_field" on a Checkbox field with any other action_custom_field_value
 503 | "Could not validate custom field options. Please try again." | template_type "custom_field" on a Dropdown/Picklist field: the option-list read itself failed — retry
 422 | "Invalid value for dropdown/picklist custom field." | template_type "custom_field" on a Dropdown/Picklist field with a value not in the field's option list
+422 | "AI Scheduling is only allowed for the following trigger types: email_parsed, fb_lead_ad, sign_up_form, scheduler_completion" | template_type "ai_scheduling" with a trigger_type outside the allowed set — see the footnote on the [Actions](#actions-template_type) table above. Checked before AI Booking Agent enablement or any other ai_scheduling field.
 403 | "AI Booking Agent is not enabled" | template_type "ai_scheduling" and AI Booking Agent isn't enabled for this account
 422 | "Scheduler is required" | template_type "ai_scheduling" is missing ai_scheduler_contact_list_id
 422 | "Text template is required" | template_type "ai_scheduling" is missing ai_text_template_id
