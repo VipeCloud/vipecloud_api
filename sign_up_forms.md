@@ -348,6 +348,7 @@ GET /sign_up_forms/:id/fields
 |---|---|
 | 401 | Authentication failed |
 | 404 | Form not found or not owned by your account |
+| 500 | "Unable to load sign up form fields. Please retry." — a field's option read failed server-side. This is a dependency-read failure, not a bad request; retry. |
 
 **Example**
 

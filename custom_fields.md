@@ -3,11 +3,11 @@ Custom Fields (GET)
 Get your account's custom fields.
 
 #### GET account custom fields
-```
+```http
 GET /custom_fields
 ```
 The response to this GET will be an array of your account custom fields.
-```   
+```json
 { 
   [
     {
@@ -20,3 +20,9 @@ The response to this GET will be an array of your account custom fields.
   ]
 }
 ```
+
+#### Errors
+
+HTTP | `message` | When
+--- | --- | ---
+500 | "Unable to read custom field options. Please retry." | The Dropdown/Picklist/Link option read failed server-side. This is a dependency-read failure, not a bad request — retry.
