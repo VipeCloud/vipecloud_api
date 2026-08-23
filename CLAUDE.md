@@ -77,6 +77,32 @@ When updating API documentation:
 5. **Source-of-truth check**: cross-reference the implementation to confirm the docs match real behavior — v3.1 has historically drifted from its docs because the stability rule discourages silent updates.
 6. If adding new endpoints, consider adding corresponding tests in the implementation repo's test suite.
 
+## Never commit real customer or employee PII
+
+**This repository is PUBLIC** — anything committed here is world-readable, so this rule is absolute.
+
+No real names, email addresses, phone numbers or postal addresses of
+customers or employees in ANY tracked file — code, comments, examples, sample
+requests/responses, SQL, docs, plan files, QA sheets, *or commit messages*.
+Internal numeric ids (`account_master_id`, `contact_list_id`, `user_id`) are fine
+and usually necessary; it is the human-identifying values that must never land.
+
+- Use synthetic identities: seeded test accounts, the designated smoke
+  identities, or obvious placeholders (`jane.doe@example.com`, `[REDACTED]`).
+- **A bug report is the highest-risk moment.** Customer names arrive in the
+  prompt from a ticket and flow straight into the artifact describing the fix.
+  Translate them to ids at the START of the investigation and work in ids after.
+- **Verification never needs names.** Assert a per-person outcome in aggregate
+  or by id instead of listing people — it is PII-free *and* a stronger check,
+  because it covers every row rather than the handful someone reported.
+- **It is not cheaply reversible.** `git push --force` makes the old commits
+  unreachable but does NOT erase them: the host keeps serving them by SHA until
+  support runs a GC on request. A rewrite also forces every collaborator to
+  `git reset --hard`. Prevention is the only cheap control.
+
+(Source: 2026-08-23 — customer names from a bug report were committed to a vc3
+QA sheet and a SQL migration, and removing them required rewriting `main`.)
+
 ## Documentation Standards
 
 - All requests and responses use JSON encoding.
