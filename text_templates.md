@@ -17,6 +17,12 @@ Body params
 }
 ```
 
+`message` is stored and sent as plain text. HTML tags are stripped, and HTML
+entities are resolved to the characters they represent — so a template submitted
+as `you&apos;d like this &amp; more` is stored and texted as `you'd like this & more`.
+Send the characters you want the recipient to receive; there is no need to
+escape them.
+
 Sample response
 ```
 {
