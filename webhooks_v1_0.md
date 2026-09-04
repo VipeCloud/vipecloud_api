@@ -25,6 +25,8 @@ Below is a list of the webhook events we current support.
   * email_bounce
   * email_unsubscribe
 
+> **Note:** `email_unsubscribe` above is a webhook **event** — it notifies your configured endpoint when a contact unsubscribes from email. A separate `email_unsubscribe` automation **trigger** also exists (see [Automations](automations.md#triggers-trigger_type)) and lets you fire an automation action (add to a list, cancel a series, etc.) when the same thing happens. These are two separate features that share a name.
+
 Sample webhook event payload
 ```   
 {
