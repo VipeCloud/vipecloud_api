@@ -72,12 +72,15 @@ move_opp_stage | stage_moves | Yes | No | Yes | No
 move_opp_stage_delayed | target_stage_id | No | No | Yes | No
 add_to_watchlist | none required (optional watch_target_user_id) | Yes | Yes¹ | Yes | Yes
 remove_from_watchlist | none | Yes | Yes¹ | Yes | Yes
+stop_ai_booking_agent³ | none — requires AI Booking Agent enabled | Yes | Yes | Yes | Yes
 
 `custom_field` note: the field referenced by `action_custom_field_id` must have `item_type = "contact"` regardless of which automation item_type you're building — an opportunity-type custom field is always rejected, even inside an item_type "opportunity" automation.
 
 ¹ **`template_id` presence quirk, item_type "contact_list" only:** the required-field check for this item_type does not inspect which action was requested — it requires `contact_list_id`, `template_type`, and `template_id` to all be present, with `template_id` exempted only for "cancel_*" and "custom_field". So on "contact_list" (and only on "contact_list"), every action marked Yes¹ above requires a `template_id` key in the body even though the action doesn't use its value — send `"template_id": 0`. Omitting it returns the same 422 as omitting `contact_list_id`: `"Creating or updating an Automation requires a contact_list_id, template_type, and (template_id if not a cancel template_type or template_ids array if a cancel type)."` This does not apply on item_type "contact", "opportunity", or "suite_party".
 
 ² **`ai_scheduling` trigger restriction (independent of `item_type`):** this action is only allowed when `trigger_type` is `"sign_up_form"` or `"scheduler_completion"` — the two AI-Scheduling-allowed trigger values reachable through this endpoint. (The underlying allowlist also includes `"email_parsed"` and `"fb_lead_ad"`, but the item_types those triggers belong to are not yet available through this endpoint — see the note under [item_type reference](#item_type-reference) above — so they aren't reachable here.) Any other `trigger_type` returns 422 with `"AI Scheduling is only allowed for the following trigger types: email_parsed, fb_lead_ad, sign_up_form, scheduler_completion"` — see [Errors](#errors). In practice this means item_type "suite_party" (`trigger_type` is always forced to `"suite_party_joined"`) and item_type "opportunity" using its typical `"opp_stage_change"` trigger cannot successfully create an `ai_scheduling` automation through this endpoint, even though both are marked "Yes" above (the action is offered; the trigger requirement is what rejects them) — only item_type "contact"/"contact_list" with `trigger_type` explicitly set to `"sign_up_form"` or `"scheduler_completion"` can.
+
+³ **`stop_ai_booking_agent` (Cancel AI Booking Agent):** takes no fields and needs no `template_id` on any item_type, and works with any `trigger_type`. When the automation fires, it stops every active AI Booking Agent conversation with the contact (whichever user on the account started it) and cancels any Booking Agent runs still queued for that contact. Conversations that follow up on an already-booked meeting keep running. Returns 403 `"AI Booking Agent is not enabled"` if AI Booking Agent isn't enabled for the account.
 
 #### Triggers (trigger_type)
 
@@ -397,6 +400,7 @@ HTTP | `message` | When
 422 | "Invalid value for dropdown/picklist custom field." | template_type "custom_field" on a Dropdown/Picklist field with a value not in the field's option list
 422 | "AI Scheduling is only allowed for the following trigger types: email_parsed, fb_lead_ad, sign_up_form, scheduler_completion" | template_type "ai_scheduling" with a trigger_type outside the allowed set — see the footnote on the [Actions](#actions-template_type) table above. Checked before AI Booking Agent enablement or any other ai_scheduling field.
 403 | "AI Booking Agent is not enabled" | template_type "ai_scheduling" and AI Booking Agent isn't enabled for this account
+403 | "AI Booking Agent is not enabled" | template_type "stop_ai_booking_agent" and AI Booking Agent isn't enabled for this account
 422 | "Scheduler is required" | template_type "ai_scheduling" is missing ai_scheduler_contact_list_id
 422 | "Text template is required" | template_type "ai_scheduling" is missing ai_text_template_id
 503 | "Could not verify scheduler. Please try again." | template_type "ai_scheduling": the scheduler lookup itself failed — retry
