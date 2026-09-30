@@ -88,7 +88,7 @@ Attribute | Type | Required | Description
 --- | --- | --- | ---
 first_name | string | **yes** | First name of the new user
 last_name | string | **yes** | Last name of the new user
-email | string | **yes** | Email address (must be unique across all VipeCloud accounts)
+email | string | **yes** | Email address, including a full domain such as `name@example.com` (must be unique across all VipeCloud accounts)
 user_role | enum | no | The role for the new user: `Admin` or `Member`. Default: `Member`
 company | string | no | Company name. For non-agency accounts, defaults to the account owner's company name. For agency accounts, this will be blank if not provided.
 phone_office | string | no | Office phone number
@@ -176,7 +176,7 @@ Status | Message | Description
 403 | "Only account owners can create users via API." | The authenticated user is not the account owner
 422 | "Invalid request body format." | The request body is not valid JSON
 422 | "Missing required field: first_name, last_name, or email." | One or more required fields are missing
-422 | "Invalid email address provided." | The email format is invalid
+422 | "Invalid email address provided." | The email format is invalid, including an address without a full domain (for example `name@example`)
 422 | "This email belongs to a deleted user within your account." | The email was previously used by a deleted user in your account
 422 | "This email is unavailable. Please contact support." | The email is in use by another account or is otherwise unavailable
 422 | "You don't have enough seats available for this product." | Your account has reached its user seat limit
