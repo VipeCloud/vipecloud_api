@@ -1,0 +1,28 @@
+# Areas for this repository — the source of truth for `area:*` issue labels.
+#
+# Every issue carries at least one area label, or `area_unassigned` when it
+# genuinely fits none. Labels are created/updated from this file by
+# `bin/sync-area-labels.sh --repo VipeCloud/vipecloud_api --apply` in VipeCloud/vc3 (one script
+# serves every repo). The create-issue skill (vc3 .claude/skills/create-issue/)
+# reads `covers` to route new issues. Format and rules: see vc3's .github/areas.yml.
+#
+# Adding an area: add an entry, run the sync script. Renaming: rename the label
+# in the GitHub UI first (keeps it on existing issues), then update it here.
+
+repo: VipeCloud/vipecloud_api
+color: "c5def5"
+unassigned_label: area_unassigned
+unassigned_description: Fits no area in .github/areas.yml — triage, or propose a new area
+
+areas:
+  - name: area:endpoint-docs
+    description: "Per-resource endpoint docs: requests, responses, errors, examples"
+    covers:
+      - One .md file per API resource (contacts.md, texts.md, ...)
+
+  - name: area:docs-tooling
+    description: Docs structure, navigation (SUMMARY.md, README.md) and publishing
+    covers:
+      - SUMMARY.md
+      - README.md
+      - CLAUDE.md
