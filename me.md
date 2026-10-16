@@ -16,7 +16,8 @@ to the call with a value of 1 in order to return the
   "phone"  : "123-456-7890",
   "company_name" : "Acme",
   "api_keys" : ["123456XYZ"],
-  "user_role" : 'Admin'
+  "user_role" : 'Admin',
+  "role" : "admin" // see Users > Roles
   "digital_business_card_link" : "https://example_url.com/bcard/XXXX/first_name" //Link to the user's digital business card (if available, requested, and active)
   "activation_link" : "example_url.com/activation_link_path" // Activiation link if requested and is currently inactive and ready to be activated.
 }
