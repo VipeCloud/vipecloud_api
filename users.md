@@ -185,6 +185,17 @@ The response matches the same format as `GET /users/:id`, including the activati
 }
 ```
 
+If the user is created but their role cannot be saved, they are created as Read-only and the response also carries a `warning`. Check for it, and set the role from the VipeCloud app:
+
+```json
+{
+  "user_id" : 12345,
+  "user_role" : "Member",
+  "role" : "read_only",
+  "warning" : "The user was added as Read-only because their role could not be saved. Edit the user to set it."
+}
+```
+
 #### Error Responses
 
 Status | Message | Description
