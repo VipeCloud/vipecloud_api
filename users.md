@@ -201,6 +201,7 @@ If the user is created but their role cannot be saved, they are created as Read-
 Status | Message | Description
 --- | --- | ---
 403 | "Only account owners can create users via API." | The authenticated user is not the account owner
+403 | "You do not have permission to give that role." | The account owner's own permissions do not allow giving the requested `user_role`
 422 | "Invalid request body format." | The request body is not valid JSON
 422 | "Missing required field: first_name, last_name, or email." | One or more required fields are missing
 422 | "Invalid email address provided." | The email format is invalid, including an address without a full domain (for example `name@example`)
