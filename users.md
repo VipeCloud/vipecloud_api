@@ -5,7 +5,7 @@ Users (GET / POST)
 ```
 GET /users
 ```
-The response to this GET will be a list of the currently active VipeCloud users in your account. Users displayed are based on the visibility permission of the authenticated user. For example, an Admin user will see all your account users, a Manager will see their team members, and a Member will only see themselves.
+The response to this GET will be a list of the currently active VipeCloud users in your account. Users displayed are based on the visibility permission of the authenticated user. For example, an Admin user will see all your account users, and a Member will only see themselves.
 ```json
 {
   [
@@ -24,6 +24,7 @@ The response to this GET will be a list of the currently active VipeCloud users 
       "timezone" : "America/New_York",
       "api_keys" : ["123456XYZ"],
       "user_role" : "Admin",
+      "role" : "admin",
       "team_memberships" : [
         { "team_id": 100, "team_name": "Sales Team" }
       ]
@@ -60,6 +61,7 @@ Optional query parameters:
   "timezone" : "America/New_York",
   "api_keys" : ["123456XYZ"],
   "user_role" : "Admin",
+  "role" : "admin",
   "team_memberships" : [
     { "team_id": 100, "team_name": "Sales Team" }
   ],
@@ -67,6 +69,19 @@ Optional query parameters:
   "digital_business_card_link" : "https://v.vipecloud.com/bcard/XXXX/first_name" // If configured
 }
 ```
+
+---
+
+### Roles
+
+Every user has one role in your account. `user_role` reports the role's access level (`Admin` or `Member`), and `role` names the exact role:
+
+`role` | `user_role` | What the user can do
+--- | --- | ---
+`admin` | `Admin` | Everything, including billing and managing users.
+`admin_no_billing` | `Admin` | Everything except billing and granting Admin Access.
+`member` | `Member` | Works their own records and sees their team's.
+`read_only` | `Member` | Sees their team's records but cannot change anything. Does not use a paid seat. API requests made with a Read-only user's key are limited to GET requests; any other method returns `403` with the message "Read-only users cannot make changes. Ask an account admin if you need to."
 
 ---
 
@@ -89,7 +104,7 @@ Attribute | Type | Required | Description
 first_name | string | **yes** | First name of the new user
 last_name | string | **yes** | Last name of the new user
 email | string | **yes** | Email address, including a full domain such as `name@example.com` (must be unique across all VipeCloud accounts)
-user_role | enum | no | The role for the new user: `Admin` or `Member`. Default: `Member`
+user_role | enum | no | The role for the new user: `Admin`, `Member`, `admin_no_billing` or `read_only` (see [Roles](#roles)). Default: `Member`. Any other value is rejected.
 company | string | no | Company name. For non-agency accounts, defaults to the account owner's company name. For agency accounts, this will be blank if not provided.
 phone_office | string | no | Office phone number
 mobile_phone | string | no | Mobile phone number
@@ -160,6 +175,7 @@ The response matches the same format as `GET /users/:id`, including the activati
   "timezone" : "America/New_York",
   "api_keys" : ["abc123xyz"],
   "user_role" : "Member",
+  "role" : "member",
   "team_memberships" : [
     { "team_id": 123, "team_name": "Sales Team" },
     { "team_id": 456, "team_name": "Marketing Team" }
@@ -169,17 +185,30 @@ The response matches the same format as `GET /users/:id`, including the activati
 }
 ```
 
+If the user is created but their role cannot be saved, they are created as Read-only and the response also carries a `warning`. Check for it, and set the role from the VipeCloud app:
+
+```json
+{
+  "user_id" : 12345,
+  "user_role" : "Member",
+  "role" : "read_only",
+  "warning" : "The user was added as Read-only because their role could not be saved. Edit the user to set it."
+}
+```
+
 #### Error Responses
 
 Status | Message | Description
 --- | --- | ---
 403 | "Only account owners can create users via API." | The authenticated user is not the account owner
+403 | "You do not have permission to give that role." | The account owner's own permissions do not allow giving the requested `user_role`
 422 | "Invalid request body format." | The request body is not valid JSON
 422 | "Missing required field: first_name, last_name, or email." | One or more required fields are missing
 422 | "Invalid email address provided." | The email format is invalid, including an address without a full domain (for example `name@example`)
 422 | "This email belongs to a deleted user within your account." | The email was previously used by a deleted user in your account
 422 | "This email is unavailable. Please contact support." | The email is in use by another account or is otherwise unavailable
-422 | "You don't have enough seats available for this product." | Your account has reached its user seat limit
+422 | "Invalid user_role. Use Admin, Member, admin_no_billing or read_only." | `user_role` is not one of the accepted roles
+422 | "You don't have enough seats available for this product." | Your account has reached its user seat limit. Read-only users do not use a seat, so `read_only` can still be created.
 500 | "Failed to create user." | User creation failed unexpectedly
 500 | "Error creating user, please contact support." | An exception occurred during user creation
 
