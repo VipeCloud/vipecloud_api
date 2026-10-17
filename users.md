@@ -81,7 +81,7 @@ Every user has one role in your account. `user_role` reports the role's access l
 `admin` | `Admin` | Everything, including billing and managing users.
 `admin_no_billing` | `Admin` | Everything except billing and granting Admin Access.
 `member` | `Member` | Works their own records and sees their team's.
-`read_only` | `Member` | Sees their team's records but cannot change anything. Does not use a paid seat. API requests made with a Read-only user's key can read but not write; a write returns `403` with the message "Read-only users cannot make changes. Ask an account admin if you need to."
+`read_only` | `Member` | Sees their team's records but cannot change anything. Does not use a paid seat. API requests made with a Read-only user's key are limited to GET requests; any other method returns `403` with the message "Read-only users cannot make changes. Ask an account admin if you need to."
 
 ---
 
