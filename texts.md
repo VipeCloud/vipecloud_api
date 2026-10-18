@@ -2,6 +2,8 @@ Texts (POST)
 -------------
 Send texts via a POST. 
 
+> **Role restrictions:** a user whose role does not include sending texts (for example a Lead Capture Manager) gets `403` with the message "Your role does not include sending texts to contacts.". Nothing is sent and the request body is not stored.
+
 #### POST Text(s)
 
 ```

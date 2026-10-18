@@ -63,6 +63,8 @@ Returns a single sign up form's information along with the `contacts_master_ids`
 
 ### GET sign up form submission data
 
+> **Lead previews:** for a user whose role sees a preview of captured leads (for example a Lead Capture Manager), `data` holds only the form's most recent submissions: 3 unless an Admin sets another number, and none when it is set to 0.
+
 ```
 GET /sign_up_forms/:id/data?contacts_master_id=:contacts_master_id
 ```
