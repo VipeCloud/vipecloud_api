@@ -81,6 +81,7 @@ Every user has one role in your account. `user_role` reports the role's access l
 `admin` | `Admin` | Everything, including billing and managing users.
 `admin_no_billing` | `Admin` | Everything except billing and granting Admin Access.
 `member` | `Member` | Works their own records and sees their team's.
+`lead_capture_manager` | `Member` | Sets up sign-up forms, schedulers, email parsing and Facebook Lead Ads. Cannot email, text or otherwise contact contacts, and cannot open contact records. Sees totals plus the most recent lead records (3 unless an Admin sets another number). Its automations are limited to lead-source triggers and steps that do not contact anyone.
 `read_only` | `Member` | Sees their team's records but cannot change anything. Does not use a paid seat. API requests made with a Read-only user's key are limited to GET requests; any other method returns `403` with the message "Read-only users cannot make changes. Ask an account admin if you need to."
 
 ---
@@ -104,7 +105,7 @@ Attribute | Type | Required | Description
 first_name | string | **yes** | First name of the new user
 last_name | string | **yes** | Last name of the new user
 email | string | **yes** | Email address, including a full domain such as `name@example.com` (must be unique across all VipeCloud accounts)
-user_role | enum | no | The role for the new user: `Admin`, `Member`, `admin_no_billing` or `read_only` (see [Roles](#roles)). Default: `Member`. Any other value is rejected.
+user_role | enum | no | The role for the new user: `Admin`, `Member`, `admin_no_billing`, `lead_capture_manager` or `read_only` (see [Roles](#roles)). Default: `Member`. Any other value is rejected.
 company | string | no | Company name. For non-agency accounts, defaults to the account owner's company name. For agency accounts, this will be blank if not provided.
 phone_office | string | no | Office phone number
 mobile_phone | string | no | Mobile phone number
@@ -207,7 +208,7 @@ Status | Message | Description
 422 | "Invalid email address provided." | The email format is invalid, including an address without a full domain (for example `name@example`)
 422 | "This email belongs to a deleted user within your account." | The email was previously used by a deleted user in your account
 422 | "This email is unavailable. Please contact support." | The email is in use by another account or is otherwise unavailable
-422 | "Invalid user_role. Use Admin, Member, admin_no_billing or read_only." | `user_role` is not one of the accepted roles
+422 | "Invalid user_role. Use Admin, Member, admin_no_billing, lead_capture_manager or read_only." | `user_role` is not one of the accepted roles
 422 | "You don't have enough seats available for this product." | Your account has reached its user seat limit. Read-only users do not use a seat, so `read_only` can still be created.
 500 | "Failed to create user." | User creation failed unexpectedly
 500 | "Error creating user, please contact support." | An exception occurred during user creation

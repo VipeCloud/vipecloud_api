@@ -2,6 +2,8 @@ Emails (POST)
 -------------
 Send emails via a POST. 
 
+> **Role restrictions:** a user whose role does not include sending email (for example a Lead Capture Manager) gets `403` with the message "Your role does not include sending email to contacts.". Nothing is sent and the request body is not stored.
+
 #### POST Email(s)
 
 ```

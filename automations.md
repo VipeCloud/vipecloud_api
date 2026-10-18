@@ -375,6 +375,8 @@ Sample response to get all automations. GET /automations
 
 HTTP | `message` | When
 --- | --- | ---
+422 | "Your role can only manage automations for sign-up forms, schedulers, email parsing and Facebook Lead Ads." | The key's role is limited to lead-source automations (for example a Lead Capture Manager) and the trigger is not a sign-up form, scheduler, email parsing rule or Facebook Lead Ad
+422 | "Your role cannot add or change steps that email, text or otherwise contact a contact." | The key's role is limited to lead-source automations and the step sends email or texts, launches a series, starts an AI Booking Agent conversation, triggers a Zap, or is not yet classified as non-contacting
 501 | "The '{item_type}' item_type is supported in the web app but is not yet available via the API. It is planned for a future API release." | item_type is "email_parsed" or "fb_lead_ad"
 422 | "Unsupported item_type '{item_type}'." | item_type is any other unrecognized value
 422 | "Creating or updating an Automation requires a contact_list_id, template_type, and (template_id if not a cancel template_type or template_ids array if a cancel type)." | item_type "contact_list" is missing a required field
