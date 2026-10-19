@@ -83,6 +83,7 @@ Every user has one role in your account. `user_role` reports the role's access l
 `member` | `Member` | Works their own records and sees their team's.
 `lead_capture_manager` | `Member` | Sets up sign-up forms, schedulers, email parsing and Facebook Lead Ads. Cannot email, text or otherwise contact contacts, and cannot open contact records. Sees totals plus the most recent lead records (3 unless an Admin sets another number). Its automations are limited to lead-source triggers and steps that do not contact anyone.
 `read_only` | `Member` | Sees their team's records but cannot change anything. Does not use a paid seat. API requests made with a Read-only user's key are limited to GET requests; any other method returns `403` with the message "Read-only users cannot make changes. Ask an account admin if you need to."
+`custom:<id>` | Its built-in role's | A custom role your account created from a built-in role (Setup → Users → Roles). It can do only what its built-in role can, trimmed by your account. `user_role` reports its built-in role's access level. If it was created from Read-only, the key's API requests are limited to GET requests as for `read_only`.
 
 ---
 
@@ -105,7 +106,7 @@ Attribute | Type | Required | Description
 first_name | string | **yes** | First name of the new user
 last_name | string | **yes** | Last name of the new user
 email | string | **yes** | Email address, including a full domain such as `name@example.com` (must be unique across all VipeCloud accounts)
-user_role | enum | no | The role for the new user: `Admin`, `Member`, `admin_no_billing`, `lead_capture_manager` or `read_only` (see [Roles](#roles)). Default: `Member`. Any other value is rejected.
+user_role | enum | no | The role for the new user: `Admin`, `Member`, `admin_no_billing`, `lead_capture_manager` or `read_only` (see [Roles](#roles)). Default: `Member`. Any other value is rejected, including custom roles, which are assigned in the VipeCloud app.
 company | string | no | Company name. For non-agency accounts, defaults to the account owner's company name. For agency accounts, this will be blank if not provided.
 phone_office | string | no | Office phone number
 mobile_phone | string | no | Mobile phone number
