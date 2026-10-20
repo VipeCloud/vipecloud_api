@@ -42,7 +42,7 @@ curl_setopt($curl, CURLOPT_HTTPHEADER, array("Authorization: Basic $auth", "Acce
 
 Key limits
 -------------
-An API key can be limited to some of what its user can do: open **Limits** next to the key (Setup → Integrations → API keys), tick the permissions the key needs, and choose how widely it may use each one. A key can never do more than its user. A key with no limits keeps everything its user can do.
+An API key can be limited to some of what its user can do: open **Limits** next to the key (Setup → Integrations → API keys), and tick the permissions the key needs. The key can use each ticked permission as its user can, and nothing else. A key with no limits keeps everything its user can do.
 
 A limited key used outside its limits returns **403**:
 
