@@ -53,7 +53,7 @@ A limited key used outside its limits returns **403**:
 }
 ```
 
-Reading an endpoint needs its view permission (for example *View contacts* for `GET /contacts`); creating, changing or deleting needs its change permission (*Edit contacts*), and sending needs the matching send permission (*Send email* for `POST /emails`). `GET /me` is always allowed.
+Reading an endpoint needs its view permission (for example *View contacts* for `GET /contacts`); creating, changing or deleting needs its change permission (*Edit contacts*), and sending needs the matching send permission (*Send email* for `POST /emails`). Sending to a whole contact list (a `contact_list_id`) also needs *Bulk send*. `GET /me` is always allowed.
 
 
 Next Step: [Summary of Endpoints](SUMMARY.md)
