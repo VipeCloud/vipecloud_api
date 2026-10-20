@@ -21,6 +21,7 @@ Overview
 
 #### Responses
    * 200 for success
+   * 403 when a limited API key is used outside its limits (see [Key limits](#key-limits))
    * 422 for incorrect post
    * 500 which is most likely a VipeCloud error
 
@@ -38,6 +39,21 @@ curl_setopt($curl, CURLOPT_HTTPHEADER, array("Authorization: Basic $auth", "Acce
 
 ?>
 ```
+
+Key limits
+-------------
+An API key can be limited to some of what its user can do: open **Limits** next to the key (Setup → Integrations → API keys), tick the permissions the key needs, and choose how widely it may use each one. A key can never do more than its user. A key with no limits keeps everything its user can do.
+
+A limited key used outside its limits returns **403**:
+
+```json
+{
+   "status" : "error",
+   "message" : "This API key is not allowed to do this. Ask the key's owner to widen its limits."
+}
+```
+
+Reading an endpoint needs its view permission (for example *View contacts* for `GET /contacts`); creating, changing or deleting needs its change permission (*Edit contacts*), and sending needs the matching send permission (*Send email* for `POST /emails`). `GET /me` is always allowed.
 
 
 Next Step: [Summary of Endpoints](SUMMARY.md)
