@@ -44,6 +44,8 @@ Key limits
 -------------
 An API key can be limited to some of what its user can do: open **Limits** next to the key (Setup → Integrations → API keys), and tick the permissions the key needs. The key can use each ticked permission as its user can, and nothing else. A key with no limits keeps everything its user can do.
 
+*View contacts* and *View CRM records* can also be narrowed to fewer records: pick **Own records** or **Team** next to the permission, and the key returns only those records (for example, only the contacts its user owns). A key never sees more records than its user.
+
 A limited key used outside its limits returns **403**:
 
 ```json
