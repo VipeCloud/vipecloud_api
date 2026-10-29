@@ -130,6 +130,9 @@ Full contact record:
      "personal_twitter_url" : "https://www.twitter.com/...",
      "personal_facebook_url" : "https://www.facebook.com/...",
      "tags" : ["Speedy"],
+     "bounced" : 0,
+     "soft_bounced" : 0,
+     "human_score" : 8,
      "contact_lists" : [
         "0" => [
             "contact_list_id" : 123,
@@ -143,6 +146,14 @@ Full contact record:
   ]
 }
 ```
+
+Bounce and lead-quality fields (read-only — these cannot be set through the API, and any values sent in a create or update request are ignored):
+
+- `bounced` — `1` when email to this address bounced and the contact is not emailed.
+- `soft_bounced` — `1` when that bounce was a soft (temporary) bounce, such as a full mailbox: email to the contact is paused in your account only, and the flag clears after the next successful delivery. Three soft bounces for the same address within 30 days turn it into a hard bounce. `0` with `bounced` set to `1` means a hard bounce, which stops email to the address everywhere.
+- `human_score` — an estimate from Contact Research, from `1` to `10`, of how likely the contact is a real, findable person. `null` until the contact has been researched.
+
+All three can be requested with `to_get`, e.g. `GET /contacts/123?to_get=first_name,soft_bounced,human_score`.
 
 #### DELETE Contacts
 ```
