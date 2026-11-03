@@ -71,3 +71,7 @@ You don't have access to that text template.
 All filters are required to have field_type, id, operator, and value parameters.
 ABCXYZ is not a valid contact standard field.
 ABCXYZ is not a valid operator.
+
+#### Company texting registrations
+
+A user can text under their company's texting registration instead of registering on their own. Such a user can send texts once their text number has been assigned to the company registration.
