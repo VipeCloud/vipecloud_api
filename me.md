@@ -25,4 +25,4 @@ to the call with a value of 1 in order to return the
 
 - `role` is the user's exact role; see Users > Roles.
 - `digital_business_card_link` is returned when requested and the user's card is configured and active.
-- `activation_link` is returned when requested and the user is inactive and ready to be activated.
+- `activation_link` is returned when requested and the user is inactive and ready to be activated. A Read-only user's API key cannot request it: the call returns `403` (see Users > Read-only API keys).

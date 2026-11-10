@@ -43,7 +43,7 @@ GET /users/:id
 Getting an individual user will return a single user's information if the calling user has the authorization to view that record.
 
 Optional query parameters:
-- `activation_link=true` - Include the user's activation link in the response (useful for newly created users who haven't set their password yet)
+- `activation_link=true` - Include the user's activation link in the response (useful for newly created users who haven't set their password yet). A Read-only user's API key cannot request it; see Read-only API keys.
 
 ```json
 {
@@ -81,7 +81,16 @@ Every user has one role in your account. `user_role` reports the role's access l
 `admin` | `Admin` | Everything, including billing and managing users.
 `admin_no_billing` | `Admin` | Everything except billing and granting Admin Access.
 `member` | `Member` | Works their own records and sees their team's.
-`read_only` | `Member` | Sees their team's records but cannot change anything. Does not use a paid seat. API requests made with a Read-only user's key are limited to GET requests; any other method returns `403` with the message "Read-only users cannot make changes. Ask an account admin if you need to."
+`read_only` | `Member` | Sees their team's records but cannot change anything. Does not use a paid seat. Their API key can read but not change anything; see Read-only API keys below.
+
+#### Read-only API keys
+
+A Read-only user's API key can read data but cannot change it. These requests return `403` with the message "Read-only users cannot make changes. Ask an account admin if you need to.":
+
+- POST, PUT, PATCH and DELETE requests, except `/user_auth`.
+- `/tasks`, whatever the method, because it always logs a new task.
+- `GET /me`, `GET /users` or `GET /users/:id` with an `activation_link` parameter, whatever its value. Creating an activation link resets the user's activation and returns a link that sets their password, so it counts as a change. Leave the parameter out when you use a Read-only key.
+- The v3.0 API used by the Zapier integration, except the calls that only read data (such as getting contact lists, custom fields, pipelines and pipeline stages), whatever the method.
 
 ---
 
