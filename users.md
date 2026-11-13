@@ -43,7 +43,7 @@ GET /users/:id
 Getting an individual user will return a single user's information if the calling user has the authorization to view that record.
 
 Optional query parameters:
-- `activation_link=true` - Include the user's activation link in the response (useful for newly created users who haven't set their password yet). A Read-only user's API key cannot request it; see Read-only API keys.
+- `activation_link=true` - Include the user's activation link in the response (useful for newly created users who haven't set their password yet). A Read-only user's API key cannot request it; see Read-only API keys. Other keys are limited too; see Activation links for other users.
 
 ```json
 {
@@ -91,6 +91,14 @@ A Read-only user's API key can read data but cannot change it. These requests re
 - `/tasks`, whatever the method, because it always logs a new task.
 - `GET /me`, `GET /users` or `GET /users/:id` with an `activation_link` parameter, whatever its value. Creating an activation link resets the user's activation and returns a link that sets their password, so it counts as a change. Leave the parameter out when you use a Read-only key.
 - The v3.0 API used by the Zapier integration, except the calls that only read data (such as getting contact lists, custom fields, pipelines and pipeline stages), whatever the method.
+
+#### Activation links for other users
+
+`GET /users/:id` with an `activation_link` parameter creates a link that sets that user's password, so it is allowed only when the key's user could manage that user's login in the app. These requests return `403` with the message "You do not have permission to create an activation link for this user.":
+
+- The key's user is not an Admin (`user_role` `Admin`) who can manage users.
+- The requested user is the account owner, and the key's user is not.
+- The requested user has access the key's user does not have. For example, an `admin_no_billing` key cannot get a link for an `admin` user.
 
 ---
 
