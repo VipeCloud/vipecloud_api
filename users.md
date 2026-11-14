@@ -180,6 +180,9 @@ Status | Message | Description
 422 | "This email belongs to a deleted user within your account." | The email was previously used by a deleted user in your account
 422 | "This email is unavailable. Please contact support." | The email is in use by another account or is otherwise unavailable
 422 | "You don't have enough seats available for this product." | Your account has reached its user seat limit
+422 | "FSE Solo includes one user. Upgrade to FSE Team to add users." | Your account is on FSE Solo, which includes exactly one user, and that user already exists. Upgrade to FSE Team to add users.
+422 | "We could not check your plan's seats right now. Please try again in a moment." | The seat check could not read your plan. Nothing was created; retry the request.
+422 | "Another user change is in progress on this account. Please try again in a moment." | Another request was adding a user to your account at the same time. Nothing was created; retry the request.
 500 | "Failed to create user." | User creation failed unexpectedly
 500 | "Error creating user, please contact support." | An exception occurred during user creation
 
