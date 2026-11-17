@@ -202,7 +202,7 @@ The response matches the same format as `GET /users/:id`, including the activati
 }
 ```
 
-If the user is created but their role cannot be saved, they are created as Read-only and the response also carries a `warning`. Check for it, and set the role from the VipeCloud app:
+If the user is created but their role cannot be saved, they are created as Read-only, the response carries a `warning`, and it has no `activation_link`. Check for it, set the role from the VipeCloud app, then request the link with `GET /users/:id?activation_link=true`:
 
 ```json
 {
