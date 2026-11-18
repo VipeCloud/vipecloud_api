@@ -202,6 +202,8 @@ The response matches the same format as `GET /users/:id`, including the activati
 }
 ```
 
+If the key's user could not get an activation link for the new user (see Activation links for other users), the user is still created and the response has no `activation_link`.
+
 If the user is created but their role cannot be saved, they are created as Read-only, the response carries a `warning`, and it has no `activation_link`. Check for it, set the role from the VipeCloud app, then request the link with `GET /users/:id?activation_link=true`:
 
 ```json
