@@ -7,7 +7,7 @@ GET /users
 ```
 The response to this GET will be a list of the currently active VipeCloud users in your account. Users displayed are based on the visibility permission of the authenticated user. For example, an Admin user will see all your account users, a Manager will see their team members, and a Member will only see themselves.
 
-`api_keys` carries API keys only on the authenticated user's own record. For every other user it is an empty array (`[]`). Use `GET /me` to read your own keys.
+`api_keys` lists every user's API keys when the authenticated user is an account Admin (the account owner included). For any other user role it lists only the authenticated user's own keys, and every other user's `api_keys` is an empty array (`[]`). Use `GET /me` to read your own keys.
 
 ```json
 {
@@ -44,7 +44,7 @@ GET /users/:id
 
 Getting an individual user will return a single user's information if the calling user has the authorization to view that record.
 
-`api_keys` is returned only when `:id` is the authenticated user; for any other user it is an empty array (`[]`).
+`api_keys` follows the same rule as the list: an account Admin (the account owner included) sees any user's keys; any other role sees keys only when `:id` is the authenticated user, and an empty array (`[]`) for any other user.
 
 Optional query parameters:
 - `activation_link=true` - Include the user's activation link in the response (useful for newly created users who haven't set their password yet)
